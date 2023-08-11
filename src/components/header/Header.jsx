@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Logoimage from 'assets/logo.png';
 
 const Wrapper = styled.div`
+	margin: 0 auto;
+	max-width: 1080px;
 	display: flex;
 	justify-content: space-between;
 	background: transparent;
