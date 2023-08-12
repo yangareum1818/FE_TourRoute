@@ -1,93 +1,116 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 html {
-    font-size: 62.5%;
+	font-size: 62.5%;
 }
 
 body {
-    font-family: "Spoqa Han Sans Neo","Spoqa Han Sans","SpoqaHanSans","Lato","Source Han Sans K","NotoSansCJKkr","Noto Sans KR",sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    line-height: 1.5;
-    color: #424242;
+	font-family: 'Spoqa Han Sans Neo', 'Spoqa Han Sans', 'SpoqaHanSans', 'Lato', 'Source Han Sans K',
+		'NotoSansCJKkr', 'Noto Sans KR', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	line-height: 1.5;
+	color: #424242;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 a {
-    color: #282828;
-    text-decoration: none;
+	color: #959696;
+	text-decoration: none;
 }
 
-ul, li, ol, dl {
-    list-style: none;
+ul,
+li,
+ol,
+dl {
+	list-style: none;
 }
 
 svg {
-    display: inline-block;
-    vertical-align: middle;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 hr {
-    box-sizing: content-box;
-    height: 0;
-    overflow: visible;
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
 }
 
 button {
-    cursor: pointer;
-    background-color: transparent;
+	cursor: pointer;
+	border: 0;
+	background-color: transparent;
 }
-button, [type="button"], [type="reset"], [type="submit"] {
-    -webkit-appearance: button;
-}
-
-[type=text], [type=number], [type=tel], [type=file], [type=password], [type=email], [type=search], [type=url], textarea {
-    vertical-align: middle;
-    box-sizing: border-box;
-    width: 100%;
-    min-width: 12rem;
-    height: 4.2rem;
-    padding: 0 1.6rem;
-    border-radius: 0;
-    border: 0.1rem solid #d3d3d3;
-    background: #fff;
-    font-size: 1.2rem;
-    color: #424242;
-    line-height: 4.2rem;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+	-webkit-appearance: button;
 }
 
-input[type=checkbox] {
-    display: inline-block;
-    width: 1.6rem;
-    height: 1.6rem;
-    outline: 1px solid #6e6e73;
-    border-radius: .4rem;
-    appearance: none;
-    cursor: pointer;
+input,
+[type='text'],
+[type='number'],
+[type='tel'],
+[type='file'],
+[type='password'],
+[type='email'],
+[type='search'],
+[type='url'],
+textarea {
+	vertical-align: middle;
+	box-sizing: border-box;
+	height: 5.1rem;
+	padding: 1.6rem 3rem 1.6rem 2rem;
+	border-radius: 0.8rem;
+	border: 0.1rem solid #cfcfcf;
+	background: #fff;
+	font-size: 1.6rem;
+	color: #000;
+	-webkit-appearance: none;
+	-moz-appearance: none;
 }
 
-input[type=checkbox]:checked {
-    outline: 1px solid #ed234b;
-    background-color: #ed234b;
+input:focus {
+	outline: none;
+	border: 0.1rem solid #000;
 }
 
-[readonly=readonly], [disabled=disabled] {
-    background-color: rgba(204,206,210,.5);
-    color: #424242;
+input::placeholder {
+	color: #cfcfcf;
+}
+
+input[type='checkbox'] {
+	display: inline-block;
+	width: 1.6rem;
+	height: 1.6rem;
+	outline: 1px solid #cfcfcf;
+	border-radius: 0.4rem;
+	appearance: none;
+	cursor: pointer;
+}
+
+input[type='checkbox']:checked {
+	outline: 1px solid #3ad0ff;
+	background-color: #3ad0ff;
+}
+
+[readonly='readonly'],
+[disabled='disabled'] {
+	background-color: rgba(204, 206, 210, 0.5);
+	color: #424242;
 }
 
 ::selection {
-    background: #ed234b;
-    color: #fff;
-    text-shadow: none;
+	background: #3ad0ff;
+	color: #fff;
+	text-shadow: none;
 }
