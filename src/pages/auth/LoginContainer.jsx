@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useCallback } from 'react';
 
 import google from '../../assets/btn_google_signin_light_normal_web@2x.png';
 import kakao from '../../assets/kakao_login_medium_narrow.png';
@@ -7,7 +8,8 @@ import kakao from '../../assets/kakao_login_medium_narrow.png';
 import { Button } from 'components/common/Button';
 import { Input } from 'components/common/Input';
 import { Title } from 'components/common/Title';
-import { useCallback } from 'react';
+
+import Modal from 'components/common/Modal';
 
 const Wrapper = styled.div`
 	display: flex;
@@ -107,6 +109,9 @@ const LoginContainer = () => {
 					<Button type="primary" text="로그인" />
 				</FormWrapper>
 			</InnerWrapper>
+
+			{/* 로그인 실패 시 모달 */}
+			{/* <Modal text="텍스트" /> */}
 		</Wrapper>
 	);
 };
