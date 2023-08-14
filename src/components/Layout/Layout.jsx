@@ -17,6 +17,7 @@ const HeaderContainer = styled.header`
 `;
 const SectionContainer = styled.section`
 	display: flex;
+	justify-content: center;
 `;
 const FooterContainer = styled.footer`
 	margin-top: 2em;
