@@ -5,22 +5,19 @@ import { useCallback } from 'react';
 import google from '../../assets/btn_google_signin_light_normal_web@2x.png';
 import kakao from '../../assets/kakao_login_medium_narrow.png';
 
-import { Button, ButtonGroup } from 'components/common/Button';
+import { Button } from 'components/common/Button';
 import { Input } from 'components/common/Input';
 import { Title } from 'components/common/Title';
 
 import Modal from 'components/common/Modal';
+import AuthLayout from 'components/Layout/AuthLayout';
 
-const Wrapper = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	gap: 4rem;
-	max-width: 76rem;
-	width: 100%;
-	padding: 8rem 0 13rem;
+const DescText = styled.p`
+	padding-bottom: 2rem;
+	font-size: 1.6rem;
+	text-align: center;
 `;
+
 const InnerWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -70,49 +67,23 @@ const Line = styled.hr`
 	}
 `;
 
-const FormWrapper = styled.form``;
-
-const InputWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
-`;
-
-const RegisterLink = styled(Link)`
-	display: inline-block;
-	margin: 1rem 0 2rem;
-	width: 100%;
-	font-size: 1.4rem;
-	text-align: center;
-`;
-
-const LoginContainer = () => {
-	const onSubmit = useCallback(() => {
-		console.log('hi');
-	}, []);
-
+const SignUpContainer = () => {
 	return (
-		<Wrapper>
-			<Title text="로그인" />
+		<AuthLayout>
+			<DescText>
+				쉽고 편리하게 회원가입해 보세요!
+				<br />
+				기존 사용 계정으로 간편하게 가입하고, 투어라우트의 다양한 혜택을 누려보세요.
+			</DescText>
 			<InnerWrapper>
 				<SocialWrapper>
 					<GoogleLoginBtn />
 					<KakaoLoginBtn />
 				</SocialWrapper>
 				<Line />
-				<FormWrapper onSubmit={onSubmit} method="POST" action="/login">
-					<InputWrapper>
-						<Input type="email" placeholder="이메일을 입력하세요." required />
-						<Input type="password" placeholder="비밀번호를 입력하세요." required />
-					</InputWrapper>
-					<RegisterLink to="/auth/signup">회원가입</RegisterLink>
-					<Button type="primary" htmlType="submit" text="로그인" />
-				</FormWrapper>
+				<Button type="button" text="ID/PW 간편 회원가입" to="/auth/signup/terms" />
 			</InnerWrapper>
-
-			{/* 로그인 실패 시 모달 */}
-			{/* <Modal text="텍스트" /> */}
-		</Wrapper>
+		</AuthLayout>
 	);
 };
-export default LoginContainer;
+export default SignUpContainer;
