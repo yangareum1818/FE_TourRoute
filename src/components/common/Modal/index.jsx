@@ -30,7 +30,7 @@ const Modal = ({ text }) => {
 						{/* <ModalText>회원정보가 존재하지 않습니다.</ModalText> */}
 
 						{/* 회원정보가 존재하지 않을 경우, 보여짐 */}
-						<ModalLink to="register">간편 회원가입 하러가기</ModalLink>
+						<ModalLink to="/auth/signup">간편 회원가입 하러가기</ModalLink>
 					</ModalTextWrapper>
 					<ModalCheckBtn>확인</ModalCheckBtn>
 				</ModalShape>

@@ -56,18 +56,18 @@ button,
 	-webkit-appearance: button;
 }
 
-input,
-[type='text'],
-[type='number'],
-[type='tel'],
-[type='file'],
-[type='password'],
-[type='email'],
-[type='search'],
-[type='url'],
+input[type='text'],
+input[type='number'],
+input[type='tel'],
+input[type='file'],
+input[type='password'],
+input[type='email'],
+input[type='search'],
+input[type='url'],
 textarea {
 	vertical-align: middle;
 	box-sizing: border-box;
+	width: 100%;
 	height: 5.1rem;
 	padding: 1.6rem 3rem 1.6rem 2rem;
 	border-radius: 0.8rem;
@@ -88,7 +88,7 @@ input::placeholder {
 	color: #cfcfcf;
 }
 
-input[type='checkbox'] {
+/* input[type='checkbox'] {
 	display: inline-block;
 	width: 1.6rem;
 	height: 1.6rem;
@@ -101,7 +101,7 @@ input[type='checkbox'] {
 input[type='checkbox']:checked {
 	outline: 1px solid #3ad0ff;
 	background-color: #3ad0ff;
-}
+} */
 
 [readonly='readonly'],
 [disabled='disabled'] {
