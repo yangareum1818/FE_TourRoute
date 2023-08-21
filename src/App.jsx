@@ -4,13 +4,14 @@ import Layout from 'components/Layout/Layout';
 
 //여행계획
 import MainContainer from 'pages/mainpage/MainContainer';
-
+import Plan from './pages/planpage/Plan';
 // 로그인, 회원가입
 import LoginContainer from 'pages/auth/LoginContainer';
 import SignUpContainer from 'pages/auth/SignUpContainer';
 import SignUpTermsContainer from 'pages/auth/SignUpTermsContainer';
 import SignUpInfoInput from 'pages/auth/SignUpInfoInputContainer';
 import SignUpCompleteContainer from 'pages/auth/SignUpCompleteContainer';
+import PlanCheck from './pages/planpage/plancheck/PlanCheck';
 
 function App() {
 	return (
@@ -19,6 +20,9 @@ function App() {
 				<Route element={<Layout />}>
 					<Route path="/" element={<MainContainer />}>
 						메인 페이지
+					</Route>
+					<Route path="/tourplan/" element={<Plan />}>
+						<Route path="1" element={<PlanCheck />} />
 					</Route>
 					<Route path="/login" element={<LoginContainer />} />
 					{/* 회원가입 */}
