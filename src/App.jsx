@@ -7,6 +7,7 @@ import MainContainer from 'pages/mainpage/MainContainer';
 import Plan from 'pages/planpage/Plan';
 import PlanCheck from 'pages/planpage/plancheck/PlanCheck';
 import PlanList from 'pages/planpage/PlanList/PlanList';
+import MapLayOut from 'pages/planpage/planmap/MapLayOut';
 // 로그인, 회원가입
 import LoginContainer from 'pages/auth/LoginContainer';
 import SignUpContainer from 'pages/auth/SignUpContainer';
@@ -25,6 +26,7 @@ function App() {
 					<Route path="/tourplan/" element={<Plan />}>
 						<Route path="1" element={<PlanCheck />} />
 						<Route path="2" element={<PlanList />} />
+						<Route path="3" element={<MapLayOut />} />
 					</Route>
 					<Route path="/login" element={<LoginContainer />} />
 					{/* 회원가입 */}
