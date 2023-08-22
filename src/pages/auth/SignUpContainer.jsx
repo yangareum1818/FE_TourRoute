@@ -1,15 +1,10 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useCallback } from 'react';
 
 import google from '../../assets/btn_google_signin_light_normal_web@2x.png';
 import kakao from '../../assets/kakao_login_medium_narrow.png';
 
 import { Button } from 'components/common/Button';
-import { Input } from 'components/common/Input';
-import { Title } from 'components/common/Title';
-
-import Modal from 'components/common/Modal';
 import AuthLayout from 'components/Layout/AuthLayout';
 
 const DescText = styled.p`
@@ -81,7 +76,9 @@ const SignUpContainer = () => {
 					<KakaoLoginBtn />
 				</SocialWrapper>
 				<Line />
-				<Button type="button" text="ID/PW 간편 회원가입" to="/auth/signup/terms" />
+				<Link to="/auth/signup/terms">
+					<Button type="button" text="ID/PW 간편 회원가입" />
+				</Link>
 			</InnerWrapper>
 		</AuthLayout>
 	);
