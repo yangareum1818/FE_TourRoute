@@ -1,4 +1,6 @@
+import MypageLayout from 'components/Layout/MypageLayout';
+
 const RecordContainer = () => {
-	return <></>;
+	return <MypageLayout></MypageLayout>;
 };
 export default RecordContainer;

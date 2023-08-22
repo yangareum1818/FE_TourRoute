@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { Title } from 'components/common/Title';
+import MypageContentLayout from './MypageContentLayout';
+import MypageSidebarLayout from './MypageSidebarLayout';
 
 const MyPageWrapper = styled.div`
 	display: flex;
@@ -9,11 +11,19 @@ const MyPageWrapper = styled.div`
 	width: 100%;
 	padding: 8rem 0 13rem;
 `;
+
+const MyPageInner = styled.div`
+	display: flex;
+`;
+
 const MypageLayout = ({ children }) => {
 	return (
 		<MyPageWrapper>
 			<Title text="마이페이지" locationStyle="left" />
-			{children}
+			<MyPageInner>
+				<MypageContentLayout>{children}</MypageContentLayout>
+				<MypageSidebarLayout />
+			</MyPageInner>
 		</MyPageWrapper>
 	);
 };

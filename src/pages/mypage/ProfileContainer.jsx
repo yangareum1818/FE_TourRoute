@@ -1,6 +1,6 @@
 import MypageLayout from 'components/Layout/MypageLayout';
 
 const ProfileContainer = () => {
-	return <MypageLayout></MypageLayout>;
+	return <MypageLayout>내 프로필</MypageLayout>;
 };
 export default ProfileContainer;
