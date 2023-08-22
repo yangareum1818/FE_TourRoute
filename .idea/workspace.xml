@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e085182f-3b89-45ce-8196-989ceea4c33d" name="변경" comment="feat : edit route">
+    <list default="true" id="e085182f-3b89-45ce-8196-989ceea4c33d" name="변경" comment="feat : CategoryListImage">
+      <change afterPath="$PROJECT_DIR$/src/pages/planpage/planmap/MapLayOut.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/planpage/planmap/kakaomap/KakaoMap.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/planpage/planmap/maplist/MapList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/planpage/ planprogress/PlanProgress.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/planpage/planprogress/PlanProgress.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/planpage/Plan.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/planpage/Plan.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +106,7 @@
       <workItem from="1691989285649" duration="709000" />
       <workItem from="1692095993460" duration="3614000" />
       <workItem from="1692605424522" duration="5479000" />
-      <workItem from="1692693699259" duration="5136000" />
+      <workItem from="1692693699259" duration="5802000" />
     </task>
     <task id="LOCAL-00001" summary="feat : header 디자인 수정">
       <option name="closed" value="true" />
@@ -149,7 +156,23 @@
       <option name="project" value="LOCAL" />
       <updated>1692739202297</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat : install KaKaoMapSDK">
+      <option name="closed" value="true" />
+      <created>1692740012629</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1692740012629</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat : CategoryListImage">
+      <option name="closed" value="true" />
+      <created>1692740032076</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1692740032076</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -173,7 +196,9 @@
     <MESSAGE value="feat : design NextBtn" />
     <MESSAGE value="feat : design PlanList" />
     <MESSAGE value="feat : edit route" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat : edit route" />
+    <MESSAGE value="feat : install KaKaoMapSDK" />
+    <MESSAGE value="feat : CategoryListImage" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : CategoryListImage" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
