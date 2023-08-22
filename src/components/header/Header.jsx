@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Logoimage from 'assets/logo.png';
 
 const Wrapper = styled.div`
-	margin: 0 auto;
+	margin: 3rem auto;
 	max-width: 1080px;
 	display: flex;
 	justify-content: space-between;
@@ -30,6 +30,8 @@ const Register = styled.ul`
 const Category = styled.li`
 	margin-left: 4rem;
 	list-style-type: none;
+	font-size: 16px;
+	font-weight: normal;
 `;
 const Header = () => {
 	return (
