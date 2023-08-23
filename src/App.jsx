@@ -14,6 +14,8 @@ import SignUpContainer from 'pages/auth/SignUpContainer';
 import SignUpTermsContainer from 'pages/auth/SignUpTermsContainer';
 import SignUpInfoInput from 'pages/auth/SignUpInfoInputContainer';
 import SignUpCompleteContainer from 'pages/auth/SignUpCompleteContainer';
+import ProfileContainer from './pages/mypage/ProfileContainer';
+import RecordContainer from './pages/mypage/RecordContainer';
 
 function App() {
 	return (
@@ -34,6 +36,10 @@ function App() {
 					<Route path="/auth/signup/terms" element={<SignUpTermsContainer />} />
 					<Route path="/auth/signup/information" element={<SignUpInfoInput />} />
 					<Route path="/auth/signup/complete" element={<SignUpCompleteContainer />} />
+
+					{/* 마이페이지 */}
+					<Route path="/my/profile" element={<ProfileContainer />} />
+					<Route path="/my/record" element={<RecordContainer />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
