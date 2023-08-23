@@ -3,6 +3,7 @@ import AuthLayout from 'components/Layout/AuthLayout';
 import { RightArrow } from 'components/common/Icon';
 import { Button, ButtonGroup } from 'components/common/Button';
 import { Input } from 'components/common/Input';
+import { Link } from 'react-router-dom';
 
 const InnerWrapper = styled.div`
 	display: flex;
@@ -80,8 +81,12 @@ const SignUpInfoInput = () => {
 					</AuthContent>
 
 					<ButtonGroup>
-						<Button type="button" text="다음" to="/auth/signup/complete" />
-						<Button type="button" text="취소" variant="cancel" to="/login" />
+						<Link to="/auth/signup/complete">
+							<Button type="button" text="다음" />
+						</Link>
+						<Link to="/login">
+							<Button type="button" text="취소" variant="cancel" />
+						</Link>
 					</ButtonGroup>
 				</FormWrapper>
 			</InnerWrapper>

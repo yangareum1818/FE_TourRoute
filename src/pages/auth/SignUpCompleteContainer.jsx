@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import AuthLayout from 'components/Layout/AuthLayout';
 import { RightArrow } from 'components/common/Icon';
 import { Button } from 'components/common/Button';
+import { Link } from 'react-router-dom';
 
 const InnerWrapper = styled.div`
 	display: flex;
@@ -72,7 +73,9 @@ const SignUpCompleteContainer = () => {
 					<AuthCompleteDesc>회원가입이 정상적으로 완료되었습니다.</AuthCompleteDesc>
 				</AuthContent>
 
-				<Button type="button" text="다음" to="/" />
+				<Link to="/">
+					<Button type="button" text="다음" />
+				</Link>
 			</InnerWrapper>
 		</AuthLayout>
 	);

@@ -5,6 +5,7 @@ import AuthLayout from 'components/Layout/AuthLayout';
 import Modal from 'components/common/Modal';
 import { RightArrow } from 'components/common/Icon';
 import Checkbox from 'components/common/CheckBox';
+import { Link } from 'react-router-dom';
 
 const InnerWrapper = styled.div`
 	display: flex;
@@ -98,8 +99,12 @@ const SignUpTermsContainer = () => {
 					</AuthContent>
 
 					<ButtonGroup>
-						<Button type="button" text="다음" to="/auth/signup/information" />
-						<Button type="button" text="취소" to="/login" variant="cancel" />
+						<Link to="/auth/signup/information">
+							<Button type="button" text="다음" />
+						</Link>
+						<Link to="/login">
+							<Button type="button" text="취소" variant="cancel" />
+						</Link>
 					</ButtonGroup>
 				</FormWrapper>
 			</InnerWrapper>
