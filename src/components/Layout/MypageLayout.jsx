@@ -14,6 +14,8 @@ const MyPageWrapper = styled.div`
 
 const MyPageInner = styled.div`
 	display: flex;
+	gap: 2rem;
+	flex-direction: row;
 `;
 
 const MypageLayout = ({ children }) => {
