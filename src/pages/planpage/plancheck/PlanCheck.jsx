@@ -41,7 +41,7 @@ const UserInput = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background: #f2f6f9;
+	background: #f2f6정f9;
 	padding: 1rem;
 	border-radius: 8px;
 	font-size: 16px;
