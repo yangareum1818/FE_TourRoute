@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import barcord from 'assets/barcord.png';
 import { FaCalendarAlt, FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
@@ -6,6 +6,7 @@ import Logoimage from 'assets/Logo5.svg';
 import SerchLogo from 'assets/SerchLogo.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { DatePicker, InputNumber, Select } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const WrapperContainer = styled.div`
 	padding-bottom: 5rem;
@@ -26,6 +27,7 @@ const LogoContainer = styled.div`
 const LogoImg = styled.img`
 	width: 13rem;
 	height: 20px;
+	cursor: pointer;
 `;
 const NavBar = styled.ul`
 	display: flex;
@@ -136,15 +138,19 @@ const ResultContainer = styled.div`
 `;
 
 const MainHeader = () => {
+	const navigate = useNavigate();
+
 	const { RangePicker } = DatePicker;
 	const dispatch = useDispatch();
 	const count = useSelector(state => state.reducer.count);
-	console.log(count);
+	const handleLogo = useCallback(() => {
+		navigate('/');
+	}, [navigate()]);
 	return (
 		<WrapperContainer>
 			<Wrapper>
 				<LogoContainer>
-					<LogoImg src={Logoimage} />
+					<LogoImg src={Logoimage} onClick={handleLogo} />
 				</LogoContainer>
 				<NavBar>
 					<Category>여행계획</Category>
