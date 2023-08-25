@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import Logoimage from 'assets/logo.png';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
 	margin: 3rem auto;
@@ -16,6 +17,7 @@ const Logo = styled.div`
 const LogoImg = styled.img`
 	width: 13rem;
 	height: 20px;
+	cursor: pointer;
 `;
 const NavBar = styled.ul`
 	display: flex;
@@ -34,10 +36,14 @@ const Category = styled.li`
 	font-weight: normal;
 `;
 const Header = () => {
+	const navigate = useNavigate();
+	const handleLogo = useCallback(() => {
+		navigate('/');
+	}, [navigate]);
 	return (
 		<Wrapper>
 			<Logo>
-				<LogoImg src={Logoimage} />
+				<LogoImg src={Logoimage} onClick={handleLogo} />
 			</Logo>
 			<NavBar>
 				<Category>여행계획</Category>
