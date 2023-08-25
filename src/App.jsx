@@ -16,6 +16,8 @@ import SignUpInfoInput from 'pages/auth/SignUpInfoInputContainer';
 import SignUpCompleteContainer from 'pages/auth/SignUpCompleteContainer';
 import ProfileContainer from './pages/mypage/ProfileContainer';
 import RecordContainer from './pages/mypage/RecordContainer';
+import Community from './pages/community/Community';
+import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
 
 function App() {
 	return (
@@ -40,6 +42,12 @@ function App() {
 					{/* 마이페이지 */}
 					<Route path="/my/profile" element={<ProfileContainer />} />
 					<Route path="/my/record" element={<RecordContainer />} />
+
+					{/* 커뮤니티 */}
+					<Route path="/community" element={<Community />}></Route>
+					<Route path="/communitywrite" element={<CommunityWrite />}>
+						{' '}
+					</Route>
 				</Route>
 			</Routes>
 		</BrowserRouter>
