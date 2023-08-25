@@ -5,6 +5,7 @@ import deaguimg from 'assets/deagu.png';
 import gyeongjuimg from 'assets/gyeongju.png';
 import pohang from 'assets/pohang.png';
 import { FaMapMarkerAlt } from 'react-icons/fa';
+
 const Wrapper = styled.div`
 	width: 100%;
 `;

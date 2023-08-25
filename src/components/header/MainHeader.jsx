@@ -4,6 +4,8 @@ import barcord from 'assets/barcord.png';
 import { FaCalendarAlt, FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
 import Logoimage from 'assets/Logo5.svg';
 import SerchLogo from 'assets/SerchLogo.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { DatePicker, InputNumber, Select } from 'antd';
 
 const WrapperContainer = styled.div`
 	padding-bottom: 5rem;
@@ -81,29 +83,45 @@ const BarcordContainer = styled.div`
 	margin-bottom: 2rem;
 `;
 const SerchBarInput = styled.div`
-	display: flex;
-	justify-content: space-between;
+	display: grid;
+	grid-template-columns: 18rem 30rem 12rem 18rem 16rem;
+	grid-template-rows: 4rem;
+	gap: 2rem;
+	padding-left: 1rem;
 `;
 const UserInput = styled.div`
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 	background: #f2f6f9;
-	padding: 1rem;
+	padding: 0 0.3rem;
 	border-radius: 8px;
 	font-size: 16px;
 	color: #959696;
+
+	& > * {
+		border: 0;
+		background: transparent;
+	}
 `;
 
+const InputDiv = styled.div`
+	& > * {
+		width: 5rem;
+		border: 0;
+		background: transparent;
+		input:focus {
+			outline: none;
+		}
+	}
+`;
 const InputIcon = styled.div`
 	color: #3ad0ff;
-	margin-left: 2rem;
+	margin-left: 0.5rem;
 `;
 const InputId = styled.input`
-	border: 0px;
+	border: 0;
 	background: transparent;
 	font-size: 16px;
-	width: 100%;
 `;
 const ResultContainer = styled.div`
 	background: #3ad0ff;
@@ -111,13 +129,17 @@ const ResultContainer = styled.div`
 	padding: 1rem 3rem;
 	border-radius: 8px;
 	font-size: 16px;
-	font-width: bold;
+	font-weight: bold;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
 
 const MainHeader = () => {
+	const { RangePicker } = DatePicker;
+	const dispatch = useDispatch();
+	const count = useSelector(state => state.reducer.count);
+	console.log(count);
 	return (
 		<WrapperContainer>
 			<Wrapper>
@@ -149,19 +171,38 @@ const MainHeader = () => {
 						</BarcordContainer>
 						<SerchBarInput>
 							<UserInput>
-								<div style={{ marginRight: '1rem' }}>목적지</div>
+								<div>
+									목적지
+									<Select
+										defaultValue="대구광역시"
+										options={[
+											{
+												value: '대구광역시',
+												label: '대구광역시',
+											},
+											{
+												value: '부산광역시',
+												label: '부산광역시',
+											},
+										]}
+									/>
+								</div>
 								<InputIcon>
 									<FaMapMarkerAlt />
 								</InputIcon>
 							</UserInput>
 							<UserInput>
-								<div style={{ marginRight: '1rem' }}>YYYY-MM-DD ~ YYYY-MM-DD</div>
+								<div style={{ marginRight: '1rem' }}>
+									<RangePicker />
+								</div>
 								<InputIcon>
 									<FaCalendarAlt />
 								</InputIcon>
 							</UserInput>
 							<UserInput>
-								<div style={{ marginRight: '1rem' }}>인원</div>
+								<InputDiv>
+									인원 <InputNumber defaultValue={count} />
+								</InputDiv>
 								<InputIcon>
 									<FaUserFriends />
 								</InputIcon>
