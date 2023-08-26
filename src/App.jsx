@@ -18,6 +18,7 @@ import ProfileContainer from './pages/mypage/ProfileContainer';
 import RecordContainer from './pages/mypage/RecordContainer';
 import Community from './pages/community/Community';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
+import WishListContainer from 'pages/mypage/WishListContainer';
 
 function App() {
 	return (
@@ -42,6 +43,7 @@ function App() {
 					{/* 마이페이지 */}
 					<Route path="/my/profile" element={<ProfileContainer />} />
 					<Route path="/my/record" element={<RecordContainer />} />
+					<Route path="/my/wishlist" element={<WishListContainer />} />
 
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />}></Route>
