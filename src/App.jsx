@@ -18,6 +18,7 @@ import ProfileContainer from './pages/mypage/ProfileContainer';
 import RecordContainer from './pages/mypage/RecordContainer';
 import Community from './pages/community/Community';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
+import CommunityWriteLayout from './components/Layout/CommunityWriteLayout';
 
 function App() {
 	return (
@@ -45,8 +46,8 @@ function App() {
 
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />}></Route>
-					<Route path="/communitywrite" element={<CommunityWrite />}>
-						{' '}
+					<Route element={<CommunityWriteLayout />}>
+						<Route path="/communitywrite" element={<CommunityWrite />}></Route>{' '}
 					</Route>
 				</Route>
 			</Routes>
