@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import ProfileManagementIcon from '../../../assets/brightness_high.png';
-import dummyMyImage from '../../../assets/Mask_group.svg';
+import ProfileManagementIcon from '../../assets/brightness_high.png';
+import dummyMyImage from '../../assets/Mask_group.svg';
+import SidebarLayout from 'components/Layout/SidebarLayout';
 
 const ProfileWrapper = styled.div`
 	display: flex;
@@ -36,11 +36,13 @@ const ProfileManagement = styled.span`
 
 const Profile = () => {
 	return (
-		<ProfileWrapper>
-			<MyImage src={dummyMyImage} />
-			<MyName>홍길동</MyName>
-			<ProfileManagement>프로필 관리</ProfileManagement>
-		</ProfileWrapper>
+		<SidebarLayout>
+			<ProfileWrapper>
+				<MyImage src={dummyMyImage} />
+				<MyName>홍길동</MyName>
+				<ProfileManagement>프로필 관리</ProfileManagement>
+			</ProfileWrapper>
+		</SidebarLayout>
 	);
 };
 export default Profile;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MypageLayout from 'components/Layout/MypageLayout';
+import PostContentsLayout from 'components/Layout/PostContentsLayout';
 
 import logoImg from '../../assets/logo2.png';
 import recordImg1 from '../../assets/recordImg1.png';
@@ -143,7 +143,7 @@ const MyRecordInfoTourEnd = styled.span`
 
 const RecordContainer = () => {
 	return (
-		<MypageLayout>
+		<PostContentsLayout text="마이페이지">
 			<MyRecordWrppaer>
 				<MyRecord>
 					<MyRecordHead>
@@ -288,7 +288,7 @@ const RecordContainer = () => {
 					</MyRecordContentWrapper>
 				</MyRecord>
 			</MyRecordWrppaer>
-		</MypageLayout>
+		</PostContentsLayout>
 	);
 };
 export default RecordContainer;

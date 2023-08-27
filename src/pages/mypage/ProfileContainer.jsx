@@ -1,4 +1,4 @@
-import MypageLayout from 'components/Layout/MypageLayout';
+import PostContentsLayout from 'components/Layout/PostContentsLayout';
 import styled from 'styled-components';
 
 const MyProfileContent = styled.div`
@@ -36,7 +36,7 @@ const ProfileInfoChangeText = styled.span`
 
 const ProfileContainer = () => {
 	return (
-		<MypageLayout>
+		<PostContentsLayout text="마이페이지">
 			<MyProfileContent>
 				<ProfileInfoWrpper>
 					<ProfileInfoTitle>이름</ProfileInfoTitle>
@@ -52,7 +52,7 @@ const ProfileContainer = () => {
 				</ProfileInfoWrpper>
 				<ProfileInfoChangeText>최근 수정일 : 2023-08-14</ProfileInfoChangeText>
 			</MyProfileContent>
-		</MypageLayout>
+		</PostContentsLayout>
 	);
 };
 export default ProfileContainer;

@@ -19,6 +19,7 @@ import RecordContainer from './pages/mypage/RecordContainer';
 import Community from './pages/community/Community';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
 import WishListContainer from 'pages/mypage/WishListContainer';
+import WritingListContainer from 'pages/mypage/WritingListContainer';
 
 function App() {
 	return (
@@ -44,6 +45,7 @@ function App() {
 					<Route path="/my/profile" element={<ProfileContainer />} />
 					<Route path="/my/record" element={<RecordContainer />} />
 					<Route path="/my/wishlist" element={<WishListContainer />} />
+					<Route path="/my/writing" element={<WritingListContainer />} />
 
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />}></Route>

@@ -1,4 +1,4 @@
-import MypageLayout from 'components/Layout/MypageLayout';
+import PostContentsLayout from 'components/Layout/PostContentsLayout';
 import { TrackingProgressIcon, WishHeartIcon } from 'components/common/Icon';
 import { styled } from 'styled-components';
 
@@ -35,7 +35,7 @@ const WishListContainer = () => {
 	const wishlist = [];
 
 	return (
-		<MypageLayout>
+		<PostContentsLayout text="마이페이지">
 			<MyWishListWrapper>
 				<MyWishList>
 					<ListIconWrapper>
@@ -52,7 +52,7 @@ const WishListContainer = () => {
 				<MyWishList></MyWishList>
 				<MyWishList></MyWishList>
 			</MyWishListWrapper>
-		</MypageLayout>
+		</PostContentsLayout>
 	);
 };
 export default WishListContainer;
