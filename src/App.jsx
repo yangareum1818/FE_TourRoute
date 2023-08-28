@@ -20,6 +20,7 @@ import Community from './pages/community/Community';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
 import WishListContainer from 'pages/mypage/WishListContainer';
 import WritingListContainer from 'pages/mypage/WritingListContainer';
+import PostContentsLayout from 'components/Layout/PostContentsLayout';
 
 function App() {
 	return (
@@ -42,10 +43,12 @@ function App() {
 					<Route path="/auth/signup/complete" element={<SignUpCompleteContainer />} />
 
 					{/* 마이페이지 */}
-					<Route path="/my/profile" element={<ProfileContainer />} />
-					<Route path="/my/record" element={<RecordContainer />} />
-					<Route path="/my/wishlist" element={<WishListContainer />} />
-					<Route path="/my/writing" element={<WritingListContainer />} />
+					<Route element={<PostContentsLayout text="마이페이지" />}>
+						<Route path="/my/profile" element={<ProfileContainer />} />
+						<Route path="/my/record" element={<RecordContainer />} />
+						<Route path="/my/wishlist" element={<WishListContainer />} />
+						<Route path="/my/writing" element={<WritingListContainer />} />
+					</Route>
 
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />}></Route>

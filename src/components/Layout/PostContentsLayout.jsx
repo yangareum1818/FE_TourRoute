@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Title } from 'components/common/Title';
-import PostContent from './PostContent';
 import SidebarLayout from './SidebarLayout';
+import { Outlet } from 'react-router-dom';
 
 const PostContentsWrapper = styled.div`
 	display: flex;
@@ -18,12 +18,18 @@ const PostContentsInner = styled.div`
 	flex-direction: row;
 `;
 
-const PostContentsLayout = ({ children, text }) => {
+const PostContent = styled.div`
+	flex: 3;
+`;
+
+const PostContentsLayout = ({ text }) => {
 	return (
 		<PostContentsWrapper>
 			<Title text={text} locationStyle="left" />
 			<PostContentsInner>
-				<PostContent>{children}</PostContent>
+				<PostContent>
+					<Outlet />
+				</PostContent>
 				<SidebarLayout />
 			</PostContentsInner>
 		</PostContentsWrapper>

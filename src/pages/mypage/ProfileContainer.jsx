@@ -1,4 +1,3 @@
-import PostContentsLayout from 'components/Layout/PostContentsLayout';
 import styled from 'styled-components';
 
 const MyProfileContent = styled.div`
@@ -36,23 +35,21 @@ const ProfileInfoChangeText = styled.span`
 
 const ProfileContainer = () => {
 	return (
-		<PostContentsLayout text="마이페이지">
-			<MyProfileContent>
-				<ProfileInfoWrpper>
-					<ProfileInfoTitle>이름</ProfileInfoTitle>
-					<ProfileInfoValue>홍길동</ProfileInfoValue>
-				</ProfileInfoWrpper>
-				<ProfileInfoWrpper>
-					<ProfileInfoTitle>이메일</ProfileInfoTitle>
-					<ProfileInfoValue>hong-gildong@gmail.com</ProfileInfoValue>
-				</ProfileInfoWrpper>
-				<ProfileInfoWrpper>
-					<ProfileInfoTitle>마케팅 수신동의</ProfileInfoTitle>
-					<ProfileInfoValue>수신거부</ProfileInfoValue>
-				</ProfileInfoWrpper>
-				<ProfileInfoChangeText>최근 수정일 : 2023-08-14</ProfileInfoChangeText>
-			</MyProfileContent>
-		</PostContentsLayout>
+		<MyProfileContent>
+			<ProfileInfoWrpper>
+				<ProfileInfoTitle>이름</ProfileInfoTitle>
+				<ProfileInfoValue>홍길동</ProfileInfoValue>
+			</ProfileInfoWrpper>
+			<ProfileInfoWrpper>
+				<ProfileInfoTitle>이메일</ProfileInfoTitle>
+				<ProfileInfoValue>hong-gildong@gmail.com</ProfileInfoValue>
+			</ProfileInfoWrpper>
+			<ProfileInfoWrpper>
+				<ProfileInfoTitle>마케팅 수신동의</ProfileInfoTitle>
+				<ProfileInfoValue>수신거부</ProfileInfoValue>
+			</ProfileInfoWrpper>
+			<ProfileInfoChangeText>최근 수정일 : 2023-08-14</ProfileInfoChangeText>
+		</MyProfileContent>
 	);
 };
 export default ProfileContainer;
