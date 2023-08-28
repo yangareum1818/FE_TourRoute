@@ -14,13 +14,16 @@ import SignUpContainer from 'pages/auth/SignUpContainer';
 import SignUpTermsContainer from 'pages/auth/SignUpTermsContainer';
 import SignUpInfoInput from 'pages/auth/SignUpInfoInputContainer';
 import SignUpCompleteContainer from 'pages/auth/SignUpCompleteContainer';
-import ProfileContainer from 'pages/mypage/ProfileContainer';
-import RecordContainer from './pages/mypage/RecordContainer';
+// 커뮤니티
 import Community from './pages/community/Community';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
+// 마이페이지
+import PostContentsLayout from 'components/Layout/PostContentsLayout';
+import ProfileContainer from 'pages/mypage/ProfileContainer';
+import RecordContainer from './pages/mypage/RecordContainer';
 import WishListContainer from 'pages/mypage/WishListContainer';
 import WritingListContainer from 'pages/mypage/WritingListContainer';
-import PostContentsLayout from 'components/Layout/PostContentsLayout';
+import CommentContainer from 'pages/mypage/CommentContainer';
 
 function App() {
 	return (
@@ -47,7 +50,8 @@ function App() {
 						<Route path="/my/profile" element={<ProfileContainer />} />
 						<Route path="/my/record" element={<RecordContainer />} />
 						<Route path="/my/wishlist" element={<WishListContainer />} />
-						<Route path="/my/writing" element={<WritingListContainer />} />
+						<Route path="/my/wrtiting" element={<WritingListContainer />} />
+						<Route path="/my/comment" element={<CommentContainer />} />
 					</Route>
 
 					{/* 커뮤니티 */}

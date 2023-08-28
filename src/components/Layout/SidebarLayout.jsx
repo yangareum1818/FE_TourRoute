@@ -2,7 +2,7 @@ import Profile from 'components/sidebar/Profile';
 import SideMenu from 'components/sidebar/SideMenu';
 import styled from 'styled-components';
 
-const MySideBar = styled.div`
+const SidebarWrapper = styled.div`
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -20,13 +20,22 @@ const SideMenuLocation = styled.span`
 `;
 
 const SidebarLayout = ({ locationText, children }) => {
+	const locaion = window.location.pathname;
+	const mypage = locaion.includes('/my');
+	console.log(mypage);
 	return (
-		<MySideBar>
-			{/* sideMenu Active된 {locationText}값 넣어야함. */}
-			{/*<SideMenuLocation>{locationText}</SideMenuLocation>*/}
-			<Profile />
-			<SideMenu />
-		</MySideBar>
+		<SidebarWrapper>
+			{mypage === true ? (
+				<>
+					{/* sideMenu Active된 {locationText}값 넣어야함. */}
+					{/* <SideMenuLocation>{locationText}</SideMenuLocation> */}
+					<SideMenuLocation>내 프로필</SideMenuLocation>
+
+					<Profile />
+					<SideMenu />
+				</>
+			) : null}
+		</SidebarWrapper>
 	);
 };
 export default SidebarLayout;

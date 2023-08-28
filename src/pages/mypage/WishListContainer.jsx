@@ -35,24 +35,22 @@ const WishListContainer = () => {
 	const wishlist = [];
 
 	return (
-		<PostContentsLayout text="마이페이지">
-			<MyWishListWrapper>
-				<MyWishList>
-					<ListIconWrapper>
-						<WishHeartIcon />
-						<TrackingProgressIcon text="진행 중" />
-					</ListIconWrapper>
+		<MyWishListWrapper>
+			<MyWishList>
+				<ListIconWrapper>
+					<WishHeartIcon />
+					<TrackingProgressIcon text="진행 중" />
+				</ListIconWrapper>
 
-					<ListContent></ListContent>
-				</MyWishList>
-				<MyWishList></MyWishList>
-				<MyWishList></MyWishList>
-				<MyWishList></MyWishList>
-				<MyWishList></MyWishList>
-				<MyWishList></MyWishList>
-				<MyWishList></MyWishList>
-			</MyWishListWrapper>
-		</PostContentsLayout>
+				<ListContent></ListContent>
+			</MyWishList>
+			<MyWishList></MyWishList>
+			<MyWishList></MyWishList>
+			<MyWishList></MyWishList>
+			<MyWishList></MyWishList>
+			<MyWishList></MyWishList>
+			<MyWishList></MyWishList>
+		</MyWishListWrapper>
 	);
 };
 export default WishListContainer;

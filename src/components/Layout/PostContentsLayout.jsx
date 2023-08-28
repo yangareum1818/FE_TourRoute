@@ -23,8 +23,6 @@ const PostContent = styled.div`
 `;
 
 const PostContentsLayout = ({ text }) => {
-	const locaion = window.location.pathname;
-	console.log(locaion);
 	return (
 		<PostContentsWrapper>
 			<Title text={text} locationStyle="left" />
@@ -32,7 +30,10 @@ const PostContentsLayout = ({ text }) => {
 				<PostContent>
 					<Outlet />
 				</PostContent>
-				<SidebarLayout />
+
+				<SidebarLayout>
+					<Outlet />
+				</SidebarLayout>
 			</PostContentsInner>
 		</PostContentsWrapper>
 	);

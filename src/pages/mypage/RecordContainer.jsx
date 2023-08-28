@@ -143,152 +143,150 @@ const MyRecordInfoTourEnd = styled.span`
 
 const RecordContainer = () => {
 	return (
-		<PostContentsLayout text="마이페이지">
-			<MyRecordWrppaer>
-				<MyRecord>
-					<MyRecordHead>
-						<MyRecordHeadImg src={logoImg} />
-					</MyRecordHead>
+		<MyRecordWrppaer>
+			<MyRecord>
+				<MyRecordHead>
+					<MyRecordHeadImg src={logoImg} />
+				</MyRecordHead>
 
-					<MyRecordContentWrapper>
-						<MyRecordCategoryImg>
-							<CategoryImg src={recordImg1} />
-							<CategoryText>맛집</CategoryText>
-						</MyRecordCategoryImg>
+				<MyRecordContentWrapper>
+					<MyRecordCategoryImg>
+						<CategoryImg src={recordImg1} />
+						<CategoryText>맛집</CategoryText>
+					</MyRecordCategoryImg>
 
-						<MyRecordContent>
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>여행지</MyRecordInfoText>
-								<MyRecordInfoValue>부산</MyRecordInfoValue>
-							</MyRecordInfoWrapper>
+					<MyRecordContent>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>여행지</MyRecordInfoText>
+							<MyRecordInfoValue>부산</MyRecordInfoValue>
+						</MyRecordInfoWrapper>
 
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>날짜</MyRecordInfoText>
-								<MyRecordInfoValue>2023-08-09 ~ 2023-08-10</MyRecordInfoValue>
-							</MyRecordInfoWrapper>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>날짜</MyRecordInfoText>
+							<MyRecordInfoValue>2023-08-09 ~ 2023-08-10</MyRecordInfoValue>
+						</MyRecordInfoWrapper>
 
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>인원</MyRecordInfoText>
-								<MyRecordInfoValue>2명</MyRecordInfoValue>
-							</MyRecordInfoWrapper>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>인원</MyRecordInfoText>
+							<MyRecordInfoValue>2명</MyRecordInfoValue>
+						</MyRecordInfoWrapper>
 
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>동행인</MyRecordInfoText>
-								<MyRecordInfoValuesWrapper>
-									<MyRecordInfoValue>nextgenerationsuperstar@gmail.com 맹구</MyRecordInfoValue>
-									<MyRecordInfoValue>nextgenerationsuperstar@gmail.com 유리</MyRecordInfoValue>
-									<MyRecordInfoValue>nextgenerationsuperstar@gmail.com 유리</MyRecordInfoValue>
-								</MyRecordInfoValuesWrapper>
-							</MyRecordInfoWrapper>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>동행인</MyRecordInfoText>
+							<MyRecordInfoValuesWrapper>
+								<MyRecordInfoValue>nextgenerationsuperstar@gmail.com 맹구</MyRecordInfoValue>
+								<MyRecordInfoValue>nextgenerationsuperstar@gmail.com 유리</MyRecordInfoValue>
+								<MyRecordInfoValue>nextgenerationsuperstar@gmail.com 유리</MyRecordInfoValue>
+							</MyRecordInfoValuesWrapper>
+						</MyRecordInfoWrapper>
 
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>투어리스트</MyRecordInfoText>
-								<MyRecordInfoTourValuesWrapper>
-									<MyRecordInfoTourValuesInner>
-										<MyRecordInfoTourStart>개미집 서면 본점</MyRecordInfoTourStart>
-										<MyRecordInfoTourEnd>물보라 광안</MyRecordInfoTourEnd>
-									</MyRecordInfoTourValuesInner>
-								</MyRecordInfoTourValuesWrapper>
-							</MyRecordInfoWrapper>
-						</MyRecordContent>
-					</MyRecordContentWrapper>
-				</MyRecord>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>투어리스트</MyRecordInfoText>
+							<MyRecordInfoTourValuesWrapper>
+								<MyRecordInfoTourValuesInner>
+									<MyRecordInfoTourStart>개미집 서면 본점</MyRecordInfoTourStart>
+									<MyRecordInfoTourEnd>물보라 광안</MyRecordInfoTourEnd>
+								</MyRecordInfoTourValuesInner>
+							</MyRecordInfoTourValuesWrapper>
+						</MyRecordInfoWrapper>
+					</MyRecordContent>
+				</MyRecordContentWrapper>
+			</MyRecord>
 
-				<MyRecord>
-					<MyRecordHead>
-						<MyRecordHeadImg src={logoImg} />
-					</MyRecordHead>
+			<MyRecord>
+				<MyRecordHead>
+					<MyRecordHeadImg src={logoImg} />
+				</MyRecordHead>
 
-					<MyRecordContentWrapper>
-						<MyRecordCategoryImg>
-							<CategoryImg src={recordImg2} />
-							<CategoryText>등산</CategoryText>
-						</MyRecordCategoryImg>
+				<MyRecordContentWrapper>
+					<MyRecordCategoryImg>
+						<CategoryImg src={recordImg2} />
+						<CategoryText>등산</CategoryText>
+					</MyRecordCategoryImg>
 
-						<MyRecordContent>
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>여행지</MyRecordInfoText>
-								<MyRecordInfoValue>부산</MyRecordInfoValue>
-							</MyRecordInfoWrapper>
+					<MyRecordContent>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>여행지</MyRecordInfoText>
+							<MyRecordInfoValue>부산</MyRecordInfoValue>
+						</MyRecordInfoWrapper>
 
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>날짜</MyRecordInfoText>
-								<MyRecordInfoValue>2023-08-09 ~ 2023-08-10</MyRecordInfoValue>
-							</MyRecordInfoWrapper>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>날짜</MyRecordInfoText>
+							<MyRecordInfoValue>2023-08-09 ~ 2023-08-10</MyRecordInfoValue>
+						</MyRecordInfoWrapper>
 
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>인원</MyRecordInfoText>
-								<MyRecordInfoValue>2명</MyRecordInfoValue>
-							</MyRecordInfoWrapper>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>인원</MyRecordInfoText>
+							<MyRecordInfoValue>2명</MyRecordInfoValue>
+						</MyRecordInfoWrapper>
 
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>동행인</MyRecordInfoText>
-								<MyRecordInfoValuesWrapper>
-									<MyRecordInfoValue>-</MyRecordInfoValue>
-								</MyRecordInfoValuesWrapper>
-							</MyRecordInfoWrapper>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>동행인</MyRecordInfoText>
+							<MyRecordInfoValuesWrapper>
+								<MyRecordInfoValue>-</MyRecordInfoValue>
+							</MyRecordInfoValuesWrapper>
+						</MyRecordInfoWrapper>
 
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>투어리스트</MyRecordInfoText>
-								<MyRecordInfoTourValuesWrapper>
-									<MyRecordInfoTourValuesInner>
-										<MyRecordInfoTourStart>개미집 서면 본점</MyRecordInfoTourStart>
-										<MyRecordInfoTourEnd>물보라 광안</MyRecordInfoTourEnd>
-									</MyRecordInfoTourValuesInner>
-								</MyRecordInfoTourValuesWrapper>
-							</MyRecordInfoWrapper>
-						</MyRecordContent>
-					</MyRecordContentWrapper>
-				</MyRecord>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>투어리스트</MyRecordInfoText>
+							<MyRecordInfoTourValuesWrapper>
+								<MyRecordInfoTourValuesInner>
+									<MyRecordInfoTourStart>개미집 서면 본점</MyRecordInfoTourStart>
+									<MyRecordInfoTourEnd>물보라 광안</MyRecordInfoTourEnd>
+								</MyRecordInfoTourValuesInner>
+							</MyRecordInfoTourValuesWrapper>
+						</MyRecordInfoWrapper>
+					</MyRecordContent>
+				</MyRecordContentWrapper>
+			</MyRecord>
 
-				<MyRecord>
-					<MyRecordHead>
-						<MyRecordHeadImg src={logoImg} />
-					</MyRecordHead>
+			<MyRecord>
+				<MyRecordHead>
+					<MyRecordHeadImg src={logoImg} />
+				</MyRecordHead>
 
-					<MyRecordContentWrapper>
-						<MyRecordCategoryImg>
-							<CategoryImg src={recordImg3} />
-							<CategoryText>역사</CategoryText>
-						</MyRecordCategoryImg>
+				<MyRecordContentWrapper>
+					<MyRecordCategoryImg>
+						<CategoryImg src={recordImg3} />
+						<CategoryText>역사</CategoryText>
+					</MyRecordCategoryImg>
 
-						<MyRecordContent>
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>여행지</MyRecordInfoText>
-								<MyRecordInfoValue>부산</MyRecordInfoValue>
-							</MyRecordInfoWrapper>
+					<MyRecordContent>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>여행지</MyRecordInfoText>
+							<MyRecordInfoValue>부산</MyRecordInfoValue>
+						</MyRecordInfoWrapper>
 
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>날짜</MyRecordInfoText>
-								<MyRecordInfoValue>2023-08-09 ~ 2023-08-10</MyRecordInfoValue>
-							</MyRecordInfoWrapper>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>날짜</MyRecordInfoText>
+							<MyRecordInfoValue>2023-08-09 ~ 2023-08-10</MyRecordInfoValue>
+						</MyRecordInfoWrapper>
 
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>인원</MyRecordInfoText>
-								<MyRecordInfoValue>2명</MyRecordInfoValue>
-							</MyRecordInfoWrapper>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>인원</MyRecordInfoText>
+							<MyRecordInfoValue>2명</MyRecordInfoValue>
+						</MyRecordInfoWrapper>
 
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>동행인</MyRecordInfoText>
-								<MyRecordInfoValuesWrapper>
-									<MyRecordInfoValue>nextgenerationsuperstar@gmail.com 맹구</MyRecordInfoValue>
-								</MyRecordInfoValuesWrapper>
-							</MyRecordInfoWrapper>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>동행인</MyRecordInfoText>
+							<MyRecordInfoValuesWrapper>
+								<MyRecordInfoValue>nextgenerationsuperstar@gmail.com 맹구</MyRecordInfoValue>
+							</MyRecordInfoValuesWrapper>
+						</MyRecordInfoWrapper>
 
-							<MyRecordInfoWrapper>
-								<MyRecordInfoText>투어리스트</MyRecordInfoText>
-								<MyRecordInfoTourValuesWrapper>
-									<MyRecordInfoTourValuesInner>
-										<MyRecordInfoTourStart>개미집 서면 본점</MyRecordInfoTourStart>
-										<MyRecordInfoTourEnd>물보라 광안</MyRecordInfoTourEnd>
-									</MyRecordInfoTourValuesInner>
-								</MyRecordInfoTourValuesWrapper>
-							</MyRecordInfoWrapper>
-						</MyRecordContent>
-					</MyRecordContentWrapper>
-				</MyRecord>
-			</MyRecordWrppaer>
-		</PostContentsLayout>
+						<MyRecordInfoWrapper>
+							<MyRecordInfoText>투어리스트</MyRecordInfoText>
+							<MyRecordInfoTourValuesWrapper>
+								<MyRecordInfoTourValuesInner>
+									<MyRecordInfoTourStart>개미집 서면 본점</MyRecordInfoTourStart>
+									<MyRecordInfoTourEnd>물보라 광안</MyRecordInfoTourEnd>
+								</MyRecordInfoTourValuesInner>
+							</MyRecordInfoTourValuesWrapper>
+						</MyRecordInfoWrapper>
+					</MyRecordContent>
+				</MyRecordContentWrapper>
+			</MyRecord>
+		</MyRecordWrppaer>
 	);
 };
 export default RecordContainer;
