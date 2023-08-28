@@ -19,12 +19,15 @@ import RecordContainer from './pages/mypage/RecordContainer';
 import Community from './pages/community/Community';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
 import CommunityWriteLayout from './components/Layout/CommunityWriteLayout';
+import Info from 'pages/ info/Info';
 
 function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route element={<Layout />}>
+					<Route path="/tourpalninfo" element={<Info />} />
+
 					<Route path="/" element={<MainContainer />}>
 						메인 페이지
 					</Route>
