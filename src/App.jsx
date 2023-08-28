@@ -14,6 +14,13 @@ import SignUpContainer from 'pages/auth/SignUpContainer';
 import SignUpTermsContainer from 'pages/auth/SignUpTermsContainer';
 import SignUpInfoInput from 'pages/auth/SignUpInfoInputContainer';
 import SignUpCompleteContainer from 'pages/auth/SignUpCompleteContainer';
+// 마이페이지
+import PostContentsLayout from 'components/Layout/PostContentsLayout';
+import ProfileContainer from 'pages/mypage/ProfileContainer';
+import RecordContainer from 'pages/mypage/RecordContainer';
+import WishListContainer from 'pages/mypage/WishListContainer';
+import WritingListContainer from 'pages/mypage/WritingListContainer';
+import CommentContainer from 'pages/mypage/CommentContainer';
 // 커뮤니티
 import Community from './pages/community/Community';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
