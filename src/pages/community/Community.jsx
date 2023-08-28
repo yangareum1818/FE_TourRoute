@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 	gap: 2rem;
 	padding-left: 1rem;
 	width: 100%;
-	height: 100vh;
+	height: 130vh;
 	margin-top: 7rem;
 `;
 
