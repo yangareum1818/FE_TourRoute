@@ -26,7 +26,7 @@ function App() {
 		<BrowserRouter>
 			<Routes>
 				<Route element={<Layout />}>
-					<Route path="/tourpalninfo" element={<Info />} />
+					<Route path="/tourplaninfo" element={<Info />} />
 
 					<Route path="/" element={<MainContainer />}>
 						메인 페이지
@@ -48,9 +48,9 @@ function App() {
 					<Route path="/my/record" element={<RecordContainer />} />
 
 					{/* 커뮤니티 */}
-					<Route path="/community" element={<Community />}></Route>
+					<Route path="/community" element={<Community />} />
 					<Route element={<CommunityWriteLayout />}>
-						<Route path="/communitywrite" element={<CommunityWrite />}></Route>{' '}
+						<Route path="/communitywrite" element={<CommunityWrite />} />
 					</Route>
 				</Route>
 			</Routes>

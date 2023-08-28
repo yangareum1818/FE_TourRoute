@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Footer from 'components/footer/Footer';
 import Header from 'components/header/Header';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import MainHeader from '../header/MainHeader';
 import backimg from 'assets/background.png';
 const LayoutContainer = styled.div`
@@ -23,10 +23,17 @@ const FooterContainer = styled.footer`
 	margin-top: 2em;
 `;
 const Layout = () => {
-	const mainheader = window.location.pathname;
+	const [Path, SetPath] = useState(window.location.pathname);
+	const [Loading, SetLoading] = useState(false);
+	const navigate = useNavigate();
+	console.log(window.location.pathname);
+	useEffect(() => {
+		navigate('/');
+		Path === '/' ? SetLoading(true) : SetLoading(false);
+	}, [Path]);
 	return (
-		<>
-			{mainheader === '/' ? (
+		<div>
+			{Loading ? (
 				<HeaderContainer>
 					<MainHeader />
 				</HeaderContainer>
@@ -41,7 +48,7 @@ const Layout = () => {
 					<Footer />
 				</FooterContainer>
 			</LayoutContainer>
-		</>
+		</div>
 	);
 };
 
