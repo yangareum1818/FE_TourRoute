@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import backgroundimg from 'assets/background_write.png';
+
 import imgBtn from 'assets/image.png';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -10,17 +10,9 @@ const Wrapper = styled.div`
 	color: #959696;
 `;
 
-const Benner = styled.img`
-	background-image: url(${backgroundimg});
-`;
-const BennerDiv = styled.div`
-	position: relative;
-	left: -42rem;
-	overflow: visible;
-`;
 const SectionDiv = styled.div`
 	display: grid;
-	grid-template-rows: 14rem 8rem 14rem 80rem 20rem;
+	grid-template-rows: 14rem 8rem 8rem 14rem 80rem 20rem;
 	padding: 2rem;
 	gap: 2rem;
 `;
@@ -36,7 +28,7 @@ const CategoryDiv = styled.div`
 `;
 const TitleDiv = styled.div`
 	display: grid;
-	grid-template-columns: 15rem 50rem;
+	grid-template-columns: 15rem 60rem;
 	grid-template-rows: 1.5rem;
 	gap: 2rem;
 	padding: 3rem;
@@ -51,6 +43,7 @@ const TitleInput = styled.input`
 		outline: none;
 	}
 `;
+
 const ImageDiv = styled.div`
 	display: flex;
 	align-items: center;
@@ -107,9 +100,6 @@ const CommunityWrite = () => {
 	);
 	return (
 		<Wrapper>
-			<BennerDiv>
-				<Benner src={backgroundimg} />
-			</BennerDiv>
 			<SectionDiv>
 				<CategoryDiv>
 					<span>카테고리</span>
@@ -122,6 +112,10 @@ const CommunityWrite = () => {
 				<TitleDiv>
 					<div>제목</div>
 					<TitleInput placeholder="ex) 1박 2일 대구 놀러갈 분 구해요" />
+				</TitleDiv>
+				<TitleDiv>
+					<div>참여링크</div>
+					<TitleInput placeholder="ex) 오픈채팅 URL 또는 편하신 URL을 입력해주세요. *개인정보는 올리시면 안돼요! " />
 				</TitleDiv>
 				<ImageDiv>
 					<img src={imgBtn} />
