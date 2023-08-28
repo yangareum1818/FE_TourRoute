@@ -23,7 +23,7 @@ const SidebarLayout = ({ locationText, children }) => {
 	return (
 		<MySideBar>
 			{/* sideMenu Active된 {locationText}값 넣어야함. */}
-			<SideMenuLocation>{locationText}</SideMenuLocation>
+			{/*<SideMenuLocation>{locationText}</SideMenuLocation>*/}
 			<Profile />
 			<SideMenu />
 		</MySideBar>

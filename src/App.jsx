@@ -14,7 +14,7 @@ import SignUpContainer from 'pages/auth/SignUpContainer';
 import SignUpTermsContainer from 'pages/auth/SignUpTermsContainer';
 import SignUpInfoInput from 'pages/auth/SignUpInfoInputContainer';
 import SignUpCompleteContainer from 'pages/auth/SignUpCompleteContainer';
-import ProfileContainer from './pages/mypage/ProfileContainer';
+import ProfileContainer from 'pages/mypage/ProfileContainer';
 import RecordContainer from './pages/mypage/RecordContainer';
 import Community from './pages/community/Community';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';

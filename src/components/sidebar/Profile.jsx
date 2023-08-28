@@ -36,13 +36,11 @@ const ProfileManagement = styled.span`
 
 const Profile = () => {
 	return (
-		<SidebarLayout>
-			<ProfileWrapper>
-				<MyImage src={dummyMyImage} />
-				<MyName>홍길동</MyName>
-				<ProfileManagement>프로필 관리</ProfileManagement>
-			</ProfileWrapper>
-		</SidebarLayout>
+		<ProfileWrapper>
+			<MyImage src={dummyMyImage} />
+			<MyName>홍길동</MyName>
+			<ProfileManagement>프로필 관리</ProfileManagement>
+		</ProfileWrapper>
 	);
 };
 export default Profile;
