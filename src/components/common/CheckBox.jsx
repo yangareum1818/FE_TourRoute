@@ -15,7 +15,9 @@ const StyledP = styled.span`
 	cursor: pointer;
 `;
 
-const StyledDisplay = styled.div``;
+const StyledDisplay = styled.div`
+	cursor: pointer;
+`;
 
 const StyledInput = styled.input`
 	display: none;
