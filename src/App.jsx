@@ -18,12 +18,15 @@ import SignUpCompleteContainer from 'pages/auth/SignUpCompleteContainer';
 import Community from './pages/community/Community';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
 import CommunityWriteLayout from './components/Layout/CommunityWriteLayout';
+import Info from 'pages/ info/Info';
 
 function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route element={<Layout />}>
+					<Route path="/tourplaninfo" element={<Info />} />
+
 					<Route path="/" element={<MainContainer />}>
 						메인 페이지
 					</Route>
@@ -49,9 +52,9 @@ function App() {
 					</Route>
 
 					{/* 커뮤니티 */}
-					<Route path="/community" element={<Community />}></Route>
+					<Route path="/community" element={<Community />} />
 					<Route element={<CommunityWriteLayout />}>
-						<Route path="/communitywrite" element={<CommunityWrite />}></Route>{' '}
+						<Route path="/communitywrite" element={<CommunityWrite />} />
 					</Route>
 				</Route>
 			</Routes>
