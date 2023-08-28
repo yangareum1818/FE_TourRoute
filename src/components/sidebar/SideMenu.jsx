@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const SideBarWrapper = styled.div`
 	padding: 2rem;
@@ -41,13 +41,13 @@ const Sidebar = () => {
 					<Link to="/my/record">나의 여행기록</Link>
 				</SideList>
 				<SideList>
-					<Link>찜한 목록</Link>
+					<Link to="/my/wishlist">찜한 목록</Link>
 				</SideList>
 				<SideList>
-					<Link>내가 작성한 글</Link>
+					<Link to="/my/wrtiting">내가 작성한 글</Link>
 				</SideList>
 				<SideList>
-					<Link>내가 쓴 댓글</Link>
+					<Link to="/my/comment">내가 쓴 댓글</Link>
 				</SideList>
 			</SideMenu>
 		</SideBarWrapper>

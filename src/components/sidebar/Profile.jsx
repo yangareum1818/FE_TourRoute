@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import ProfileManagementIcon from '../../../assets/brightness_high.png';
-import dummyMyImage from '../../../assets/Mask_group.svg';
+import ProfileManagementIcon from '../../assets/brightness_high.png';
+import dummyMyImage from '../../assets/Mask_group.svg';
+import SidebarLayout from 'components/Layout/SidebarLayout';
 
 const ProfileWrapper = styled.div`
 	display: flex;

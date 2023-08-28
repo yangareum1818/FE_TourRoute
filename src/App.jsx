@@ -14,8 +14,7 @@ import SignUpContainer from 'pages/auth/SignUpContainer';
 import SignUpTermsContainer from 'pages/auth/SignUpTermsContainer';
 import SignUpInfoInput from 'pages/auth/SignUpInfoInputContainer';
 import SignUpCompleteContainer from 'pages/auth/SignUpCompleteContainer';
-import ProfileContainer from './pages/mypage/ProfileContainer';
-import RecordContainer from './pages/mypage/RecordContainer';
+// 커뮤니티
 import Community from './pages/community/Community';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
 import CommunityWriteLayout from './components/Layout/CommunityWriteLayout';
@@ -41,8 +40,13 @@ function App() {
 					<Route path="/auth/signup/complete" element={<SignUpCompleteContainer />} />
 
 					{/* 마이페이지 */}
-					<Route path="/my/profile" element={<ProfileContainer />} />
-					<Route path="/my/record" element={<RecordContainer />} />
+					<Route element={<PostContentsLayout text="마이페이지" />}>
+						<Route path="/my/profile" element={<ProfileContainer />} />
+						<Route path="/my/record" element={<RecordContainer />} />
+						<Route path="/my/wishlist" element={<WishListContainer />} />
+						<Route path="/my/wrtiting" element={<WritingListContainer />} />
+						<Route path="/my/comment" element={<CommentContainer />} />
+					</Route>
 
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />}></Route>
