@@ -22,7 +22,7 @@ const SideMenuLocation = styled.span`
 const SidebarLayout = ({ locationText, children }) => {
 	const locaion = window.location.pathname;
 	const mypage = locaion.includes('/my');
-	console.log(mypage);
+	console.log('sidebar 페이지 확인', mypage);
 	return (
 		<SidebarWrapper>
 			{mypage === true ? (

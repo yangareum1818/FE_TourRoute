@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 
+// 오른쪽 방향 화살표
 export const RightArrow = () => {
 	return (
 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -46,6 +47,51 @@ export const WishHeartActiveIcon = () => {
 				</clipPath>
 			</defs>
 		</svg>
+	);
+};
+
+// 게시판 리스트 이미지있을 경우 Icon
+export const ImgWhether = () => {
+	return (
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+			<g clip-path="url(#clip0_651_4061)">
+				<path
+					d="M14.6673 10.6666V2.66665C14.6673 1.93331 14.0673 1.33331 13.334 1.33331H5.33398C4.60065 1.33331 4.00065 1.93331 4.00065 2.66665V10.6666C4.00065 11.4 4.60065 12 5.33398 12H13.334C14.0673 12 14.6673 11.4 14.6673 10.6666ZM7.33398 7.99998L8.68732 9.80665L10.6673 7.33331L13.334 10.6666H5.33398L7.33398 7.99998ZM1.33398 3.99998V13.3333C1.33398 14.0666 1.93398 14.6666 2.66732 14.6666H12.0007V13.3333H2.66732V3.99998H1.33398Z"
+					fill="#959696"
+				/>
+			</g>
+			<defs>
+				<clipPath id="clip0_651_4061">
+					<rect width="16" height="16" fill="white" />
+				</clipPath>
+			</defs>
+		</svg>
+	);
+};
+
+// 게시판 모집상태
+export const RecruitmentStatus = ({ statusText }) => {
+	const Status = styled.span`
+		padding: 0.4rem 0.8rem;
+		font-size: 1.4rem;
+		font-weight: 500;
+		border: 0.1rem solid #000;
+		border-radius: 0.4rem;
+
+		&.complete {
+			color: #959696;
+			border: 0.1rem solid #959696;
+		}
+	`;
+
+	return (
+		<>
+			{statusText === '모집 완료' ? (
+				<Status>{statusText}</Status>
+			) : (
+				<Status className="complete">{statusText}</Status>
+			)}
+		</>
 	);
 };
 

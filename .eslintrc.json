@@ -1,5 +1,6 @@
 {
 	"extends": ["react-app", "plugin:prettier/recommended"],
+	"allowExpressions": true, // 불필요한 <></> 허용함
 	"rules": {
 		"no-var": "warn", // var 금지
 		"no-nested-ternary": "warn", // 중첩 삼항 연산자 금지

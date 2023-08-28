@@ -1,4 +1,3 @@
-import PostContentsLayout from 'components/Layout/PostContentsLayout';
 import { TrackingProgressIcon, WishHeartIcon } from 'components/common/Icon';
 import { styled } from 'styled-components';
 
@@ -44,12 +43,62 @@ const WishListContainer = () => {
 
 				<ListContent></ListContent>
 			</MyWishList>
-			<MyWishList></MyWishList>
-			<MyWishList></MyWishList>
-			<MyWishList></MyWishList>
-			<MyWishList></MyWishList>
-			<MyWishList></MyWishList>
-			<MyWishList></MyWishList>
+			<MyWishList>
+				<ListIconWrapper>
+					<WishHeartIcon />
+					<TrackingProgressIcon text="진행 중" />
+				</ListIconWrapper>
+
+				<ListContent></ListContent>
+			</MyWishList>
+			<MyWishList>
+				<ListIconWrapper>
+					<WishHeartIcon />
+					<TrackingProgressIcon text="진행 중" />
+				</ListIconWrapper>
+
+				<ListContent></ListContent>
+			</MyWishList>
+			<MyWishList>
+				<ListIconWrapper>
+					<WishHeartIcon />
+					<TrackingProgressIcon text="진행 중" />
+				</ListIconWrapper>
+
+				<ListContent></ListContent>
+			</MyWishList>
+			<MyWishList>
+				<ListIconWrapper>
+					<WishHeartIcon />
+					<TrackingProgressIcon text="진행 중" />
+				</ListIconWrapper>
+
+				<ListContent></ListContent>
+			</MyWishList>
+			<MyWishList>
+				<ListIconWrapper>
+					<WishHeartIcon />
+					<TrackingProgressIcon text="진행 중" />
+				</ListIconWrapper>
+
+				<ListContent></ListContent>
+			</MyWishList>
+			<MyWishList>
+				<ListIconWrapper>
+					<WishHeartIcon />
+					<TrackingProgressIcon text="진행 중" />
+				</ListIconWrapper>
+
+				<ListContent></ListContent>
+			</MyWishList>
+			<MyWishList>
+				<ListIconWrapper>
+					<WishHeartIcon />
+					<TrackingProgressIcon text="진행 중" />
+				</ListIconWrapper>
+
+				<ListContent></ListContent>
+			</MyWishList>
 		</MyWishListWrapper>
 	);
 };
