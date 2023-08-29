@@ -4,7 +4,7 @@ import { styled } from 'styled-components';
 export const RightArrow = () => {
 	return (
 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-			<g clip-path="url(#clip0_158_1011)">
+			<g clipPath="url(#clip0_158_1011)">
 				<path
 					d="M9.99997 6L8.58997 7.41L13.17 12L8.58997 16.59L9.99997 18L16 12L9.99997 6Z"
 					fill="#CFCFCF"
@@ -35,7 +35,7 @@ export const WishHeartIcon = () => {
 export const WishHeartActiveIcon = () => {
 	return (
 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-			<g clip-path="url(#clip0_651_3731)">
+			<g clipPath="url(#clip0_651_3731)">
 				<path
 					d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z"
 					fill="#3AD0FF"
@@ -54,7 +54,7 @@ export const WishHeartActiveIcon = () => {
 export const ImgWhether = () => {
 	return (
 		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-			<g clip-path="url(#clip0_651_4061)">
+			<g clipPath="url(#clip0_651_4061)">
 				<path
 					d="M14.6673 10.6666V2.66665C14.6673 1.93331 14.0673 1.33331 13.334 1.33331H5.33398C4.60065 1.33331 4.00065 1.93331 4.00065 2.66665V10.6666C4.00065 11.4 4.60065 12 5.33398 12H13.334C14.0673 12 14.6673 11.4 14.6673 10.6666ZM7.33398 7.99998L8.68732 9.80665L10.6673 7.33331L13.334 10.6666H5.33398L7.33398 7.99998ZM1.33398 3.99998V13.3333C1.33398 14.0666 1.93398 14.6666 2.66732 14.6666H12.0007V13.3333H2.66732V3.99998H1.33398Z"
 					fill="#959696"
