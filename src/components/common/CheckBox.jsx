@@ -81,7 +81,7 @@ const CustomCheckedAll = ({ text, name, ...rest }) => {
 const CustomCheckbox = ({ text, name, ...rest }) => {
 	return (
 		<StyledLabel htmlFor={name}>
-			<StyledInput type="checkbox" {...rest} id={name} name={name} />
+			<StyledInput type="checkbox" {...rest} name={name} id={name} />
 			<StyledDisplay />
 			<StyledP>{text}</StyledP>
 		</StyledLabel>
@@ -89,7 +89,11 @@ const CustomCheckbox = ({ text, name, ...rest }) => {
 };
 
 const Checkbox = ({ name, ...rest }) => {
-	return name === 'all-check' ? <CustomCheckedAll {...rest} /> : <CustomCheckbox {...rest} />;
+	return name === 'all-check' ? (
+		<CustomCheckedAll name={name} {...rest} />
+	) : (
+		<CustomCheckbox name={name} {...rest} />
+	);
 };
 
 export default Checkbox;
