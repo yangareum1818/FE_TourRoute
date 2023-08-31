@@ -4,6 +4,7 @@ import { RightArrow } from 'components/common/Icon';
 import { Button, ButtonGroup } from 'components/common/Button';
 import { Input } from 'components/common/Input';
 import { Link } from 'react-router-dom';
+import Modal from 'components/common/Modal';
 
 const InnerWrapper = styled.div`
 	display: flex;
@@ -82,13 +83,14 @@ const SignUpInfoInput = () => {
 
 					<ButtonGroup>
 						<Link to="/auth/signup/complete">
-							<Button type="button" text="다음" />
+							<Button text="다음" />
 						</Link>
 						<Link to="/login">
-							<Button type="button" text="취소" variant="cancel" />
+							<Button text="취소" variant="cancel" />
 						</Link>
 					</ButtonGroup>
 				</FormWrapper>
+				{/* <Modal text="필수 항목을 입력해주세요." /> */}
 			</InnerWrapper>
 		</AuthLayout>
 	);
