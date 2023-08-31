@@ -83,10 +83,10 @@ const SignUpInfoInput = () => {
 
 					<ButtonGroup>
 						<Link to="/auth/signup/complete">
-							<Button type="button" text="다음" />
+							<Button text="다음" />
 						</Link>
 						<Link to="/login">
-							<Button type="button" text="취소" variant="cancel" />
+							<Button text="취소" variant="cancel" />
 						</Link>
 					</ButtonGroup>
 				</FormWrapper>

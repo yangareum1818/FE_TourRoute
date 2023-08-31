@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Check from '../../assets/check.svg';
 import Checked from '../../assets/checked.svg';
+import { Result } from 'antd';
 
 const StyledLabel = styled.label`
 	display: flex;
@@ -19,7 +20,9 @@ const StyledDisplay = styled.div`
 	cursor: pointer;
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled.input.attrs({
+	type: 'checkbox',
+})`
 	display: none;
 
 	& + ${StyledDisplay} {
@@ -30,7 +33,7 @@ const StyledInput = styled.input`
 
 	&:checked + ${StyledDisplay} {
 		background-size: cover;
-		background-image: url('${Checked}');
+		background-image: url(${Checked});
 	}
 `;
 
@@ -62,7 +65,7 @@ const StyledAllInput = styled(StyledInput)`
 
 	&:checked + ${StyledDisplay} {
 		background-size: cover;
-		background-image: url('${Checked}');
+		background-image: url(${Checked});
 	}
 `;
 
@@ -70,7 +73,7 @@ const StyledAllInput = styled(StyledInput)`
 const CustomCheckedAll = ({ text, name, ...rest }) => {
 	return (
 		<StyledAllLabel htmlFor={name}>
-			<StyledAllInput type="checkbox" {...rest} id={name} name={name} />
+			<StyledAllInput {...rest} id={name} name={name} />
 			<StyledAllDisplay />
 			<StyledAllP>{text}</StyledAllP>
 		</StyledAllLabel>
@@ -81,7 +84,7 @@ const CustomCheckedAll = ({ text, name, ...rest }) => {
 const CustomCheckbox = ({ text, name, ...rest }) => {
 	return (
 		<StyledLabel htmlFor={name}>
-			<StyledInput type="checkbox" {...rest} name={name} id={name} />
+			<StyledInput {...rest} name={name} id={name} />
 			<StyledDisplay />
 			<StyledP>{text}</StyledP>
 		</StyledLabel>

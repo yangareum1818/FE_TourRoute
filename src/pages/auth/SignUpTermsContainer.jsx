@@ -7,6 +7,7 @@ import Checkbox from 'components/common/CheckBox';
 import Modal from 'components/common/Modal';
 import { Button, ButtonGroup } from 'components/common/Button';
 import { RightArrow } from 'components/common/Icon';
+import useModal from 'hook/useModal';
 
 const InnerWrapper = styled.div`
 	display: flex;
@@ -95,13 +96,17 @@ const SignUpTermsContainer = () => {
 
 	// 다음 버튼 클릭 시
 	const navigate = useNavigate();
-	const [agreementErrMsg, setAgreementErrMsg] = useState(false);
+	const { isOpen, open } = useModal();
 	const onClickNextHanle = () => {
 		const { term, privacy } = agreementChecked;
-		console.log(term, privacy);
-		if ((term && privacy) === false) return setAgreementErrMsg(true);
 
-		return navigate('/auth/signup/information');
+		if (term && privacy === true) {
+			console.log('이동한다.');
+			navigate('/auth/signup/information');
+		} else {
+			console.log('열린다링이이이이잉');
+			open();
+		}
 	};
 
 	return (
@@ -135,7 +140,6 @@ const SignUpTermsContainer = () => {
 								htmlFor="term"
 								checked={agreementChecked.term}
 								onChange={checkedHandle}
-								required
 							/>
 							<Checkbox
 								id="privacy"
@@ -144,7 +148,6 @@ const SignUpTermsContainer = () => {
 								htmlFor="privacy"
 								checked={agreementChecked.privacy}
 								onChange={checkedHandle}
-								required
 							/>
 							<Checkbox
 								id="marketing"
@@ -162,12 +165,12 @@ const SignUpTermsContainer = () => {
 					</AuthContent>
 
 					<ButtonGroup>
-						<Button type="button" text="다음" onClick={onClickNextHanle} />
+						<Button text="다음" onClick={onClickNextHanle} />
 						<Link to="/login">
-							<Button type="button" text="취소" variant="cancel" />
+							<Button text="취소" variant="cancel" />
 						</Link>
 					</ButtonGroup>
-					{agreementErrMsg && <Modal text="약관을 동의해 주세요." />}
+					{isOpen && <Modal text="약관을 동의해 주세요." />}
 				</FormWrapper>
 			</InnerWrapper>
 		</AuthLayout>

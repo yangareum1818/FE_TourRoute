@@ -106,7 +106,7 @@ const LoginContainer = () => {
 						<Input type="password" placeholder="비밀번호를 입력하세요." required />
 					</InputWrapper>
 					<RegisterLink to="/auth/signup">회원가입</RegisterLink>
-					<Button type="primary" htmlType="submit" text="로그인" />
+					<Button $submit htmlType="submit" text="로그인" />
 				</FormWrapper>
 			</InnerWrapper>
 
