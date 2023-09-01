@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import Logoimage from 'assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
@@ -35,7 +35,7 @@ const Category = styled.li`
 	font-size: 16px;
 	font-weight: normal;
 `;
-const Header = () => {
+const SubHeader = () => {
 	return (
 		<Wrapper>
 			<Logo>
@@ -67,4 +67,4 @@ const Header = () => {
 	);
 };
 
-export default Header;
+export default SubHeader;
