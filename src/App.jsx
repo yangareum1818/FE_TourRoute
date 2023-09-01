@@ -27,6 +27,7 @@ import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
 import CommunityWriteLayout from './components/Layout/CommunityWriteLayout';
 import Info from 'pages/ info/Info';
 import MainLayOut from './components/Layout/MainLayOut';
+import Fastival from './pages/fastival/Fastival';
 
 function App() {
 	return (
@@ -55,6 +56,9 @@ function App() {
 						<Route path="/my/wrtiting" element={<WritingListContainer />} />
 						<Route path="/my/comment" element={<CommentContainer />} />
 					</Route>
+
+					{/* 지역축제 */}
+					<Route path="fastval/:id" element={<Fastival />} />
 
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />} />
