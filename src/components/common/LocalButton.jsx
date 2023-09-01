@@ -8,6 +8,8 @@ const MyWishList = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	padding: 2rem;
+	height: 100%;
+	background-size: cover;
 	border-radius: 0.8rem;
 	background-image: url(${img});
 `;
@@ -19,48 +21,44 @@ const ListIconWrapper = styled.div`
 `;
 
 const ListContent = styled.div`
-	height: 30rem;
 	color: white;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
-	padding: 1rem;
 	gap: 0.5rem;
 `;
 const LocalName = styled.h1`
-	font-size: 24px;
+	font-size: 2.4rem;
 `;
 const LocalTitle = styled.h4`
-	font-size: 16px;
+	font-size: 1.6rem;
 `;
 const LocalAddr = styled.div`
 	color: #959696;
-	font-size: 12px;
+	font-size: 1.2rem;
 `;
 const LocalDate = styled.h1`
-	font-size: 16px;
+	font-size: 1.6rem;
 `;
 const LocalButton = () => {
 	return (
-		<div>
-			<MyWishList>
-				<ListIconWrapper>
-					<WishHeartIcon />
-					<TrackingProgressIcon text="진행 중" />
-				</ListIconWrapper>
+		<MyWishList>
+			<ListIconWrapper>
+				<WishHeartIcon />
+				<TrackingProgressIcon text="진행 중" />
+			</ListIconWrapper>
 
-				<ListContent>
-					<LocalName>대구</LocalName>
-					<div>
-						<LocalTitle>2023 부산여행영화제</LocalTitle>
-						<LocalAddr>
-							<FaMapMarkerAlt /> 부산해운대구
-						</LocalAddr>
-					</div>
-					<LocalDate>2023. 08. 26 - 2023.08. 27</LocalDate>
-				</ListContent>
-			</MyWishList>
-		</div>
+			<ListContent>
+				<LocalName>대구</LocalName>
+				<div>
+					<LocalTitle>2023 부산여행영화제</LocalTitle>
+					<LocalAddr>
+						<FaMapMarkerAlt /> 부산해운대구
+					</LocalAddr>
+				</div>
+				<LocalDate>2023. 08. 26 - 2023.08. 27</LocalDate>
+			</ListContent>
+		</MyWishList>
 	);
 };
 
