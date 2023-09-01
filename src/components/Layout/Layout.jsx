@@ -14,6 +14,7 @@ const SectionContainer = styled.section`
 `;
 const FooterContainer = styled.footer`
 	margin-top: 2em;
+	padding-bottom: 4rem;
 `;
 const Layout = () => {
 	return (
