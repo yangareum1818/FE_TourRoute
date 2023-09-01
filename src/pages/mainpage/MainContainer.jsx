@@ -42,8 +42,8 @@ const MainContainer = () => {
 					<ComunityTheMore>더보기</ComunityTheMore>
 				</ComunityHeader>
 				<ComunityContent>
-					{test.map(e => {
-						return <PostFree />;
+					{test.map((e, index) => {
+						return <PostFree key={index} />;
 					})}
 				</ComunityContent>
 			</ComunityContainer>

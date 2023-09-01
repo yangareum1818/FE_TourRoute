@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import barcord from 'assets/barcord.png';
 import { FaCalendarAlt, FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
@@ -140,7 +140,6 @@ const ResultContainer = styled.div`
 
 const MainHeader = () => {
 	const { RangePicker } = DatePicker;
-
 	const count = useSelector(state => state.reducer.count);
 	return (
 		<WrapperContainer>

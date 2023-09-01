@@ -26,17 +26,15 @@ import Community from './pages/community/Community';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
 import CommunityWriteLayout from './components/Layout/CommunityWriteLayout';
 import Info from 'pages/ info/Info';
+import MainLayOut from './components/Layout/MainLayOut';
 
 function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
+				<Route path="/" element={<MainLayOut />} />
 				<Route element={<Layout />}>
 					<Route path="/tourplaninfo" element={<Info />} />
-
-					<Route path="/" element={<MainContainer />}>
-						메인 페이지
-					</Route>
 					<Route path="/tourplan/" element={<Plan />}>
 						<Route path="1" element={<PlanCheck />} />
 						<Route path="2" element={<PlanList />} />
