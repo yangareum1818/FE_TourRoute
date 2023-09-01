@@ -28,6 +28,7 @@ import CommunityWriteLayout from './components/Layout/CommunityWriteLayout';
 import Info from 'pages/ info/Info';
 import MainLayOut from './components/Layout/MainLayOut';
 import Fastival from './pages/fastival/Fastival';
+import FastivalPost from './pages/fastival/FastivalPost';
 
 function App() {
 	return (
@@ -58,8 +59,8 @@ function App() {
 					</Route>
 
 					{/* 지역축제 */}
-					<Route path="fastval/:id" element={<Fastival />} />
-
+					<Route path="fastival" element={<Fastival />} />
+					<Route path="fastival/1" element={<FastivalPost />} />
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />} />
 					<Route element={<CommunityWriteLayout />}>
