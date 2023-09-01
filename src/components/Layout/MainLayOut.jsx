@@ -1,12 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import Footer from 'components/footer/Footer';
-import { Outlet } from 'react-router-dom';
 import backimg from 'assets/background.png';
-import SubHeader from '../header/SubHeader';
+import MainContainer from '../../pages/mainpage/MainContainer';
+import MainHeader from '../header/MainHeader';
 const LayoutContainer = styled.div`
 	margin: 0 auto;
 	max-width: 1080px;
+`;
+
+const HeaderContainer = styled.header`
+	background-image: url(${backimg});
+	background-size: cover;
+	background-position: center;
 `;
 const SectionContainer = styled.section`
 	display: flex;
@@ -18,10 +24,12 @@ const FooterContainer = styled.footer`
 const Layout = () => {
 	return (
 		<div>
-			<SubHeader />
+			<HeaderContainer>
+				<MainHeader />
+			</HeaderContainer>
 			<LayoutContainer>
 				<SectionContainer>
-					<Outlet />
+					<MainContainer />
 				</SectionContainer>
 				<FooterContainer>
 					<Footer />
