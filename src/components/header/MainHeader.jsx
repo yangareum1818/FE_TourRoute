@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import barcord from 'assets/barcord.png';
 import { FaCalendarAlt, FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
@@ -6,7 +6,8 @@ import Logoimage from 'assets/Logo5.svg';
 import SerchLogo from 'assets/SerchLogo.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { DatePicker, InputNumber, Select } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import route from 'store/PostRedux';
 
 const WrapperContainer = styled.div`
 	padding-bottom: 5rem;
@@ -138,29 +139,35 @@ const ResultContainer = styled.div`
 `;
 
 const MainHeader = () => {
-	const navigate = useNavigate();
-
 	const { RangePicker } = DatePicker;
-	const dispatch = useDispatch();
 	const count = useSelector(state => state.reducer.count);
-	const handleLogo = useCallback(() => {
-		navigate('/');
-	}, [navigate()]);
 	return (
 		<WrapperContainer>
 			<Wrapper>
 				<LogoContainer>
-					<LogoImg src={Logoimage} onClick={handleLogo} />
+					<Link to="/">
+						<LogoImg src={Logoimage} />
+					</Link>
 				</LogoContainer>
 				<NavBar>
-					<Category>여행계획</Category>
-					<Category>여행기록</Category>
+					<Link to="/tourplan/1">
+						<Category>여행계획</Category>
+					</Link>
 					<Category>지역축제</Category>
-					<Category>커뮤니티</Category>
+					<Link to="/community">
+						<Category>커뮤니티</Category>
+					</Link>
+					<Link to="/tourplanInfo">
+						<Category>투어라우트</Category>
+					</Link>
 				</NavBar>
 				<Register>
-					<Category style={{ color: '#959696' }}>로그인</Category>
-					<Category style={{ color: '#959696' }}>회원가입</Category>
+					<Link to="/login">
+						<Category style={{ color: '#959696' }}>로그인</Category>
+					</Link>
+					<Link to="/auth/signup">
+						<Category style={{ color: '#959696' }}>회원가입</Category>
+					</Link>
 				</Register>
 			</Wrapper>
 			<WrapperDiv>

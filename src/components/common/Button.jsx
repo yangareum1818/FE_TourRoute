@@ -19,8 +19,10 @@ export const ButtonGroup = styled.div`
 	gap: 1.5rem;
 `;
 
-const StyledButton = styled.button`
-	${p => p.variantStyle}
+const StyledButton = styled.button.attrs(props => ({
+	type: props.$submit ? 'submit' : 'button',
+}))`
+	${p => p.variantstyle}
 
 	display: flex;
 	align-items: center;
@@ -42,11 +44,11 @@ const StyledButton = styled.button`
 	}
 `;
 
-export const Button = ({ type, text, variant, disabled, to, ...rest }) => {
-	const variantStyle = VARIANTS[variant];
+export const Button = ({ type, text, variant, disabled, ...rest }) => {
+	const variantstyle = VARIANTS[variant];
 
 	return (
-		<StyledButton disabled={disabled} variantStyle={variantStyle} {...rest}>
+		<StyledButton disabled={disabled} variantstyle={variantstyle} {...rest}>
 			{text}
 		</StyledButton>
 	);

@@ -74,7 +74,7 @@ const SignUpCompleteContainer = () => {
 				</AuthContent>
 
 				<Link to="/">
-					<Button type="button" text="다음" />
+					<Button text="다음" />
 				</Link>
 			</InnerWrapper>
 		</AuthLayout>

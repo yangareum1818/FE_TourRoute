@@ -19,7 +19,18 @@ const DefalutP = styled.p`
 	font-size: 1.6rem;
 	font-weight: 300;
 `;
-const DefaultInput = styled.input``;
+const DefaultInput = styled.input`
+	height: 5.1rem;
+	padding: 1.6rem 3rem 1.6rem 2rem;
+	border-radius: 0.8rem;
+	border: 0.1rem solid #cfcfcf;
+	background: #fff;
+
+	&:focus {
+		outline: none;
+		border: 0.1rem solid #000;
+	}
+`;
 
 // Error Msg
 const ErrorWrapper = styled.div`
