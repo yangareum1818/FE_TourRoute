@@ -59,8 +59,8 @@ function App() {
 					</Route>
 
 					{/* 지역축제 */}
-					<Route path="fastival" element={<Fastival />} />
-					<Route path="fastival/1" element={<FastivalPost />} />
+					<Route path="festival" element={<Fastival />} />
+					<Route path="festival/1" element={<FastivalPost />} />
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />} />
 					<Route element={<CommunityWriteLayout />}>

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import LocalButton from '../../components/common/LocalButton';
+import { Pagination } from 'antd';
 
 const Wrapper = styled.div`
 	height: 100%;
@@ -9,7 +10,7 @@ const Wrapper = styled.div`
 `;
 const FastivalTitle = styled.h1`
 	color: #000000;
-	font-size: 32px;
+	font-size: 3.2rem;
 	margin-bottom: 1rem;
 `;
 const FastivalSubTitle = styled.span`
@@ -21,7 +22,7 @@ const LocalList = styled.div`
 `;
 const LocalBtn = styled.button`
 	border: 1px solid #cfcfcf;
-	border-radius: 8px;
+	border-radius: 0.8rem;
 	padding: 1rem 5rem;
 `;
 const MyWishListWrapper = styled.div`
@@ -32,6 +33,12 @@ const MyWishListWrapper = styled.div`
 	grid-template-columns: repeat(4, 1fr);
 	grid-auto-rows: 10rem;
 	gap: 2rem;
+`;
+const PaginationDiv = styled.div`
+	margin: 3rem auto;
+	display: flex;
+	justify-content: center;
+	font-size: 1.4rem;
 `;
 const Fastival = () => {
 	const wishlist = ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'];
@@ -57,6 +64,9 @@ const Fastival = () => {
 					return <LocalButton key={index} />;
 				})}
 			</MyWishListWrapper>
+			<PaginationDiv>
+				<Pagination />
+			</PaginationDiv>
 		</Wrapper>
 	);
 };

@@ -1,5 +1,10 @@
-import React from 'react';
-import { TrackingProgressIcon, WishHeartIcon } from './Icon';
+import React, { useState } from 'react';
+import {
+	TrackedProgressIcon,
+	TrackingProgressIcon,
+	WishHeartActiveIcon,
+	WishHeartIcon,
+} from './Icon';
 import { styled } from 'styled-components';
 import img from 'assets/testbag.png';
 import { FaMapMarkerAlt } from 'react-icons/fa';
@@ -44,8 +49,10 @@ const LocalButton = () => {
 	return (
 		<MyWishList>
 			<ListIconWrapper>
-				<WishHeartIcon />
-				<TrackingProgressIcon text="진행 중" />
+				{/*<WishHeartIcon /> 빈하트 */}
+				<WishHeartActiveIcon />
+				{/*<TrackingProgressIcon text="진행 중" /> 진행중*/}
+				<TrackedProgressIcon text="예정" />
 			</ListIconWrapper>
 
 			<ListContent>

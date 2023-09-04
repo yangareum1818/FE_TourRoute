@@ -30,21 +30,21 @@ const ContentDiv = styled.div`
 `;
 const ContentTitle = styled.div`
 	font-weight: bold;
-	font-size: 26px;
+	font-size: 2.6rem;
 	display: flex;
 
 	align-items: center;
 `;
 const ContentImg = styled.img``;
 const ContentText = styled.div`
-	font-size: 14px;
+	font-size: 1.4rem;
 `;
 const AlertDiv = styled.div`
 	margin-top: 4rem;
 	display: flex;
 	border: 1px solid #cfcfcf;
 	color: #959696;
-	border-radius: 8px;
+	border-radius: 0.8rem;
 	padding: 2rem;
 	font-size: 14px;
 	gap: 1rem;

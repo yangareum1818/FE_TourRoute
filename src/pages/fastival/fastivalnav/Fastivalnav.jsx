@@ -11,10 +11,10 @@ const Wrapper = styled.div`
 	gap: 2rem;
 `;
 const NavDiv = styled.div`
-	border: 1px solid #cfcfcf;
+	border: 0.1rem solid #cfcfcf;
 	border-radius: 8px;
 	color: #959696;
-	font-size: 14px;
+	font-size: 1.4rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
