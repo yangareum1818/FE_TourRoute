@@ -91,19 +91,18 @@ const RegisterLink = styled(Link)`
 const LoginContainer = () => {
 	const [email, setEmail] = useInput('');
 	const [password1, setPassword1] = useInput('');
-	const onSubmit = useCallback(e => {
-		e.preventdefault();
-		console.log('hi');
-
-		axios
-			.post('http://13.209.56.221:8000/users/login', {
-				email: email,
-				password: password1,
-			})
-			.then(e => {
-				console.log(e);
-			});
-	}, []);
+	const onSubmit = useCallback(
+		async e => {
+			console.log('hi');
+			e.preventDefault();
+			await axios
+				.post(`http://13.209.56.221:8000/users/login?email=${email}&password=${password1}`)
+				.then(e => {
+					console.log(e);
+				});
+		},
+		[email.password1],
+	);
 
 	return (
 		<Wrapper>
@@ -118,7 +117,7 @@ const LoginContainer = () => {
 					<InputWrapper>
 						<Input
 							type="email"
-							defaultValue={email}
+							value={email}
 							placeholder="이메일을 입력하세요."
 							onChange={setEmail}
 							required
