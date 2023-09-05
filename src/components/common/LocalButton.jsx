@@ -16,7 +16,6 @@ const MyWishList = styled.div`
 	height: 100%;
 	background-size: cover;
 	border-radius: 0.8rem;
-	background-image: url(${img});
 `;
 
 const ListIconWrapper = styled.div`
@@ -45,25 +44,29 @@ const LocalAddr = styled.div`
 const LocalDate = styled.h1`
 	font-size: 1.6rem;
 `;
-const LocalButton = () => {
+const LocalButton = ({ status, name, subaddr, term, backimg }) => {
 	return (
-		<MyWishList>
+		<MyWishList style={{ backgroundImage: `url(${img})` }}>
 			<ListIconWrapper>
 				{/*<WishHeartIcon /> 빈하트 */}
 				<WishHeartActiveIcon />
-				{/*<TrackingProgressIcon text="진행 중" /> 진행중*/}
-				<TrackedProgressIcon text="예정" />
+				{status === '개최 예정' ? (
+					<TrackedProgressIcon text={status} />
+				) : (
+					<TrackingProgressIcon text="진행 중" />
+				)}
 			</ListIconWrapper>
 
 			<ListContent>
 				<LocalName>대구</LocalName>
 				<div>
-					<LocalTitle>2023 부산여행영화제</LocalTitle>
+					<LocalTitle>{name}</LocalTitle>
 					<LocalAddr>
-						<FaMapMarkerAlt /> 부산해운대구
+						<FaMapMarkerAlt />
+						{subaddr}
 					</LocalAddr>
 				</div>
-				<LocalDate>2023. 08. 26 - 2023.08. 27</LocalDate>
+				<LocalDate>{term}</LocalDate>
 			</ListContent>
 		</MyWishList>
 	);
