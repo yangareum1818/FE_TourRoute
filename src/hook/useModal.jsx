@@ -5,11 +5,13 @@ const useModal = () => {
 
 	const open = () => {
 		console.log('열렸다. open');
+		document.body.style.overflow = 'hidden';
 		setIsOpen(true);
 	};
 
 	const close = () => {
 		console.log('닫힌다 close');
+		document.body.style.removeProperty = 'overflow';
 		setIsOpen(false);
 	};
 
