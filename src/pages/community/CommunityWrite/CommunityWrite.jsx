@@ -1,8 +1,7 @@
-import React, { useCallback } from 'react';
-
-import imgBtn from 'assets/image.png';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import img from 'assets/image.png';
 const Wrapper = styled.div`
 	height: 100%;
 	width: 100%;
@@ -12,7 +11,7 @@ const Wrapper = styled.div`
 
 const SectionDiv = styled.div`
 	display: grid;
-	grid-template-rows: 14rem 8rem 8rem 14rem 80rem 20rem;
+	grid-template-rows: 14rem 8rem 8rem 20rem 80rem 20rem;
 	padding: 2rem;
 	gap: 2rem;
 `;
@@ -47,9 +46,13 @@ const TitleInput = styled.input`
 const ImageDiv = styled.div`
 	display: flex;
 	align-items: center;
-	justify-content: center;
 	border: 0.5px solid grey;
 	border-radius: 8px;
+	padding-left: 3rem;
+`;
+const ImgBtnDiv = styled.button`
+	padding: 3rem;
+	background-image: url(${img});
 `;
 const TextAreaDiv = styled.div`
 	border: 0.5px solid grey;
@@ -83,8 +86,19 @@ const CloseBtn = styled.div`
 	margin-top: 2rem;
 	cursor: pointer;
 `;
+const InPutImg = styled.input`
+	display: none;
+`;
+const PostImg = styled.img`
+	visibility: visible;
+	width: 20rem;
+	height: 18rem;
+`;
 const CommunityWrite = () => {
+	const [Imgsrc, setImgsrc] = useState('');
 	const navigate = useNavigate();
+	const inputRef = useRef();
+
 	const handleSubmit = useCallback(
 		e => {
 			navigate('/community');
@@ -98,6 +112,38 @@ const CommunityWrite = () => {
 		},
 		[navigate],
 	);
+	const onUploadImg = e => {
+		// if (e.target.files.length > 0) {
+		// 	console.log(e.target.files[0].name);
+		// }
+		const imageLists = e.target.files;
+		let imageUrlLists = [...Imgsrc];
+		if (!e.target.files === undefined) return;
+		const reader = new FileReader();
+		if (e.target.files[0]) {
+			reader.readAsDataURL(e.target.files[0]);
+		}
+		reader.onloadend = () => {
+			const previewImgUrl = reader.result;
+			setImgsrc(previewImgUrl);
+		};
+
+		//데이터 전송
+		// const formData = new FormData();
+		// formData.append('image', e.target.files[0]);
+	};
+	const onUploadImageButtonClick = useCallback(() => {
+		inputRef.current.click();
+	}, []);
+	// const ImageUpload = useCallback(e => {
+	// 	var reader = new FileReader();
+	// 	reader.onload = function (e) {
+	// 		setImgsrc(e.target.result);
+	// 	};
+	// 	reader.readAsDataURL(e.target.files[0]);
+	// 	console.log(e.target.files[0]);
+	// }, []);
+
 	return (
 		<Wrapper>
 			<SectionDiv>
@@ -118,7 +164,18 @@ const CommunityWrite = () => {
 					<TitleInput placeholder="ex) 오픈채팅 URL 또는 편하신 URL을 입력해주세요. *개인정보는 올리시면 안돼요! " />
 				</TitleDiv>
 				<ImageDiv>
-					<img src={imgBtn} />
+					<InPutImg
+						type="file"
+						multiple
+						accept="image/*"
+						ref={inputRef}
+						onChange={e => onUploadImg(e)}
+					/>
+					{Imgsrc ? (
+						<PostImg src={Imgsrc} alt="사진추가 이미지" />
+					) : (
+						<ImgBtnDiv label="이미지업로드" onClick={onUploadImageButtonClick} />
+					)}
 				</ImageDiv>
 				<TextAreaDiv>TextArea 라이브러리 확인해봐야함</TextAreaDiv>
 				<FormSubmitBtn>
