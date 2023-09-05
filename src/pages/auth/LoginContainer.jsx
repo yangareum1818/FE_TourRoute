@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
 
 import google from '../../assets/btn_google_signin_light_normal_web@2x.png';
@@ -91,17 +91,25 @@ const RegisterLink = styled(Link)`
 const LoginContainer = () => {
 	const [email, setEmail] = useInput('');
 	const [password1, setPassword1] = useInput('');
-	const onSubmit = useCallback(e => {
-		e.preventdefault();
+
+	console.log(email, password1);
+
+	const navigate = useNavigate();
+	const onSubmit = useCallback(async e => {
+		e.preventDefault();
 		console.log('hi');
 
-		axios
+		await axios
 			.post('http://13.209.56.221:8000/users/login', {
 				email: email,
 				password: password1,
 			})
 			.then(e => {
 				console.log(e);
+				navigate('/');
+			})
+			.catch(e => {
+				console.error(e);
 			});
 	}, []);
 
@@ -125,7 +133,7 @@ const LoginContainer = () => {
 						/>
 						<Input
 							type="password"
-							value={password1}
+							defaultValue={password1}
 							onChange={setPassword1}
 							placeholder="비밀번호를 입력하세요."
 							required
