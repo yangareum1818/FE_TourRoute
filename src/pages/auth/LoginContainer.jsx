@@ -101,10 +101,7 @@ const LoginContainer = () => {
 			console.log('hi');
 
 			await axios
-				.post(`http://13.209.56.221:8000/users/login?email=${email}&password=${password1}`, {
-					email: email,
-					password: password1,
-				})
+				.post(`http://13.209.56.221:8000/users/login?email=${email}&password=${password1}`)
 				.then(res => {
 					console.log(res);
 					localStorage.setItem('token', res.data.token);
