@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
 
 import google from '../../assets/btn_google_signin_light_normal_web@2x.png';
@@ -10,6 +10,8 @@ import { Input } from 'components/common/Input';
 import { Title } from 'components/common/Title';
 
 import Modal from 'components/common/Modal';
+import useInput from 'hook/useInput';
+import axios from 'axios';
 
 const Wrapper = styled.div`
 	display: flex;
@@ -87,8 +89,28 @@ const RegisterLink = styled(Link)`
 `;
 
 const LoginContainer = () => {
-	const onSubmit = useCallback(() => {
+	const [email, setEmail] = useInput('');
+	const [password1, setPassword1] = useInput('');
+
+	console.log(email, password1);
+
+	const navigate = useNavigate();
+	const onSubmit = useCallback(async e => {
+		e.preventDefault();
 		console.log('hi');
+
+		await axios
+			.post('http://13.209.56.221:8000/users/login', {
+				email: email,
+				password: password1,
+			})
+			.then(e => {
+				console.log(e);
+				navigate('/');
+			})
+			.catch(e => {
+				console.error(e);
+			});
 	}, []);
 
 	return (
@@ -100,13 +122,25 @@ const LoginContainer = () => {
 					<KakaoLoginBtn />
 				</SocialWrapper>
 				<Line />
-				<FormWrapper onSubmit={onSubmit} method="POST" action="/login">
+				<FormWrapper onSubmit={onSubmit}>
 					<InputWrapper>
-						<Input type="email" placeholder="이메일을 입력하세요." required />
-						<Input type="password" placeholder="비밀번호를 입력하세요." required />
+						<Input
+							type="email"
+							value={email}
+							placeholder="이메일을 입력하세요."
+							onChange={setEmail}
+							required
+						/>
+						<Input
+							type="password"
+							defaultValue={password1}
+							onChange={setPassword1}
+							placeholder="비밀번호를 입력하세요."
+							required
+						/>
 					</InputWrapper>
 					<RegisterLink to="/auth/signup">회원가입</RegisterLink>
-					<Button $submit htmlType="submit" text="로그인" />
+					<Button $submit text="로그인" />
 				</FormWrapper>
 			</InnerWrapper>
 
