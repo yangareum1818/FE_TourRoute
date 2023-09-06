@@ -95,23 +95,27 @@ const LoginContainer = () => {
 	console.log(email, password1);
 
 	const navigate = useNavigate();
-	const onSubmit = useCallback(async e => {
-		e.preventDefault();
-		console.log('hi');
+	const onSubmit = useCallback(
+		async e => {
+			e.preventDefault();
+			console.log('hi');
 
-		await axios
-			.post('http://13.209.56.221:8000/users/login', {
-				email: email,
-				password: password1,
-			})
-			.then(e => {
-				console.log(e);
-				navigate('/');
-			})
-			.catch(e => {
-				console.error(e);
-			});
-	}, []);
+			await axios
+				.post(`http://13.209.56.221:8000/users/login?email=${email}&password=${password1}`, {
+					email: email,
+					password: password1,
+				})
+				.then(res => {
+					console.log(res);
+					localStorage.setItem('token', res.data.token);
+					navigate('/');
+				})
+				.catch(e => {
+					console.error(e);
+				});
+		},
+		[email, password1],
+	);
 
 	return (
 		<Wrapper>
