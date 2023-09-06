@@ -1,5 +1,10 @@
-import React from 'react';
-import { TrackingProgressIcon, WishHeartIcon } from './Icon';
+import React, { useState } from 'react';
+import {
+	TrackedProgressIcon,
+	TrackingProgressIcon,
+	WishHeartActiveIcon,
+	WishHeartIcon,
+} from './Icon';
 import { styled } from 'styled-components';
 import img from 'assets/testbag.png';
 import { FaMapMarkerAlt } from 'react-icons/fa';
@@ -11,7 +16,6 @@ const MyWishList = styled.div`
 	height: 100%;
 	background-size: cover;
 	border-radius: 0.8rem;
-	background-image: url(${img});
 `;
 
 const ListIconWrapper = styled.div`
@@ -40,23 +44,29 @@ const LocalAddr = styled.div`
 const LocalDate = styled.h1`
 	font-size: 1.6rem;
 `;
-const LocalButton = () => {
+const LocalButton = ({ status, name, subaddr, term, backimg }) => {
 	return (
-		<MyWishList>
+		<MyWishList style={{ backgroundImage: `url(${img})` }}>
 			<ListIconWrapper>
-				<WishHeartIcon />
-				<TrackingProgressIcon text="진행 중" />
+				{/*<WishHeartIcon /> 빈하트 */}
+				<WishHeartActiveIcon />
+				{status === '개최 예정' ? (
+					<TrackedProgressIcon text={status} />
+				) : (
+					<TrackingProgressIcon text="진행 중" />
+				)}
 			</ListIconWrapper>
 
 			<ListContent>
 				<LocalName>대구</LocalName>
 				<div>
-					<LocalTitle>2023 부산여행영화제</LocalTitle>
+					<LocalTitle>{name}</LocalTitle>
 					<LocalAddr>
-						<FaMapMarkerAlt /> 부산해운대구
+						<FaMapMarkerAlt />
+						{subaddr}
 					</LocalAddr>
 				</div>
-				<LocalDate>2023. 08. 26 - 2023.08. 27</LocalDate>
+				<LocalDate>{term}</LocalDate>
 			</ListContent>
 		</MyWishList>
 	);

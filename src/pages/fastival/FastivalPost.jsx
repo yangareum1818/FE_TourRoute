@@ -8,7 +8,7 @@ const Wrapper = styled.div`
 `;
 const FastivalTitle = styled.h1`
 	color: #000000;
-	font-size: 32px;
+	font-size: 3.2rem;
 	margin-bottom: 1rem;
 `;
 const FastivalSubTitle = styled.span`

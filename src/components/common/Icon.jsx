@@ -120,3 +120,15 @@ export const TrackingProgressIcon = ({ text }) => {
 
 	return <TrackingProgress>{text}</TrackingProgress>;
 };
+export const TrackedProgressIcon = ({ text }) => {
+	const TrackingProgress = styled.span`
+		padding: 0.4rem 0.8rem;
+		background: #ff2e2e; // 진행중 :#3ad0ff, 예정 : #FF2E2E, 종료 : #000
+		color: #fff;
+		font-size: 1.4rem;
+		font-weight: 500;
+		border-radius: 0.4rem;
+	`;
+
+	return <TrackingProgress>{text}</TrackingProgress>;
+};
