@@ -47,7 +47,9 @@ const SubHeader = () => {
 				<Link to="/tourplan/1">
 					<Category>여행계획</Category>
 				</Link>
-				<Category>지역축제</Category>
+				<Link to="/festival">
+					<Category>지역축제</Category>
+				</Link>
 				<Link to="/community">
 					<Category>커뮤니티</Category>
 				</Link>
