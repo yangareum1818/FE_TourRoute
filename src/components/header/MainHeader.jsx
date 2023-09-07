@@ -1,13 +1,12 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import barcord from 'assets/barcord.png';
 import { FaCalendarAlt, FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
 import Logoimage from 'assets/Logo5.svg';
 import SerchLogo from 'assets/SerchLogo.svg';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { DatePicker, InputNumber, Select } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import route from 'store/PostRedux';
+import { Link } from 'react-router-dom';
 
 const WrapperContainer = styled.div`
 	padding-bottom: 5rem;
@@ -46,6 +45,7 @@ const Category = styled.li`
 	font-size: 16px;
 	color: white;
 	font-weight: normal;
+	cursor: pointer;
 `;
 //section
 const WrapperDiv = styled.div`
@@ -139,8 +139,15 @@ const ResultContainer = styled.div`
 `;
 
 const MainHeader = () => {
+	const [Token, setToken] = useState(null);
 	const { RangePicker } = DatePicker;
 	const count = useSelector(state => state.reducer.count);
+	const HandleLogout = useCallback(() => {
+		setToken(window.localStorage.removeItem('token'));
+	}, []);
+	useEffect(() => {
+		setToken(window.localStorage.getItem('token'));
+	}, []);
 	return (
 		<WrapperContainer>
 			<Wrapper>
@@ -164,9 +171,15 @@ const MainHeader = () => {
 					</Link>
 				</NavBar>
 				<Register>
-					<Link to="/login">
-						<Category style={{ color: '#959696' }}>로그인</Category>
-					</Link>
+					{Token ? (
+						<Category style={{ border: '1px solid grey', color: '#959696' }} onClick={HandleLogout}>
+							로그아웃
+						</Category>
+					) : (
+						<Link to="/login">
+							<Category style={{ color: '#959696' }}>로그인</Category>
+						</Link>
+					)}
 					<Link to="/auth/signup">
 						<Category style={{ color: '#959696' }}>회원가입</Category>
 					</Link>
