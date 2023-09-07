@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import LocalButton from '../../components/common/LocalButton';
 import { Pagination } from 'antd';
 import axios from 'axios';
@@ -45,15 +45,25 @@ const Fastival = () => {
 	const wishlist = ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'];
 	let { params } = useParams();
 	const [Data, setData] = useState([]);
+
 	const GetFestival = useCallback(() => {
 		axios
 			.get('http://13.209.56.221:8000/festival/get_info')
 			.then(res => {
 				setData(res.data);
+				console.log(res.data);
 			})
 			.catch(err => console.log(err));
 	}, []);
+	const GetBookmark = useCallback(() => {
+		const token = localStorage.getItem('token');
+		axios
+			.post(`http://13.209.56.221:8000/festval/get_bookmark?token=${token}`)
+			.then(e => console.log(e));
+	}, []);
+
 	useEffect(() => {
+		// GetBookmark();
 		GetFestival();
 	}, [GetFestival]);
 
@@ -75,15 +85,18 @@ const Fastival = () => {
 			</LocalList>
 			<MyWishListWrapper>
 				{Data.map((e, index) => {
+					console.log('11111', e);
 					return (
-						<LocalButton
-							key={index}
-							status={e.status}
-							name={e.f_name}
-							subaddr={e.s_addr}
-							term={e.term}
-							backimg={e.i_link}
-						/>
+						<Link key={index} to={`./${index}`} state={{ prop: e }}>
+							<LocalButton
+								key={index}
+								status={e.status}
+								name={e.f_name}
+								subaddr={e.s_addr}
+								term={e.term}
+								backimg={e.i_link}
+							/>
+						</Link>
 					);
 				})}
 			</MyWishListWrapper>
