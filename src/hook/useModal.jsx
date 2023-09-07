@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const useModal = () => {
+	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const open = () => {
@@ -10,6 +12,7 @@ const useModal = () => {
 	};
 	const onClickClose = () => {
 		document.body.style.removeProperty = 'overflow';
+		navigate(0);
 		setIsOpen(false);
 		console.log('e 닫힌다 close', setIsOpen(isOpen), isOpen);
 	};
