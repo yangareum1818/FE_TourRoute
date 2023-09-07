@@ -121,6 +121,9 @@ const SignUpInfoInput = () => {
 			.then(e => {
 				console.log(e);
 				navigate('/auth/signup/completes');
+			})
+			.catch(e => {
+				console.error(e);
 			});
 	});
 
@@ -194,8 +197,8 @@ const SignUpInfoInput = () => {
 							<Button text="취소" variant="cancel" />
 						</Link>
 					</ButtonGroup>
-					{isOpen && <Modal text="필수 항목을 입력해주세요." />}
 				</FormWrapper>
+				{isOpen && <Modal text="필수 항목을 입력해주세요." />}
 			</InnerWrapper>
 		</AuthLayout>
 	);
