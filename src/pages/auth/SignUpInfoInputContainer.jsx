@@ -8,6 +8,7 @@ import Modal from 'components/common/Modal';
 import useInput from 'hook/useInput';
 import { useCallback, useState } from 'react';
 import axios from 'axios';
+import useModal from 'hook/useModal';
 
 const InnerWrapper = styled.div`
 	display: flex;
@@ -51,43 +52,65 @@ const AuthInfoContent = styled.div`
 `;
 
 const SignUpInfoInput = () => {
-	const [username, setUsername] = useInput('');
-	const [email, setEmail] = useInput('');
-	const [password1, setPassword1] = useInput('');
-	const [password2, setPassword2] = useInput('');
+	const [username, onChangeUsername] = useInput('');
 
+	const [email, setEmail] = useState('');
 	const [emailError, setEmailError] = useState(false);
+	const [password1, setPassword1] = useState('');
+	const [password2, setPassword2] = useState('');
+	const [passwordExpError, setPasswordExpError] = useState(false);
 	const [passwordError, setPasswordError] = useState(false);
+
+	const { isOpen, open } = useModal();
 
 	const onChangeEamilCheck = useCallback(
 		e => {
 			const expEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 			setEmail(e.target.value);
-			setEmailError(e.target.value !== expEmail.test(e.target.value));
-			if (e.target.value === '') setEmailError(false);
+			setEmailError(!expEmail.test(email));
+			if (e.target.value === '') {
+				setEmailError(false);
+			}
 		},
 		[email],
 	);
 
-	// const onChangePasswordCheck = useCallback(
-	// 	e => {
-	// 		setPassword2(e.target.value);
-	// 		setPasswordError(e.target.value !== password1);
-	// 		if (e.target.value === '') setPasswordError(false);
-	// 	},
-	// 	[password1],
-	// );
+	const onChangePasswordExp = useCallback(
+		e => {
+			const expPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+			setPassword1(e.target.value);
+			setPasswordExpError(!expPassword.test(password1));
+			if (e.target.value === '') {
+				setPasswordExpError(false);
+			}
+		},
+		[password1],
+	);
+
+	const onChangePasswordCheck = useCallback(
+		e => {
+			setPassword2(e.target.value);
+			setPasswordError(e.target.value !== password1);
+			if (e.target.value === '') setPasswordError(false);
+		},
+		[password1],
+	);
 
 	const navigate = useNavigate();
 	const onSubmit = useCallback(async e => {
-		if (password1 !== password2) return setPasswordError(true);
-
+		e.preventDefault();
 		const userData = {
 			username: username,
 			email: email,
 			password1: password1,
 			password2: password2,
 		};
+		console.log(Object.values(userData).includes(''), userData, e);
+		if (Object.values(userData).includes('') === true) return open();
+		if (!email) return setEmailError(true);
+		if (!password1) return setPasswordExpError(true);
+		if (!password2) return setPasswordError(true);
+		if (password1 !== password2) return setPasswordError(true);
 
 		await axios
 			.post('http://13.209.56.221:8000/users/signup', userData, {
@@ -123,7 +146,7 @@ const SignUpInfoInput = () => {
 									defaultValue={username}
 									text="이름*"
 									placeholder="이름을 입력해주세요."
-									onChange={setUsername}
+									onChange={onChangeUsername}
 									required
 								/>
 							</div>
@@ -133,7 +156,7 @@ const SignUpInfoInput = () => {
 									defaultValue={email}
 									text="이메일*"
 									placeholder="ID@gmail.com"
-									onChange={setEmail}
+									onChange={onChangeEamilCheck}
 									required
 								/>
 								{emailError && <ErrorMsg errmsg="이메일 형식을 다시 확인해주세요." />}
@@ -143,9 +166,13 @@ const SignUpInfoInput = () => {
 									type="password"
 									defaultValue={password1}
 									text="비밀번호*"
-									placeholder="영문, 숫자, 특수문자 2가지 조합 8~15자"
-									onChange={setPassword1}
+									placeholder="영문, 숫자, 특수문자 조합 8~15자"
+									onChange={onChangePasswordExp}
+									required
 								/>
+								{passwordExpError && (
+									<ErrorMsg errmsg="비밀번호 조합은 영문, 숫자, 특수문자 조합 8~15자 입니다." />
+								)}
 							</div>
 							<div>
 								<Input
@@ -153,7 +180,8 @@ const SignUpInfoInput = () => {
 									defaultValue={password2}
 									text="비밀번호 확인*"
 									placeholder="비밀번호를 한번 더 입력해주세요."
-									onChange={setPassword2}
+									onChange={onChangePasswordCheck}
+									required
 								/>
 								{passwordError && <ErrorMsg errmsg="비밀번호가 일치하지 않습니다." />}
 							</div>
@@ -166,8 +194,8 @@ const SignUpInfoInput = () => {
 							<Button text="취소" variant="cancel" />
 						</Link>
 					</ButtonGroup>
+					{isOpen && <Modal text="필수 항목을 입력해주세요." />}
 				</FormWrapper>
-				{/* <Modal text="필수 항목을 입력해주세요." /> */}
 			</InnerWrapper>
 		</AuthLayout>
 	);
