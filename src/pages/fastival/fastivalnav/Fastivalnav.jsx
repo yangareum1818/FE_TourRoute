@@ -4,6 +4,7 @@ import img from 'assets/testpost.png';
 import { TrackingProgressIcon } from '../../../components/common/Icon';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { FaLocationArrow } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
 const Wrapper = styled.div`
 	width: 23%;
 	display: grid;
@@ -21,41 +22,41 @@ const NavDiv = styled.div`
 	gap: 1rem;
 	padding-left: 2rem;
 `;
-const Fastivalnav = () => {
+const Fastivalnav = ({ props }) => {
 	return (
 		<Wrapper>
 			<img src={img} />
 			<NavDiv>
 				<div>
-					<TrackingProgressIcon text="진행 중" />
+					<TrackingProgressIcon text={props.status} />
 				</div>
-				2023 부산나이트워크 42K
+				{props.f_name}
 			</NavDiv>
 			<NavDiv>
 				<div>기간</div>
-				2023. 08. 26 - 2023.08. 27
+				{props.term}
 			</NavDiv>
 			<NavDiv>
 				<div>행사장소</div>
 				<div>
 					<FaMapMarkerAlt />
-					APEC 나루공원 일대
+					{props.addr}
 				</div>
 			</NavDiv>
 			<NavDiv>
 				<div>이용요금</div>
-				<div>42K 59,000원 / 22K 49,000원 / 16K 42,000원</div>
+				<div>{props.price}원</div>
 			</NavDiv>
 			<NavDiv>
 				<div>홈페이지</div>
 				<div>
 					<FaLocationArrow />
-					<a>urbansports.kr</a>
+					<Link to={props.h_link}>바로가기</Link>
 				</div>
 			</NavDiv>
 			<NavDiv>
 				<div>주최주간</div>
-				<div>부산일보사, 블렌트 / 어반스포츠</div>
+				<div>{props.host}</div>
 			</NavDiv>
 		</Wrapper>
 	);
