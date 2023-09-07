@@ -1,20 +1,22 @@
-const { useState } = require('react');
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const useModal = () => {
+	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const open = () => {
-		console.log('열렸다. open');
 		document.body.style.overflow = 'hidden';
-		setIsOpen(true);
+		setIsOpen(isOpen);
+		console.log('e 열렸다 open', setIsOpen(!isOpen), setIsOpen(true), !isOpen);
 	};
-
-	const close = () => {
-		console.log('닫힌다 close');
+	const onClickClose = () => {
 		document.body.style.removeProperty = 'overflow';
+		navigate(0);
 		setIsOpen(false);
+		console.log('e 닫힌다 close', setIsOpen(isOpen), isOpen);
 	};
 
-	return { isOpen, setIsOpen, open, close };
+	return { isOpen, setIsOpen, open, onClickClose };
 };
 export default useModal;

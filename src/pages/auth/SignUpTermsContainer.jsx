@@ -30,7 +30,7 @@ const StepText = styled.span`
 	}
 `;
 
-const FormWrapper = styled.form``;
+const FormWrapper = styled.div``;
 const StepTitle = styled.p`
 	display: block;
 	padding-top: 3rem;
@@ -96,7 +96,8 @@ const SignUpTermsContainer = () => {
 
 	// 다음 버튼 클릭 시
 	const navigate = useNavigate();
-	const { isOpen, open } = useModal();
+	const { isOpen, open, onClickClose } = useModal();
+	console.log(isOpen);
 	const onClickNextHanle = () => {
 		const { term, privacy } = agreementChecked;
 
@@ -170,9 +171,9 @@ const SignUpTermsContainer = () => {
 							<Button text="취소" variant="cancel" />
 						</Link>
 					</ButtonGroup>
-					{isOpen && <Modal text="약관을 동의해 주세요." />}
 				</FormWrapper>
 			</InnerWrapper>
+			{isOpen && <Modal text="약관을 동의해 주세요." />}
 		</AuthLayout>
 	);
 };
