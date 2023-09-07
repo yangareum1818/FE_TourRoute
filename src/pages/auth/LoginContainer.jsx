@@ -1,17 +1,18 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import google from '../../assets/btn_google_signin_light_normal_web@2x.png';
 import kakao from '../../assets/kakao_login_medium_narrow.png';
 
-import { Button, ButtonGroup } from 'components/common/Button';
-import { Input } from 'components/common/Input';
+import { Button } from 'components/common/Button';
+import { ErrorMsg, Input } from 'components/common/Input';
 import { Title } from 'components/common/Title';
 
 import Modal from 'components/common/Modal';
-import useInput from 'hook/useInput';
+// import useInput from 'hook/useInput';
 import axios from 'axios';
+import useModal from 'hook/useModal';
 
 const Wrapper = styled.div`
 	display: flex;
@@ -89,10 +90,36 @@ const RegisterLink = styled(Link)`
 `;
 
 const LoginContainer = () => {
-	const [email, setEmail] = useInput('');
-	const [password1, setPassword1] = useInput('');
+	const [email, setEmail] = useState('');
+	const [emailError, setEmailError] = useState(false);
+	const [password1, setPassword1] = useState('');
+	const [passwordExpError, setPasswordExpError] = useState(false);
 
-	console.log(email, password1);
+	const { isOpen, open } = useModal();
+
+	const onChangeEamilCheck = useCallback(
+		e => {
+			const expEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+			setEmail(e.target.value);
+			setEmailError(!expEmail.test(email));
+			if (e.target.value === '') {
+				setEmailError(false);
+			}
+		},
+		[email],
+	);
+
+	const onChangePasswordExp = useCallback(
+		e => {
+			const expPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+			setPassword1(e.target.value);
+			setPasswordExpError(!expPassword.test(password1));
+			if (e.target.value === '') {
+				setPasswordExpError(false);
+			}
+		},
+		[password1],
+	);
 
 	const navigate = useNavigate();
 	const onSubmit = useCallback(
@@ -123,26 +150,35 @@ const LoginContainer = () => {
 				<Line />
 				<FormWrapper onSubmit={onSubmit}>
 					<InputWrapper>
-						<Input
-							type="email"
-							value={email}
-							placeholder="이메일을 입력하세요."
-							onChange={setEmail}
-							required
-						/>
-						<Input
-							type="password"
-							defaultValue={password1}
-							onChange={setPassword1}
-							placeholder="비밀번호를 입력하세요."
-							required
-						/>
+						<div>
+							<Input
+								type="email"
+								value={email}
+								placeholder="이메일을 입력하세요."
+								onChange={onChangeEamilCheck}
+								required
+							/>
+							{emailError && <ErrorMsg errmsg="이메일 형식을 다시 확인해주세요." />}
+						</div>
+						<div>
+							<Input
+								type="password"
+								defaultValue={password1}
+								onChange={onChangePasswordExp}
+								placeholder="비밀번호를 입력하세요."
+								required
+							/>
+							{passwordExpError && (
+								<ErrorMsg errmsg="비밀번호 조합은 영문, 숫자, 특수문자 조합 8~15자 입니다." />
+							)}
+						</div>
 					</InputWrapper>
 					<RegisterLink to="/auth/signup">회원가입</RegisterLink>
 					<Button $submit text="로그인" />
 				</FormWrapper>
 			</InnerWrapper>
 
+			{isOpen && <Modal text="회원정보가 일치하지 않습니다." />}
 			{/* 로그인 실패 시 모달 */}
 			{/* <Modal text="텍스트" /> */}
 		</Wrapper>
