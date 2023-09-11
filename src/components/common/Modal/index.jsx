@@ -9,6 +9,7 @@ import {
 	ModalCheckBtn,
 } from './style';
 import useModal from 'hook/useModal';
+import { styled } from 'styled-components';
 
 /**
  * 해야할 기능
@@ -20,7 +21,7 @@ import useModal from 'hook/useModal';
  * <Modal text={"ex) 회원정보가 존재하지 않습니다."} />
  */
 const Modal = ({ text }) => {
-	const { close } = useModal();
+	const { onClickClose } = useModal();
 
 	return (
 		<Overlay>
@@ -35,7 +36,9 @@ const Modal = ({ text }) => {
 						{/* 회원정보가 존재하지 않을 경우, 보여짐 */}
 						{/* <ModalLink to="/auth/signup">간편 회원가입 하러가기</ModalLink> */}
 					</ModalTextWrapper>
-					<ModalCheckBtn onClick={close}>확인</ModalCheckBtn>
+					<ModalCheckBtn type="button" onClick={onClickClose}>
+						확인
+					</ModalCheckBtn>
 				</ModalShape>
 			</ModalWrapper>
 		</Overlay>
