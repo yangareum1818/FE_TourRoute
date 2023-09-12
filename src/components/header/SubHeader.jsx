@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import Logoimage from 'assets/logo.png';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
 	margin: 3rem auto;
@@ -35,28 +35,38 @@ const Category = styled.li`
 	font-size: 16px;
 	font-weight: normal;
 `;
-const Header = () => {
-	const navigate = useNavigate();
-	const handleLogo = useCallback(() => {
-		navigate('/');
-	}, [navigate]);
+const SubHeader = () => {
 	return (
 		<Wrapper>
 			<Logo>
-				<LogoImg src={Logoimage} onClick={handleLogo} />
+				<Link to="/">
+					<LogoImg src={Logoimage} />
+				</Link>
 			</Logo>
 			<NavBar>
-				<Category>여행계획</Category>
-				<Category>여행기록</Category>
-				<Category>지역축제</Category>
-				<Category>커뮤니티</Category>
+				<Link to="/tourplan/1">
+					<Category>여행계획</Category>
+				</Link>
+				<Link to="/festival">
+					<Category>지역축제</Category>
+				</Link>
+				<Link to="/community">
+					<Category>커뮤니티</Category>
+				</Link>
+				<Link to="/tourplanInfo">
+					<Category>투어라우트</Category>
+				</Link>
 			</NavBar>
 			<Register>
-				<Category>로그인</Category>
-				<Category>회원가입</Category>
+				<Link to="/login">
+					<Category>로그인</Category>
+				</Link>
+				<Link to="/auth/signup">
+					<Category>회원가입</Category>
+				</Link>
 			</Register>
 		</Wrapper>
 	);
 };
 
-export default Header;
+export default SubHeader;

@@ -10,7 +10,6 @@ const MapLayOut = () => {
 		<>
 			<Wrapper>
 				<KakaoMap />
-				<div></div>
 			</Wrapper>
 			<NextButton />
 		</>

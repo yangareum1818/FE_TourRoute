@@ -8,6 +8,8 @@ import {
 	ModalLink,
 	ModalCheckBtn,
 } from './style';
+import useModal from 'hook/useModal';
+import { styled } from 'styled-components';
 
 /**
  * 해야할 기능
@@ -19,6 +21,8 @@ import {
  * <Modal text={"ex) 회원정보가 존재하지 않습니다."} />
  */
 const Modal = ({ text }) => {
+	const { onClickClose } = useModal();
+
 	return (
 		<Overlay>
 			<ModalWrapper>
@@ -30,9 +34,11 @@ const Modal = ({ text }) => {
 						{/* <ModalText>회원정보가 존재하지 않습니다.</ModalText> */}
 
 						{/* 회원정보가 존재하지 않을 경우, 보여짐 */}
-						<ModalLink to="/auth/signup">간편 회원가입 하러가기</ModalLink>
+						{/* <ModalLink to="/auth/signup">간편 회원가입 하러가기</ModalLink> */}
 					</ModalTextWrapper>
-					<ModalCheckBtn>확인</ModalCheckBtn>
+					<ModalCheckBtn type="button" onClick={onClickClose}>
+						확인
+					</ModalCheckBtn>
 				</ModalShape>
 			</ModalWrapper>
 		</Overlay>
