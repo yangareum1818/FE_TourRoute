@@ -126,7 +126,6 @@ const LoginContainer = () => {
 		async e => {
 			e.preventDefault();
 			console.log('hi');
-
 			await axios
 				.post(`http://13.209.56.221:8000/users/login?email=${email}&password=${password1}`)
 				.then(res => {
