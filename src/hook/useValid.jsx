@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-// 리팩토링 해야하는 input 유효성 검사하기. ( 리팩토링 시, hook사용하기 )
+// 리팩토링 해야하는 input 유효성 검사하기.
 const useValid = changeValue => {
 	const [validText, setValidText] = useState('');
 	const [isValid, setIsValid] = useState({
