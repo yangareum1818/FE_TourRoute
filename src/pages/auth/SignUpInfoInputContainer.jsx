@@ -6,7 +6,7 @@ import { ErrorMsg, Input } from 'components/common/Input';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'components/common/Modal';
 import useInput from 'hook/useInput';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 import useModal from 'hook/useModal';
 
@@ -118,9 +118,9 @@ const SignUpInfoInput = () => {
 					'Content-Type': 'application/json',
 				},
 			})
-			.then(e => {
-				console.log(e);
+			.then(res => {
 				navigate('/auth/signup/completes');
+				console.log(res);
 			})
 			.catch(e => {
 				console.error(e);
