@@ -113,19 +113,20 @@ const CommunityWrite = () => {
 		[navigate],
 	);
 	const onUploadImg = e => {
-		// if (e.target.files.length > 0) {
-		// 	console.log(e.target.files[0].name);
-		// }
-		const imageLists = e.target.files;
-		let imageUrlLists = [...Imgsrc];
+		const img = e.target.files[0];
+		const formData = new FormData();
+		formData.append('file', img);
+
 		if (!e.target.files === undefined) return;
 		const reader = new FileReader();
 		if (e.target.files[0]) {
 			reader.readAsDataURL(e.target.files[0]);
 		}
+		console.log(reader);
 		reader.onloadend = () => {
 			const previewImgUrl = reader.result;
 			setImgsrc(previewImgUrl);
+			console.log(previewImgUrl);
 		};
 
 		//데이터 전송

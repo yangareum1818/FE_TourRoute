@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import NextButton from 'pages/planpage/nextbutton/NextButton';
 import artimg from 'assets/category_art.png';
 import foodimg from 'assets/category_food.png';
 import mountin from 'assets/category_mount.png';
 import hotplace from 'assets/category_hotlocation.png';
 import history from 'assets/category_history.png';
 import walking from 'assets/category_walk.png';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const CategoryContainer = styled.div`
 	display: grid;
 	grid-template-columns: 25rem 25rem 25rem 25rem;
@@ -28,7 +29,30 @@ const CategoryTitle = styled.span`
 	font-weight: bold;
 	font-size: 36px;
 `;
+const NextBtn = styled.div`
+	background-color: #3ad0ff;
+	width: 40rem;
+	height: 6rem;
+	margin: 3rem auto;
+	border-radius: 8px;
+	border: 0;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	cursor: pointer;
+	align-items: center;
+`;
+const NextText = styled.span`
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+`;
 const PlanList = () => {
+	const navigate = useNavigate();
+	const HandlePage = async () => {
+		const res = await axios.post('http://13.209.56.221:8000//plan/recommand-plan?');
+		// navigate('/tourplan/3');
+	};
 	return (
 		<div>
 			<CategoryContainer>
@@ -51,7 +75,9 @@ const PlanList = () => {
 					<CategoryTitle>산책</CategoryTitle>
 				</CategoryLocation>
 			</CategoryContainer>
-			<NextButton />
+			<NextBtn onClick={HandlePage}>
+				<NextText>다음</NextText>
+			</NextBtn>
 		</div>
 	);
 };

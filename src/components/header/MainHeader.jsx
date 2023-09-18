@@ -6,7 +6,7 @@ import Logoimage from 'assets/Logo5.svg';
 import SerchLogo from 'assets/SerchLogo.svg';
 import { useSelector } from 'react-redux';
 import { DatePicker, InputNumber, Select } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const WrapperContainer = styled.div`
 	padding-bottom: 5rem;
@@ -139,11 +139,15 @@ const ResultContainer = styled.div`
 `;
 
 const MainHeader = () => {
+	const navigate = useNavigate();
 	const [Token, setToken] = useState(null);
 	const { RangePicker } = DatePicker;
 	const count = useSelector(state => state.reducer.count);
 	const HandleLogout = useCallback(() => {
 		setToken(window.localStorage.removeItem('token'));
+	}, []);
+	const HandlePage = useCallback(() => {
+		navigate('/tourplan/1');
 	}, []);
 	useEffect(() => {
 		setToken(window.localStorage.getItem('token'));
@@ -238,7 +242,7 @@ const MainHeader = () => {
 							<UserInput>
 								<InputId type="text" placeholder="동행인 아이디 입력" />
 							</UserInput>
-							<ResultContainer>추천 경로 찾기</ResultContainer>
+							<ResultContainer onClick={HandlePage}>추천 경로 찾기</ResultContainer>
 						</SerchBarInput>
 					</SerchBarSection>
 				</SerchContainer>
