@@ -45,6 +45,7 @@ const LocalDate = styled.h1`
 	font-size: 1.6rem;
 `;
 const LocalButton = ({ status, name, subaddr, term, backimg }) => {
+	const img = 'http://13.209.56.221:8000/img/' + backimg;
 	return (
 		<MyWishList style={{ backgroundImage: `url(${img})` }}>
 			<ListIconWrapper>
