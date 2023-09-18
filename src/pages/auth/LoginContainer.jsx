@@ -129,8 +129,21 @@ const LoginContainer = () => {
 			await axios
 				.post(`http://13.209.56.221:8000/users/login?email=${email}&password=${password1}`)
 				.then(res => {
+					console.log(res);
 					localStorage.setItem('token', res.data.access_token);
+					const config = {
+						headers: {
+							Authorization: `${localStorage.getItem('token')}`,
+						},
+					};
 					navigate('/');
+					axios
+						.get('/', config)
+						.then(res => {
+							console.log(res.data);
+							alert(email + '님 환영합니다.');
+						})
+						.catch(err => console.log(err));
 				})
 				.catch(e => {
 					console.error(e);
