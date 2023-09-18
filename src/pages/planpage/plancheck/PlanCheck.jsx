@@ -4,10 +4,10 @@ import Logo from 'assets/Logo5.svg';
 import barcord from 'assets/barcord.png';
 import { FaCalendarAlt, FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
 import { DatePicker, InputNumber, Select } from 'antd';
-import NextButton from '../nextbutton/NextButton';
 import { useDispatch, useSelector } from 'react-redux';
 import useInput from 'hooks/useInput';
 import { FaX } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 const SerchContainer = styled.div`
 	border: 0.5px solid grey;
 	border-radius: 8px;
@@ -111,8 +111,27 @@ const PeopleList = styled.div`
 	width: auto;
 	gap: 8rem;
 `;
+const NextBtn = styled.div`
+	background-color: #3ad0ff;
+	width: 40rem;
+	height: 6rem;
+	margin: 3rem auto;
+	border-radius: 8px;
+	border: 0;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	cursor: pointer;
+	align-items: center;
+`;
+const NextText = styled.span`
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+`;
 const DeletBtn = styled.div``;
 const PlanCheck = () => {
+	const navigate = useNavigate();
 	const [UserId, setUserId] = useInput('');
 	const [UserList, setUserList] = useState([]);
 	const dispatch = useDispatch();
@@ -138,6 +157,9 @@ const PlanCheck = () => {
 		},
 		[UserId, UserList],
 	);
+	const HandlePage = () => {
+		navigate('/tourplan/2');
+	};
 
 	return (
 		<>
@@ -224,7 +246,9 @@ const PlanCheck = () => {
 					</TourPlayerDiv>
 				</SerchBarSection>
 			</SerchContainer>
-			<NextButton />
+			<NextBtn onClick={HandlePage}>
+				<NextText>다음</NextText>
+			</NextBtn>
 		</>
 	);
 };
