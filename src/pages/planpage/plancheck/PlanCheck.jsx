@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Logo from 'assets/Logo5.svg';
 import barcord from 'assets/barcord.png';
 import { FaCalendarAlt, FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
 import { DatePicker, InputNumber, Select } from 'antd';
-import NextButton from '../nextbutton/NextButton';
 import { useDispatch, useSelector } from 'react-redux';
+import useInput from 'hooks/useInput';
+import { FaX } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 const SerchContainer = styled.div`
 	border: 0.5px solid grey;
 	border-radius: 8px;
@@ -87,11 +89,78 @@ const ResultContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 `;
-
+const TourPlayerDiv = styled.div`
+	text-align: center;
+`;
+const TourPlayer = styled.div`
+	font-size: 16px;
+`;
+const TourPlayerListDiv = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	color: #959696;
+	padding: 3rem;
+`;
+const PeopleList = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 4rem;
+	width: auto;
+	gap: 8rem;
+`;
+const NextBtn = styled.div`
+	background-color: #3ad0ff;
+	width: 40rem;
+	height: 6rem;
+	margin: 3rem auto;
+	border-radius: 8px;
+	border: 0;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	cursor: pointer;
+	align-items: center;
+`;
+const NextText = styled.span`
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+`;
+const DeletBtn = styled.div``;
 const PlanCheck = () => {
+	const navigate = useNavigate();
+	const [UserId, setUserId] = useInput('');
+	const [UserList, setUserList] = useState([]);
 	const dispatch = useDispatch();
 	const count = useSelector(state => state.reducer.count);
 	const { RangePicker } = DatePicker;
+
+	const handleDel = useCallback(
+		e => {
+			console.log(e);
+			UserList.splice(UserList.indexOf(e), 1);
+			setUserList([...UserList]);
+		},
+		[UserList],
+	);
+	const handleKeyEnter = e => {
+		if (e.key === 'Enter') {
+			handlepeople(e);
+		}
+	};
+	const handlepeople = useCallback(
+		e => {
+			setUserList([...UserList, UserId]);
+		},
+		[UserId, UserList],
+	);
+	const HandlePage = () => {
+		navigate('/tourplan/2');
+	};
+
 	return (
 		<>
 			<SerchContainer>
@@ -137,13 +206,49 @@ const PlanCheck = () => {
 							</InputIcon>
 						</UserInput>
 						<UserInput>
-							<InputId type="text" placeholder="동행인 아이디 입력" />
+							<InputId
+								type="text"
+								placeholder="동행인 아이디 입력"
+								value={UserId}
+								onChange={setUserId}
+								onKeyPress={handleKeyEnter}
+							/>
 						</UserInput>
 						<ResultContainer>여행 수정</ResultContainer>
 					</SerchBarInput>
+					<TourPlayerDiv>
+						<TourPlayer>
+							<div>
+								<p style={{ color: '#3AD0FF', fontWeight: 'bold' }}>나</p>
+								<TourPlayerListDiv>
+									<PeopleList>
+										<li>lovaoi777@naver.com</li>
+										<li>짱구</li>
+									</PeopleList>
+								</TourPlayerListDiv>
+							</div>
+							<div>
+								<p style={{ color: '#3AD0FF', fontWeight: 'bold' }}>동행인 목록</p>
+								<TourPlayerListDiv>
+									{UserList.map((e, index) => {
+										return (
+											<PeopleList>
+												<div>{e}</div>
+												<DeletBtn>
+													<FaX onClick={() => handleDel(e)} />
+												</DeletBtn>
+											</PeopleList>
+										);
+									})}
+								</TourPlayerListDiv>
+							</div>
+						</TourPlayer>
+					</TourPlayerDiv>
 				</SerchBarSection>
 			</SerchContainer>
-			<NextButton />
+			<NextBtn onClick={HandlePage}>
+				<NextText>다음</NextText>
+			</NextBtn>
 		</>
 	);
 };
