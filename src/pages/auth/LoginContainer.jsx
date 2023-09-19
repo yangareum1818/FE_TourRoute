@@ -11,9 +11,8 @@ import { Title } from 'components/common/Title';
 
 import Modal from 'components/common/Modal';
 // import useInput from 'hook/useInput';
-import axios from 'axios';
 import useModal from 'hook/useModal';
-
+import { axiosPostQuery } from 'utils/AxiosUtils';
 const Wrapper = styled.div`
 	display: flex;
 	justify-content: center;
@@ -125,31 +124,12 @@ const LoginContainer = () => {
 	const onSubmit = useCallback(
 		async e => {
 			e.preventDefault();
-			console.log('hi');
-			await axios
-				.post(`http://13.209.56.221:8000/users/login?email=${email}&password=${password1}`)
-				.then(res => {
-					console.log(res);
-					localStorage.setItem('token', res.data.access_token);
-					const config = {
-						headers: {
-							Authorization: `${localStorage.getItem('token')}`,
-						},
-					};
-					navigate('/');
-					axios
-						.get('/', config)
-						.then(res => {
-							console.log(res.data);
-							alert(email + '님 환영합니다.');
-						})
-						.catch(err => console.log(err));
-				})
-				.catch(e => {
-					console.error(e);
-				});
+			const res = await axiosPostQuery(`/users/login?email=${email}&password=${password1}`);
+			localStorage.setItem('token', res.access_token);
+			navigate('/');
+			alert(email + '님 환영합니다.');
 		},
-		[email, password1],
+		[navigate, email, password1],
 	);
 
 	return (

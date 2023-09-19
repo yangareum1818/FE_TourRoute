@@ -9,6 +9,7 @@ import useInput from 'hook/useInput';
 import { useCallback, useState } from 'react';
 import axios from 'axios';
 import useModal from 'hook/useModal';
+import { axiosPost } from '../../utils/AxiosUtils';
 
 const InnerWrapper = styled.div`
 	display: flex;
@@ -97,35 +98,29 @@ const SignUpInfoInput = () => {
 	);
 
 	const navigate = useNavigate();
-	const onSubmit = useCallback(async e => {
-		e.preventDefault();
-		const userData = {
-			username: username,
-			email: email,
-			password1: password1,
-			password2: password2,
-		};
-		console.log(Object.values(userData).includes(''), userData, e);
-		if (Object.values(userData).includes('') === true) return open();
-		if (!email) return setEmailError(true);
-		if (!password1) return setPasswordExpError(true);
-		if (!password2) return setPasswordError(true);
-		if (password1 !== password2) return setPasswordError(true);
+	const onSubmit = useCallback(
+		async e => {
+			e.preventDefault();
+			const userData = {
+				username: username,
+				email: email,
+				password1: password1,
+				password2: password2,
+			};
+			if (Object.values(userData).includes('') === true) return open();
+			if (!email) return setEmailError(true);
+			if (!password1) return setPasswordExpError(true);
+			if (!password2) return setPasswordError(true);
+			if (password1 !== password2) return setPasswordError(true);
 
-		await axios
-			.post('http://13.209.56.221:8000/users/signup', userData, {
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			})
-			.then(e => {
-				console.log(e);
-				navigate('/auth/signup/completes');
-			})
-			.catch(e => {
-				console.error(e);
-			});
-	});
+			const res = await axiosPost('/users/signup', userData);
+			if (res.state === 200 || 201) {
+				navigate('/auth/signup/complete');
+				alert('로그인 성공');
+			}
+		},
+		[email, navigate, open, password1, password2, username],
+	);
 
 	return (
 		<AuthLayout>
