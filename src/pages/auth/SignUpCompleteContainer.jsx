@@ -73,7 +73,7 @@ const SignUpCompleteContainer = () => {
 					<AuthCompleteDesc>회원가입이 정상적으로 완료되었습니다.</AuthCompleteDesc>
 				</AuthContent>
 
-				<Link to="/">
+				<Link to="/login">
 					<Button text="다음" />
 				</Link>
 			</InnerWrapper>
