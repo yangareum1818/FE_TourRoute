@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { axiosTokenGet } from 'utils/AxiosUtils';
 
@@ -38,30 +37,30 @@ const ProfileInfoChangeText = styled.span`
 `;
 
 const ProfileContainer = () => {
+	const [username, setUsername] = useState('');
+	const [email, setEmail] = useState('');
+
 	const userInfo = useCallback(async () => {
-		const config = {
-			headers: {
-				Authorization: `${localStorage.getItem('token')}`,
-			},
-		};
-		console.log(config.headers.Authorization);
 		const res = await axiosTokenGet('/users/mypage');
 		console.log(res);
+
+		setUsername(res.username);
+		setEmail(res.email);
 	}, []);
 
 	useEffect(() => {
 		userInfo();
-	}, [userInfo()]);
+	}, [userInfo]);
 
 	return (
 		<MyProfileContent>
 			<ProfileInfoWrpper>
 				<ProfileInfoTitle>이름</ProfileInfoTitle>
-				<ProfileInfoValue>홍길동</ProfileInfoValue>
+				<ProfileInfoValue>{username}</ProfileInfoValue>
 			</ProfileInfoWrpper>
 			<ProfileInfoWrpper>
 				<ProfileInfoTitle>이메일</ProfileInfoTitle>
-				<ProfileInfoValue>hong-gildong@gmail.com</ProfileInfoValue>
+				<ProfileInfoValue>{email}</ProfileInfoValue>
 			</ProfileInfoWrpper>
 			<ProfileInfoWrpper>
 				<ProfileInfoTitle>마케팅 수신동의</ProfileInfoTitle>
