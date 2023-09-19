@@ -1,4 +1,7 @@
+import axios from 'axios';
+import { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
+import { axiosTokenGet } from 'utils/AxiosUtils';
 
 const MyProfileContent = styled.div`
 	display: flex;
@@ -20,6 +23,7 @@ const ProfileInfoTitle = styled.span`
 	flex: 1;
 	color: #000;
 	font-weight: 400;
+	white-space: nowrap;
 `;
 const ProfileInfoValue = styled.span`
 	flex: 4;
@@ -34,6 +38,21 @@ const ProfileInfoChangeText = styled.span`
 `;
 
 const ProfileContainer = () => {
+	const userInfo = useCallback(async () => {
+		const config = {
+			headers: {
+				Authorization: `${localStorage.getItem('token')}`,
+			},
+		};
+		console.log(config.headers.Authorization);
+		const res = await axiosTokenGet('/users/mypage');
+		console.log(res);
+	}, []);
+
+	useEffect(() => {
+		userInfo();
+	}, [userInfo()]);
+
 	return (
 		<MyProfileContent>
 			<ProfileInfoWrpper>
