@@ -16,6 +16,7 @@ const MyWishList = styled.div`
 	height: 100%;
 	background-size: cover;
 	border-radius: 0.8rem;
+	background: #000;
 `;
 
 const ListIconWrapper = styled.div`
@@ -31,18 +32,29 @@ const ListContent = styled.div`
 	justify-content: flex-end;
 	gap: 0.5rem;
 `;
-const LocalName = styled.h1`
+const LocalName = styled.strong`
 	font-size: 2.4rem;
+	font-weight: 700;
 `;
-const LocalTitle = styled.h4`
+const LocalTitle = styled.strong`
 	font-size: 1.6rem;
+	font-weight: 500;
 `;
 const LocalAddr = styled.div`
-	color: #959696;
-	font-size: 1.2rem;
+	margin-top: 0.5rem;
+
+	span {
+		padding-left: 0.5rem;
+		display: inline-block;
+		color: #959696;
+		font-size: 1.2rem;
+		font-weight: 300;
+		vertical-align: middle;
+	}
 `;
-const LocalDate = styled.h1`
+const LocalDate = styled.p`
 	font-size: 1.6rem;
+	font-weight: 500;
 `;
 const LocalButton = ({ status, name, subaddr, term, backimg }) => {
 	const img = 'http://13.209.56.221:8000/img/' + backimg;
@@ -61,13 +73,13 @@ const LocalButton = ({ status, name, subaddr, term, backimg }) => {
 			<ListContent>
 				<LocalName>대구</LocalName>
 				<div>
-					<LocalTitle>{name}</LocalTitle>
+					<LocalTitle>{name}2023 부산여행영화제</LocalTitle>
 					<LocalAddr>
 						<FaMapMarkerAlt />
-						{subaddr}
+						<span>{subaddr}부산 해운대구</span>
 					</LocalAddr>
 				</div>
-				<LocalDate>{term}</LocalDate>
+				<LocalDate>{term}2023. 08. 12 - 2023.08. 13</LocalDate>
 			</ListContent>
 		</MyWishList>
 	);
