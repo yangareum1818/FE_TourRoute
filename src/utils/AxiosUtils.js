@@ -9,7 +9,7 @@ const defaultHeaders = {
 const headerConfiguration = header => {
 	const config = { ...header };
 	const token = localStorage.getItem('token');
-	if (token) config.headers.Authorization = 'Bearer ' + token;
+	if (token) config.headers.token = token;
 
 	return { ...config };
 };

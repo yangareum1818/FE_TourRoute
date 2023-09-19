@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'components/common/Modal';
 import useInput from 'hook/useInput';
 import { useCallback, useState } from 'react';
-import axios from 'axios';
 import useModal from 'hook/useModal';
 import { axiosPost } from '../../utils/AxiosUtils';
 

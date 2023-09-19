@@ -1,4 +1,6 @@
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { axiosTokenGet } from 'utils/AxiosUtils';
 
 const MyProfileContent = styled.div`
 	display: flex;
@@ -20,6 +22,7 @@ const ProfileInfoTitle = styled.span`
 	flex: 1;
 	color: #000;
 	font-weight: 400;
+	white-space: nowrap;
 `;
 const ProfileInfoValue = styled.span`
 	flex: 4;
@@ -34,15 +37,30 @@ const ProfileInfoChangeText = styled.span`
 `;
 
 const ProfileContainer = () => {
+	const [username, setUsername] = useState('');
+	const [email, setEmail] = useState('');
+
+	const userInfo = useCallback(async () => {
+		const res = await axiosTokenGet('/users/mypage');
+		console.log(res);
+
+		setUsername(res.username);
+		setEmail(res.email);
+	}, []);
+
+	useEffect(() => {
+		userInfo();
+	}, [userInfo]);
+
 	return (
 		<MyProfileContent>
 			<ProfileInfoWrpper>
 				<ProfileInfoTitle>이름</ProfileInfoTitle>
-				<ProfileInfoValue>홍길동</ProfileInfoValue>
+				<ProfileInfoValue>{username}</ProfileInfoValue>
 			</ProfileInfoWrpper>
 			<ProfileInfoWrpper>
 				<ProfileInfoTitle>이메일</ProfileInfoTitle>
-				<ProfileInfoValue>hong-gildong@gmail.com</ProfileInfoValue>
+				<ProfileInfoValue>{email}</ProfileInfoValue>
 			</ProfileInfoWrpper>
 			<ProfileInfoWrpper>
 				<ProfileInfoTitle>마케팅 수신동의</ProfileInfoTitle>
