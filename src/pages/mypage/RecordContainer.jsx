@@ -5,6 +5,7 @@ import logoImg from '../../assets/logo2.png';
 import recordImg1 from '../../assets/recordImg1.png';
 import recordImg2 from '../../assets/recordImg2.png';
 import recordImg3 from '../../assets/recordImg3.png';
+import Empty from 'components/common/Empty';
 
 const MyRecordWrppaer = styled.div`
 	display: flex;
@@ -144,6 +145,7 @@ const MyRecordInfoTourEnd = styled.span`
 const RecordContainer = () => {
 	return (
 		<MyRecordWrppaer>
+			<Empty text={'여행계획에서 나의 여행정보를 추천받고 저장해보세요!'} />
 			<MyRecord>
 				<MyRecordHead>
 					<MyRecordHeadImg src={logoImg} />
