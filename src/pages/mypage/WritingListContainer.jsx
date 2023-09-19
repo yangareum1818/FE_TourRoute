@@ -1,4 +1,5 @@
 import { Pagination } from 'antd';
+import Empty from 'components/common/Empty';
 import { ImgWhether, RecruitmentStatus } from 'components/common/Icon';
 import { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -82,20 +83,8 @@ const WritingListContainer = () => {
 	];
 	return (
 		<WritingListWrapper>
+			<Empty text="커뮤니티에서 동행인을 구하거나, 자유롭게 글을 작성해보세요!" />
 			<WritingListInner>
-				{test.map(e => {
-					// console.log(e);
-					<WritingList>
-						<WritingListCategory>{e.category}</WritingListCategory>
-						<WritingListTitle>{e.title}</WritingListTitle>
-						<WritingListChange>
-							<WritingChangeBtn>수정</WritingChangeBtn>
-							<WritingChangeBtn>삭제</WritingChangeBtn>
-						</WritingListChange>
-						<WritingListDate>{e.date}</WritingListDate>
-					</WritingList>;
-				})}
-
 				<WritingList>
 					<WritingListCategory>자유게시판</WritingListCategory>
 					<WritingListTitle>
