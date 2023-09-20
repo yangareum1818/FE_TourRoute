@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Logoimage from 'assets/logo.png';
+import FooterLogo from 'assets/footer_logo.svg';
 import GitIcon from 'assets/github-mark.png';
 const Wrapper = styled.div`
+	padding-bottom: 4rem;
 	background: transparent;
 	border-top: 2px solid black;
 `;
@@ -54,7 +55,7 @@ const Footer = () => {
 	return (
 		<Wrapper>
 			<HeaderFooter>
-				<Logo src={Logoimage} />
+				<Logo src={FooterLogo} />
 				<LogoTitle>여행을 더 간편하게, 투어라우트</LogoTitle>
 			</HeaderFooter>
 			<IntroduceContainer>
