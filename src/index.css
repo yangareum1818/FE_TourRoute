@@ -1,0 +1,106 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-family: 'Spoqa Han Sans Neo', 'Spoqa Han Sans', 'SpoqaHanSans', 'Lato', 'Source Han Sans K',
+		'NotoSansCJKkr', 'Noto Sans KR', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	line-height: 1.5;
+	color: #424242;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+a {
+	color: #959696;
+	text-decoration: none;
+}
+
+ul,
+li,
+ol,
+dl {
+	list-style: none;
+}
+
+svg {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+
+button {
+	cursor: pointer;
+	border: 0;
+	background-color: transparent;
+}
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+	-webkit-appearance: button;
+}
+
+input[type='text'],
+input[type='number'],
+input[type='tel'],
+input[type='file'],
+input[type='password'],
+input[type='email'],
+input[type='search'],
+input[type='url'],
+textarea {
+	vertical-align: middle;
+	box-sizing: border-box;
+	width: 100%;
+	font-size: 1.6rem;
+	color: #000;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+input::placeholder {
+	color: #cfcfcf;
+}
+
+/* input[type='checkbox'] {
+	display: inline-block;
+	width: 1.6rem;
+	height: 1.6rem;
+	outline: 1px solid #cfcfcf;
+	border-radius: 0.4rem;
+	appearance: none;
+	cursor: pointer;
+}
+
+input[type='checkbox']:checked {
+	outline: 1px solid #3ad0ff;
+	background-color: #3ad0ff;
+} */
+
+[readonly='readonly'],
+[disabled='disabled'] {
+	background-color: rgba(204, 206, 210, 0.5);
+	color: #424242;
+}
+
+::selection {
+	background: #3ad0ff;
+	color: #fff;
+	text-shadow: none;
+}

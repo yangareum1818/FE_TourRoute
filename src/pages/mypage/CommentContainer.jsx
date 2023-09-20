@@ -1,0 +1,150 @@
+import Empty from 'components/common/Empty';
+import { Link } from 'react-router-dom';
+import { styled } from 'styled-components';
+
+const MyCommentWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+`;
+
+const MyCommentList = styled.div`
+	display: flex;
+	gap: 1rem;
+	flex-direction: column;
+	padding: 1rem 2rem;
+	width: 100%;
+	border: 0.1rem solid #cfcfcf;
+	border-radius: 0.8rem;
+`;
+
+const CommentHeader = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+const CommentInfo = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+
+	& > * {
+		color: #959696;
+		font-size: 1.6rem;
+		font-weight: 300;
+	}
+`;
+
+const UserProfileImg = styled.img`
+	width: 4rem;
+	height: 4rem;
+	background: #000;
+	border-radius: 50%;
+`;
+const CommentTitle = styled.span`
+	color: #000;
+`;
+const CommentData = styled.span``;
+
+const CommentControl = styled.div`
+	display: flex;
+	gap: 2rem;
+
+	& > * {
+		color: #959696;
+		font-size: 1.6rem;
+		font-weight: 300;
+	}
+`;
+
+const CorrectionBtn = styled.button``;
+const DeleteBtn = styled.button``;
+
+const CommentInner = styled.div``;
+const Comment = styled.p`
+	color: #000;
+	font-size: 1.5rem;
+	font-weight: 300;
+`;
+
+const CommentContainer = () => {
+	return (
+		<MyCommentWrapper>
+			<Empty text="아직 작성한 댓글이 없습니다. 사람들과 소통해보세요 - !" />
+			<MyCommentList>
+				<CommentHeader>
+					<CommentInfo>
+						<UserProfileImg />
+						<CommentTitle>배낭 여행</CommentTitle>
+						<CommentData>2023-07-31 17:22</CommentData>
+					</CommentInfo>
+					<CommentControl>
+						<Link>게시물 보기</Link>
+						<CorrectionBtn>수정</CorrectionBtn>
+						<DeleteBtn>삭제</DeleteBtn>
+					</CommentControl>
+				</CommentHeader>
+				<CommentInner>
+					<Comment>혹시 일정이 변경이 가능하실까요?</Comment>
+				</CommentInner>
+			</MyCommentList>
+
+			<MyCommentList>
+				<CommentHeader>
+					<CommentInfo>
+						<UserProfileImg />
+						<CommentTitle>배낭 여행</CommentTitle>
+						<CommentData>2023-07-31 17:22</CommentData>
+					</CommentInfo>
+					<CommentControl>
+						<Link>게시물 보기</Link>
+						<CorrectionBtn>수정</CorrectionBtn>
+						<DeleteBtn>삭제</DeleteBtn>
+					</CommentControl>
+				</CommentHeader>
+				<CommentInner>
+					<Comment>혹시 일정이 변경이 가능하실까요?</Comment>
+				</CommentInner>
+			</MyCommentList>
+
+			<MyCommentList>
+				<CommentHeader>
+					<CommentInfo>
+						<UserProfileImg />
+						<CommentTitle>배낭 여행</CommentTitle>
+						<CommentData>2023-07-31 17:22</CommentData>
+					</CommentInfo>
+					<CommentControl>
+						<Link>게시물 보기</Link>
+						<CorrectionBtn>수정</CorrectionBtn>
+						<DeleteBtn>삭제</DeleteBtn>
+					</CommentControl>
+				</CommentHeader>
+				<CommentInner>
+					<Comment>혹시 일정이 변경이 가능하실까요?</Comment>
+				</CommentInner>
+			</MyCommentList>
+
+			<MyCommentList>
+				<CommentHeader>
+					<CommentInfo>
+						<UserProfileImg />
+						<CommentTitle>배낭 여행</CommentTitle>
+						<CommentData>2023-07-31 17:22</CommentData>
+					</CommentInfo>
+					<CommentControl>
+						<Link>게시물 보기</Link>
+						<CorrectionBtn>수정</CorrectionBtn>
+						<DeleteBtn>삭제</DeleteBtn>
+					</CommentControl>
+				</CommentHeader>
+				<CommentInner>
+					<Comment>혹시 일정이 변경이 가능하실까요?</Comment>
+				</CommentInner>
+			</MyCommentList>
+		</MyCommentWrapper>
+	);
+};
+export default CommentContainer;

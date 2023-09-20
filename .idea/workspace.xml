@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="e085182f-3b89-45ce-8196-989ceea4c33d" name="변경" comment="feat : CategoryListImage">
+      <change afterPath="$PROJECT_DIR$/src/pages/planpage/planmap/MapLayOut.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/planpage/planmap/kakaomap/KakaoMap.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/planpage/planmap/maplist/MapList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/planpage/ planprogress/PlanProgress.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/planpage/planprogress/PlanProgress.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/planpage/Plan.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/planpage/Plan.jsx" afterDir="false" />
+=======
+    <list default="true" id="e085182f-3b89-45ce-8196-989ceea4c33d" name="변경" comment="feat : edit route">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> TR_4_MyPage
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+<<<<<<< HEAD
+                    <option name="branchName" value="TR_5_TourPlan" />
+                    <option name="lastUsedInstant" value="1692739972" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="dev" />
+                    <option name="lastUsedInstant" value="1692739246" />
+=======
+                    <option name="branchName" value="dev" />
+                    <option name="lastUsedInstant" value="1692740843" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="TR_5_TourPlan" />
+                    <option name="lastUsedInstant" value="1692739972" />
+>>>>>>> TR_4_MyPage
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="TR_3_Login" />
+                    <option name="lastUsedInstant" value="1691989482" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="TR_2_MainContainer" />
+                    <option name="lastUsedInstant" value="1691989197" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2TudWpslnjIUklgKRbn9jiIpj5T" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+<<<<<<< HEAD
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "TR__5__TourPlan",
+    "last_opened_file_path": "/Users/jeonbyeong-gyu/Desktop/study/FE_TourRoute/tour_route",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "/Users/jeonbyeong-gyu/Desktop/study/FE_TourRoute/tour_route/node_modules/prettier",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/jeonbyeong-gyu/Desktop/study/FE_TourRoute/tour_route&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/jeonbyeong-gyu/Desktop/study/FE_TourRoute/tour_route/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+>>>>>>> TR_4_MyPage
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/planpage/ planprogress" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e085182f-3b89-45ce-8196-989ceea4c33d" name="변경" comment="" />
+      <created>1688672623852</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1688672623852</updated>
+      <workItem from="1691896937569" duration="634000" />
+      <workItem from="1691923471170" duration="824000" />
+      <workItem from="1691989045791" duration="238000" />
+      <workItem from="1691989285649" duration="709000" />
+      <workItem from="1692095993460" duration="3614000" />
+      <workItem from="1692605424522" duration="5479000" />
+<<<<<<< HEAD
+      <workItem from="1692693699259" duration="5802000" />
+=======
+      <workItem from="1692693699259" duration="8164000" />
+      <workItem from="1692788651612" duration="622000" />
+      <workItem from="1692789408802" duration="23000" />
+      <workItem from="1692809153562" duration="691000" />
+>>>>>>> TR_4_MyPage
+    </task>
+    <task id="LOCAL-00001" summary="feat : header 디자인 수정">
+      <option name="closed" value="true" />
+      <created>1692611081067</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1692611081067</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat : edit route TourPlan">
+      <option name="closed" value="true" />
+      <created>1692611114289</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1692611114289</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat : design TourPlan">
+      <option name="closed" value="true" />
+      <created>1692611154159</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1692611154159</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat : design NextBtn">
+      <option name="closed" value="true" />
+      <created>1692739127407</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1692739127407</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat : design PlanList">
+      <option name="closed" value="true" />
+      <created>1692739145783</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1692739145783</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat : edit route">
+      <option name="closed" value="true" />
+      <created>1692739202297</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1692739202297</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat : install KaKaoMapSDK">
+      <option name="closed" value="true" />
+      <created>1692740012629</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1692740012629</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat : CategoryListImage">
+      <option name="closed" value="true" />
+      <created>1692740032076</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1692740032076</updated>
+    </task>
+<<<<<<< HEAD
+    <option name="localTasksCounter" value="9" />
+=======
+    <task id="LOCAL-00009" summary="feat : edit route">
+      <option name="closed" value="true" />
+      <created>1692740754868</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1692740754868</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat : KakaoMapSDK">
+      <option name="closed" value="true" />
+      <created>1692740771624</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1692740771624</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat : KakaoMap">
+      <option name="closed" value="true" />
+      <created>1692740778136</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1692740778136</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat : edit route">
+      <option name="closed" value="true" />
+      <created>1692740804849</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1692740804849</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+>>>>>>> TR_4_MyPage
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+<<<<<<< HEAD
+            <State />
+=======
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/TR_4_MyPage" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+>>>>>>> TR_4_MyPage
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat : header 디자인 수정" />
+    <MESSAGE value="feat : edit route TourPlan" />
+    <MESSAGE value="feat : design TourPlan" />
+    <MESSAGE value="feat : design NextBtn" />
+    <MESSAGE value="feat : design PlanList" />
+<<<<<<< HEAD
+    <MESSAGE value="feat : edit route" />
+    <MESSAGE value="feat : install KaKaoMapSDK" />
+    <MESSAGE value="feat : CategoryListImage" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : CategoryListImage" />
+=======
+    <MESSAGE value="feat : install KaKaoMapSDK" />
+    <MESSAGE value="feat : CategoryListImage" />
+    <MESSAGE value="feat : KakaoMapSDK" />
+    <MESSAGE value="feat : KakaoMap" />
+    <MESSAGE value="feat : edit route" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : edit route" />
+>>>>>>> TR_4_MyPage
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/mainpage/MainContainer.jsx</url>
+          <line>109</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
