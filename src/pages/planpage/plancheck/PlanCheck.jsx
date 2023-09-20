@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import Logo from 'assets/Logo5.svg';
+import Logo from 'assets/serch_logo.svg';
 import barcord from 'assets/barcord.png';
 import { FaCalendarAlt, FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
 import { DatePicker, InputNumber, Select } from 'antd';
@@ -43,7 +43,7 @@ const UserInput = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background: #f2f6정f9;
+	background: #f2f6f9;
 	padding: 1rem;
 	border-radius: 8px;
 	font-size: 16px;
@@ -232,7 +232,7 @@ const PlanCheck = () => {
 								<TourPlayerListDiv>
 									{UserList.map((e, index) => {
 										return (
-											<PeopleList>
+											<PeopleList key={index}>
 												<div>{e}</div>
 												<DeletBtn>
 													<FaX onClick={() => handleDel(e)} />

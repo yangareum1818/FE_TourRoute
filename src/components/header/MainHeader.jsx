@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import barcord from 'assets/barcord.png';
 import { FaCalendarAlt, FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
-import Logoimage from 'assets/Logo5.svg';
-import SerchLogo from 'assets/SerchLogo.svg';
+import Logo from 'assets/logo.svg';
+import SerchLogo from 'assets/serch_logo.svg';
 import { useSelector } from 'react-redux';
 import { DatePicker, InputNumber, Select } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
@@ -19,33 +19,28 @@ const Wrapper = styled.div`
 	justify-content: space-between;
 	padding: 2rem 0;
 `;
-const LogoContainer = styled.div`
-	display: flex;
-	align-items: center;
+const LogoContainer = styled.h1`
 	background: transparent;
 `;
 const LogoImg = styled.img`
 	width: 13rem;
-	height: 20px;
+	height: 2rem;
 	cursor: pointer;
 `;
 const NavBar = styled.ul`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-`;
-const Register = styled.ul`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	gap: 4rem;
 `;
 const Category = styled.li`
-	margin-left: 4rem;
-	list-style-type: none;
-	font-size: 16px;
-	color: white;
-	font-weight: normal;
 	cursor: pointer;
+
+	& > * {
+		font-size: 1.6rem;
+		font-weight: 400;
+		color: #fff;
+	}
 `;
 //section
 const WrapperDiv = styled.div`
@@ -112,6 +107,7 @@ const InputDiv = styled.div`
 		width: 5rem;
 		border: 0;
 		background: transparent;
+
 		input:focus {
 			outline: none;
 		}
@@ -157,37 +153,44 @@ const MainHeader = () => {
 			<Wrapper>
 				<LogoContainer>
 					<Link to="/">
-						<LogoImg src={Logoimage} />
+						<LogoImg src={Logo} />
 					</Link>
 				</LogoContainer>
 				<NavBar>
-					<Link to="/tourplan/1">
-						<Category>여행계획</Category>
-					</Link>
-					<Link to="/festival">
-						<Category>지역축제</Category>
-					</Link>
-					<Link to="/community">
-						<Category>커뮤니티</Category>
-					</Link>
-					<Link to="/tourplanInfo">
-						<Category>투어라우트</Category>
-					</Link>
+					<Category>
+						<Link to="/tourplan/1">여행계획</Link>
+					</Category>
+					<Category>
+						<Link to="/festival">지역축제</Link>
+					</Category>
+					<Category>
+						<Link to="/community">커뮤니티</Link>
+					</Category>
+					<Category>
+						<Link to="/tourplanInfo">투어라우트</Link>
+					</Category>
 				</NavBar>
-				<Register>
-					{Token ? (
-						<Category style={{ border: '1px solid grey', color: '#959696' }} onClick={HandleLogout}>
-							로그아웃
+				{Token ? (
+					<NavBar>
+						<Category style={{ color: '#959696' }}>
+							<Link to="/" onClick={HandleLogout}>
+								로그아웃
+							</Link>
 						</Category>
-					) : (
-						<Link to="/login">
-							<Category style={{ color: '#959696' }}>로그인</Category>
-						</Link>
-					)}
-					<Link to="/auth/signup">
-						<Category style={{ color: '#959696' }}>회원가입</Category>
-					</Link>
-				</Register>
+						<Category style={{ color: '#959696' }}>
+							<Link to="/my/profile">마이페이지</Link>
+						</Category>
+					</NavBar>
+				) : (
+					<NavBar>
+						<Category style={{ color: '#959696' }}>
+							<Link to="/login">로그인</Link>
+						</Category>
+						<Category style={{ color: '#959696' }}>
+							<Link to="/auth/signup">회원가입</Link>
+						</Category>
+					</NavBar>
+				)}
 			</Wrapper>
 			<WrapperDiv>
 				<SerchText>
@@ -195,11 +198,11 @@ const MainHeader = () => {
 				</SerchText>
 				<SerchContainer>
 					<SerchBarHeader>
-						<LogoHeader src={SerchLogo} alt=" 로고" />
+						<LogoHeader src={SerchLogo} alt="로고" />
 					</SerchBarHeader>
 					<SerchBarSection>
 						<BarcordContainer>
-							<img src={barcord} alt="바코드 " />
+							<img src={barcord} alt="바코드" />
 						</BarcordContainer>
 						<SerchBarInput>
 							<UserInput>
