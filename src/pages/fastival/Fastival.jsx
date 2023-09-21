@@ -6,13 +6,14 @@ import { Pagination } from 'antd';
 import axios from 'axios';
 
 const Wrapper = styled.div`
+	padding: 8rem 0 16rem;
 	height: 100%;
 	width: 100%;
 `;
 const FastivalTitle = styled.h1`
 	color: #000000;
 	font-size: 3.2rem;
-	margin-bottom: 1rem;
+	margin-bottom: 4rem;
 `;
 const FastivalSubTitle = styled.span`
 	color: #3ad0ff;
@@ -26,8 +27,8 @@ const LocalBtn = styled.button`
 	border-radius: 0.8rem;
 	padding: 1rem 5rem;
 `;
-const MyWishListWrapper = styled.div`
-	margin-top: 3rem;
+const MyWishListWrapper = styled.ul`
+	margin-top: 4rem;
 	display: grid;
 	// 몇 줄에 height값을 줄건지 map돌릴 때, (i가 3개일 때 1++증가 : test용으로 7개 넣음 (3줄이니까 3))
 	grid-template-rows: repeat(4, 40rem);
@@ -35,6 +36,7 @@ const MyWishListWrapper = styled.div`
 	grid-auto-rows: 10rem;
 	gap: 2rem;
 `;
+const MyWishList = styled.li``;
 const PaginationDiv = styled.div`
 	margin: 3rem auto;
 	display: flex;
@@ -55,6 +57,7 @@ const Fastival = () => {
 			})
 			.catch(err => console.log(err));
 	}, []);
+
 	const GetBookmark = useCallback(() => {
 		const token = localStorage.getItem('token');
 		axios
@@ -70,12 +73,9 @@ const Fastival = () => {
 	console.log(params);
 	return (
 		<Wrapper>
-			<div>
-				<FastivalTitle>
-					<FastivalSubTitle>역사가 깊은, 경상도 각지에서 </FastivalSubTitle>열리는 축제를
-					즐겨보세요!
-				</FastivalTitle>
-			</div>
+			<FastivalTitle>
+				<FastivalSubTitle>역사가 깊은, 경상도 각지에서 </FastivalSubTitle>열리는 축제를 즐겨보세요!
+			</FastivalTitle>
 			<LocalList>
 				<LocalBtn>전체</LocalBtn>
 				<LocalBtn>부산</LocalBtn>
@@ -87,16 +87,19 @@ const Fastival = () => {
 				{Data.map((e, index) => {
 					console.log('11111', e);
 					return (
-						<Link key={index} to={`./${index}`} state={{ prop: e }}>
-							<LocalButton
-								key={index}
-								status={e.status}
-								name={e.f_name}
-								subaddr={e.s_addr}
-								term={e.term}
-								backimg={e.i_link}
-							/>
-						</Link>
+						<MyWishList key={index}>
+							<Link to={`./${index}`} state={{ prop: e }}>
+								<LocalButton
+									key={index}
+									city={e.city}
+									status={e.status}
+									name={e.f_name}
+									subaddr={e.s_addr}
+									term={e.term}
+									backimg={e.i_link}
+								/>
+							</Link>
+						</MyWishList>
 					);
 				})}
 			</MyWishListWrapper>

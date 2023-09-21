@@ -56,7 +56,7 @@ const LocalDate = styled.p`
 	font-size: 1.6rem;
 	font-weight: 500;
 `;
-const LocalButton = ({ status, name, subaddr, term, backimg }) => {
+const LocalButton = ({ status, city, name, subaddr, term, backimg }) => {
 	const img = 'http://13.209.56.221:8000/img/' + backimg;
 	return (
 		<MyWishList style={{ backgroundImage: `url(${img})` }}>
@@ -71,15 +71,15 @@ const LocalButton = ({ status, name, subaddr, term, backimg }) => {
 			</ListIconWrapper>
 
 			<ListContent>
-				<LocalName>대구</LocalName>
+				<LocalName>{city}</LocalName>
 				<div>
-					<LocalTitle>{name}2023 부산여행영화제</LocalTitle>
+					<LocalTitle>{name}</LocalTitle>
 					<LocalAddr>
 						<FaMapMarkerAlt />
-						<span>{subaddr}부산 해운대구</span>
+						<span>{subaddr}</span>
 					</LocalAddr>
 				</div>
-				<LocalDate>{term}2023. 08. 12 - 2023.08. 13</LocalDate>
+				<LocalDate>{term}</LocalDate>
 			</ListContent>
 		</MyWishList>
 	);
