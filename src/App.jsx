@@ -29,6 +29,7 @@ import Info from 'pages/ info/Info';
 import MainLayOut from './components/Layout/MainLayOut';
 import Fastival from './pages/fastival/Fastival';
 import FastivalPost from './pages/fastival/FastivalPost';
+import ProfileManagementContainer from 'pages/mypage/ProfileManagementContainer';
 
 function App() {
 	return (
@@ -52,6 +53,7 @@ function App() {
 					{/* 마이페이지 */}
 					<Route element={<PostContentsLayout text="마이페이지" />}>
 						<Route path="/my/profile" element={<ProfileContainer />} />
+						<Route path="/my/profile/management" element={<ProfileManagementContainer />} />
 						<Route path="/my/record" element={<RecordContainer />} />
 						<Route path="/my/wishlist" element={<WishListContainer />} />
 						<Route path="/my/wrtiting" element={<WritingListContainer />} />

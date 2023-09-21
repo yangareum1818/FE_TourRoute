@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import PostContentsLayout from 'components/Layout/PostContentsLayout';
 
-import logoImg from '../../assets/logo2.png';
+import logoImg from '../../assets/logo.svg';
 import recordImg1 from '../../assets/recordImg1.png';
 import recordImg2 from '../../assets/recordImg2.png';
 import recordImg3 from '../../assets/recordImg3.png';

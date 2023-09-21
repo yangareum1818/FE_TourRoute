@@ -1,5 +1,6 @@
 import Profile from 'components/sidebar/Profile';
 import SideMenu from 'components/sidebar/SideMenu';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const SidebarWrapper = styled.div`
@@ -19,17 +20,46 @@ const SideMenuLocation = styled.span`
 	font-weight: 500;
 `;
 
-const SidebarLayout = ({ locationText, children }) => {
-	const locaion = window.location.pathname;
-	const mypage = locaion.includes('/my');
-	console.log('sidebar 페이지 확인', mypage);
+const SidebarLayout = () => {
+	const location = window.location.pathname;
+	const mypage = location.includes('/my');
+	const [sideLocation, setSideLocation] = useState('');
+	const sidemenulocation = [
+		{
+			pathname: '/my/profile',
+			value: '내 프로필',
+		},
+		{
+			pathname: '/my/record',
+			value: '나의 여행기록',
+		},
+		{
+			pathname: '/my/wishlist',
+			value: '찜한 목록',
+		},
+		{
+			pathname: '/my/wrtiting',
+			value: '내가 작성한 글',
+		},
+		{
+			pathname: '/my/comment',
+			value: '내가 쓴 댓글',
+		},
+	];
+	// console.log('sidebar 페이지 확인', mypage, sidemenulocation);
+
 	return (
 		<SidebarWrapper>
 			{mypage === true ? (
 				<>
-					{/* sideMenu Active된 {locationText}값 넣어야함. */}
-					{/* <SideMenuLocation>{locationText}</SideMenuLocation> */}
-					<SideMenuLocation>내 프로필</SideMenuLocation>
+					{sidemenulocation.filter(m => {
+						const menu = m.pathname;
+						const menuitem = menu.includes(location);
+						console.log(menuitem);
+						if (menuitem === true) {
+							return <SideMenuLocation>{m.value}</SideMenuLocation>;
+						}
+					})}
 
 					<Profile />
 					<SideMenu />

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const SideBarWrapper = styled.div`
 	padding: 2rem;
@@ -18,8 +18,8 @@ const SideList = styled.li`
 	font-size: 1.6rem;
 	font-weight: 300;
 
-	&.active,
-	&:hover {
+	&:hover > a,
+	& > a.active {
 		color: #000;
 		font-weight: 500;
 	}
@@ -29,25 +29,20 @@ const Sidebar = () => {
 	return (
 		<SideBarWrapper>
 			<SideMenu>
-				{/* {sideList.map(list => {
-					<SideList key={list.value} className={({ isActive }) => (isActive ? 'active' : '')}>
-						<NavLink to={list.path}>{list.name}</NavLink>
-					</SideList>;
-				})} */}
-				<SideList className="active">
-					<Link to="/my/profile">내 프로필</Link>
+				<SideList>
+					<NavLink to="/my/profile">내 프로필</NavLink>
 				</SideList>
 				<SideList>
-					<Link to="/my/record">나의 여행기록</Link>
+					<NavLink to="/my/record">나의 여행기록</NavLink>
 				</SideList>
 				<SideList>
-					<Link to="/my/wishlist">찜한 목록</Link>
+					<NavLink to="/my/wishlist">찜한 목록</NavLink>
 				</SideList>
 				<SideList>
-					<Link to="/my/wrtiting">내가 작성한 글</Link>
+					<NavLink to="/my/wrtiting">내가 작성한 글</NavLink>
 				</SideList>
 				<SideList>
-					<Link to="/my/comment">내가 쓴 댓글</Link>
+					<NavLink to="/my/comment">내가 쓴 댓글</NavLink>
 				</SideList>
 			</SideMenu>
 		</SideBarWrapper>

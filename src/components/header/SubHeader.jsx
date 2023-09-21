@@ -40,6 +40,9 @@ const SubHeader = () => {
 	const HandleLogout = useCallback(() => {
 		setToken(window.localStorage.removeItem('token'));
 	}, []);
+	useEffect(() => {
+		setToken(window.localStorage.getItem('token'));
+	}, [setToken]);
 	return (
 		<Wrapper>
 			<Logo>
