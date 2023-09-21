@@ -39,14 +39,16 @@ const ProfileInfoChangeText = styled.span`
 const ProfileContainer = () => {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
+	const [changeData, setChangeData] = useState('');
 
 	const userInfo = useCallback(async () => {
 		const res = await axiosTokenGet('/users/mypage');
-		console.log(res);
+		console.log('res', res);
 
 		setUsername(res.username);
 		setEmail(res.email);
-	}, []);
+		setChangeData(res.latest);
+	}, [setEmail, setUsername, setChangeData]);
 
 	useEffect(() => {
 		userInfo();
@@ -66,7 +68,7 @@ const ProfileContainer = () => {
 				<ProfileInfoTitle>마케팅 수신동의</ProfileInfoTitle>
 				<ProfileInfoValue>수신거부</ProfileInfoValue>
 			</ProfileInfoWrpper>
-			<ProfileInfoChangeText>최근 수정일 : 2023-08-14</ProfileInfoChangeText>
+			<ProfileInfoChangeText>최근 수정일 : {changeData}</ProfileInfoChangeText>
 		</MyProfileContent>
 	);
 };

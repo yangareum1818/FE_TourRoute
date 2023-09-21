@@ -147,7 +147,7 @@ const MainHeader = () => {
 	}, []);
 	useEffect(() => {
 		setToken(window.localStorage.getItem('token'));
-	}, []);
+	}, [setToken]);
 	return (
 		<WrapperContainer>
 			<Wrapper>
