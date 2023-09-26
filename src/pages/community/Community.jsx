@@ -3,25 +3,25 @@ import styled from 'styled-components';
 import CommunityTItile from './CoummunityTItle/ CommunityTItile';
 import CommunitySide from './CommunitySide/CommunitySide';
 import CommunityList from './CommunityList/CommunityList';
+import { Title } from 'components/common/Title';
 
 const Wrapper = styled.div`
-	display: grid;
-	grid-template-rows: 2rem 3rem;
-	gap: 2rem;
-	padding-left: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
 	width: 100%;
-	height: 130vh;
-	margin-top: 7rem;
+	padding: 8rem 0;
 `;
 
 const SectionContainer = styled.div`
 	display: flex;
-	justify-content: space-between;
+	gap: 2rem;
 `;
 const Community = () => {
 	return (
 		<Wrapper>
-			<CommunityTItile />
+			{/* <CommunityTItile /> */}
+			<Title text="커뮤니티" />
 			<SectionContainer>
 				<CommunityList />
 				<CommunitySide />
