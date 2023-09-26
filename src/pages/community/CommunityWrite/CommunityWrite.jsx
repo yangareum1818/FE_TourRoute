@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import img from 'assets/image.png';
+import { axiosTokenPost } from 'utils/AxiosUtils';
 const Wrapper = styled.div`
 	height: 100%;
 	width: 100%;
@@ -99,12 +100,11 @@ const CommunityWrite = () => {
 	const navigate = useNavigate();
 	const inputRef = useRef();
 
-	const handleSubmit = useCallback(
-		e => {
-			navigate('/community');
-		},
-		[navigate],
-	);
+	const handleSubmit = useCallback(async () => {
+		const res = await axiosTokenPost('/board/create_board');
+		console.log(res);
+		// navigate('/community');
+	}, []);
 
 	const handleClose = useCallback(
 		e => {
