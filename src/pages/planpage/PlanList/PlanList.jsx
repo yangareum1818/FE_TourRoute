@@ -7,7 +7,7 @@ import hotplace from 'assets/category_hotlocation.png';
 import history from 'assets/category_history.png';
 import walking from 'assets/category_walk.png';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { axiosTokenGet } from 'utils/AxiosUtils';
 const CategoryContainer = styled.div`
 	display: grid;
 	grid-template-columns: 25rem 25rem 25rem 25rem;
@@ -50,8 +50,9 @@ const NextText = styled.span`
 const PlanList = () => {
 	const navigate = useNavigate();
 	const HandlePage = async () => {
-		const res = await axios.post('http://13.209.56.221:8000//plan/recommand-plan?');
 		// navigate('/tourplan/3');
+		const res = await axiosTokenGet(`/plan/recommand-plan/부산/park`);
+		console.log(res);
 	};
 	return (
 		<div>
