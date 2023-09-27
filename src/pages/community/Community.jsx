@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import CommunityTItile from './CoummunityTItle/ CommunityTItile';
 import CommunitySide from './CommunitySide/CommunitySide';
 import CommunityList from './CommunityList/CommunityList';
 import { Title } from 'components/common/Title';
+import { Outlet } from 'react-router-dom';
+import PostContentsLayout from 'components/Layout/PostContentsLayout';
 
 const Wrapper = styled.div`
 	display: flex;
@@ -20,10 +21,11 @@ const SectionContainer = styled.div`
 const Community = () => {
 	return (
 		<Wrapper>
-			{/* <CommunityTItile /> */}
 			<Title text="커뮤니티" />
 			<SectionContainer>
 				<CommunityList />
+				{/* <Outlet>
+				</Outlet> */}
 				<CommunitySide />
 			</SectionContainer>
 		</Wrapper>
