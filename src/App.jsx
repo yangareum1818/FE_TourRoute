@@ -30,6 +30,7 @@ import MainLayOut from './components/Layout/MainLayOut';
 import Fastival from './pages/fastival/Fastival';
 import FastivalPost from './pages/fastival/FastivalPost';
 import ProfileManagementContainer from 'pages/mypage/ProfileManagementContainer';
+import CommunityPost from 'pages/community/CommunityPost/CommunityPost';
 
 function App() {
 	return (
@@ -49,7 +50,6 @@ function App() {
 					<Route path="/auth/signup/terms" element={<SignUpTermsContainer />} />
 					<Route path="/auth/signup/information" element={<SignUpInfoInput />} />
 					<Route path="/auth/signup/complete" element={<SignUpCompleteContainer />} />
-
 					{/* 마이페이지 */}
 					<Route element={<PostContentsLayout text="마이페이지" />}>
 						<Route path="/my/profile" element={<ProfileContainer />} />
@@ -59,15 +59,21 @@ function App() {
 						<Route path="/my/wrtiting" element={<WritingListContainer />} />
 						<Route path="/my/comment" element={<CommentContainer />} />
 					</Route>
-
 					{/* 지역축제 */}
 					<Route path="festival" element={<Fastival />} />
 					<Route path="festival/:id" element={<FastivalPost />} />
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />} />
+					<Route path="/community/:postId" element={<CommunityPost />} />
+					{/* /community/post=postId || /community/postId */}
 					<Route element={<CommunityWriteLayout />}>
 						<Route path="/communitywrite" element={<CommunityWrite />} />
 					</Route>
+
+					{/* <Route element={<PostContentsLayout text="커뮤니티" />}>
+						<Route path="/community" element={<Community />} />
+						<Route path="/community/:postId" element={<CommunityPost />} />
+					</Route> */}
 				</Route>
 			</Routes>
 		</BrowserRouter>

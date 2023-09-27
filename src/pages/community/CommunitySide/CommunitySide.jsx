@@ -3,27 +3,6 @@ import styled from 'styled-components';
 import { FaPen } from 'react-icons/fa6';
 import { Link, NavLink } from 'react-router-dom';
 
-const WriteBtn = styled(Link)`
-	font-size: 0;
-	padding: 2rem 0;
-	background: #3ad0ff;
-	border-radius: 0.8rem;
-	text-align: center;
-	cursor: pointer;
-
-	span {
-		margin-left: 0.8rem;
-	}
-
-	& > * {
-		display: inline-block;
-		color: #fff;
-		font-size: 1.5rem;
-		font-weight: 700;
-		vertical-align: middle;
-	}
-`;
-
 const SideBarWrapper = styled.div`
 	flex: 1;
 	display: flex;
@@ -51,6 +30,29 @@ const SideList = styled.li`
 		font-weight: 500;
 	}
 `;
+
+const WriteBtn = styled(Link)`
+	font-size: 0;
+	height: 6rem;
+	line-height: 6rem;
+	background: #3ad0ff;
+	border-radius: 0.8rem;
+	text-align: center;
+	cursor: pointer;
+
+	span {
+		margin-left: 0.8rem;
+	}
+
+	& > * {
+		display: inline-block;
+		color: #fff;
+		font-size: 1.5rem;
+		font-weight: 700;
+		vertical-align: middle;
+	}
+`;
+
 const CommunitySide = () => {
 	return (
 		<SideBarWrapper>
