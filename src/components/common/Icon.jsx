@@ -127,7 +127,7 @@ export const RecruitmentStatus = ({ statusText }) => {
 
 	return (
 		<>
-			{statusText === '모집 완료' ? (
+			{statusText === '모집 중' ? (
 				<Status>{statusText}</Status>
 			) : (
 				<Status className="complete">{statusText}</Status>

@@ -4,26 +4,6 @@ import { Pagination } from 'antd';
 import Empty from 'components/common/Empty';
 import { Link } from 'react-router-dom';
 import { ImgWhether, RecruitmentStatus } from 'components/common/Icon';
-
-const Wrapper = styled.div`
-	border-top: 1px solid grey;
-	width: 77%;
-`;
-const ListForm = styled.div`
-	display: grid;
-	grid-template-rows: 5.5rem;
-	grid-template-columns: 17rem 55rem 10rem;
-`;
-const ListContent = styled.div`
-	display: flex;
-	align-items: center;
-	border-bottom: 1px solid grey;
-	font-size: 16px;
-`;
-const ListSubTitle = styled.span`
-	color: #959696;
-`;
-
 const WritingListWrapper = styled.div`
 	flex: 3;
 `;
