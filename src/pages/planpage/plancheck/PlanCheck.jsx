@@ -2,9 +2,9 @@ import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Logo from 'assets/serch_logo.svg';
 import barcord from 'assets/barcord.png';
-import { FaCalendarAlt, FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
 import { DatePicker, InputNumber, Select } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import useInput from 'hooks/useInput';
 import { FaX } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
@@ -134,13 +134,11 @@ const PlanCheck = () => {
 	const navigate = useNavigate();
 	const [UserId, setUserId] = useInput('');
 	const [UserList, setUserList] = useState([]);
-	const dispatch = useDispatch();
-	const count = useSelector(state => state.reducer.count);
+	const Tour = useSelector(state => state.Tour);
+	const name = useSelector(state => state.Info);
 	const { RangePicker } = DatePicker;
-
 	const handleDel = useCallback(
 		e => {
-			console.log(e);
 			UserList.splice(UserList.indexOf(e), 1);
 			setUserList([...UserList]);
 		},
@@ -177,6 +175,7 @@ const PlanCheck = () => {
 								목적지
 								<Select
 									defaultValue="대구광역시"
+									value={Tour.Tour.LocalName}
 									options={[
 										{
 											value: '대구광역시',
@@ -185,6 +184,14 @@ const PlanCheck = () => {
 										{
 											value: '부산광역시',
 											label: '부산광역시',
+										},
+										{
+											value: '경주시',
+											label: '경주시',
+										},
+										{
+											value: '포항시',
+											label: '포항시',
 										},
 									]}
 								/>
@@ -199,7 +206,7 @@ const PlanCheck = () => {
 						</UserInput>
 						<UserInput>
 							<PeopleNum>
-								인원 <InputNumber defaultValue={count} />
+								인원 <InputNumber defaultValue="1" />
 							</PeopleNum>
 							<InputIcon>
 								<FaUserFriends />
@@ -222,8 +229,8 @@ const PlanCheck = () => {
 								<p style={{ color: '#3AD0FF', fontWeight: 'bold' }}>나</p>
 								<TourPlayerListDiv>
 									<PeopleList>
-										<li>lovaoi777@naver.com</li>
-										<li>짱구</li>
+										<li>{name.user.email}</li>
+										<li>{name.user.name}</li>
 									</PeopleList>
 								</TourPlayerListDiv>
 							</div>
