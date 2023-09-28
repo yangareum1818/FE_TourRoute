@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Footer from 'components/footer/Footer';
 import { Outlet } from 'react-router-dom';
-import backimg from 'assets/background.png';
 import SubHeader from '../header/SubHeader';
 const LayoutContainer = styled.div`
 	margin: 0 auto;
