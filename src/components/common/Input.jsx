@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { InputErrorIcon } from './Icon';
+import { createContext, useContext } from 'react';
 
 // const COLOR = {
 // 	default: css`
@@ -64,5 +65,33 @@ export const Input = ({ text, placeholder, type, onChange }) => {
 			{text && <DefalutP>{text}</DefalutP>}
 			<DefaultInput type={type} onChange={onChange} placeholder={placeholder} />
 		</DefalutLabel>
+	);
+};
+
+// 게시글
+export const SelectInputContext = createContext({});
+export const SelectInputWrapper = ({ label, children, ...rest }) => {
+	return (
+		<fieldset style={{ border: 'none', padding: '0' }}>
+			<legend>{label}</legend>
+			<SelectInputContext.Provider value={rest}>{children}</SelectInputContext.Provider>
+		</fieldset>
+	);
+};
+
+export const SelectInput = ({ children, value, name, disabled }) => {
+	const group = useContext(SelectInputContext);
+	return (
+		<label>
+			<input
+				type="radio"
+				value={value}
+				name={name}
+				disabled={disabled || group.disabled}
+				checked={group.value !== undefined ? value === group.value : undefined}
+				onChange={e => group.onChange && group.onChange(e.target.value)}
+			/>
+			{children}
+		</label>
 	);
 };
