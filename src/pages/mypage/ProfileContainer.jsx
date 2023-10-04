@@ -5,7 +5,7 @@ import { axiosTokenGet } from 'utils/AxiosUtils';
 const MyProfileContent = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 3.1rem;
+	gap: 3rem;
 	padding: 4rem 4rem 2rem;
 	border: 0.1rem solid #cfcfcf;
 	border-radius: 0.8rem;

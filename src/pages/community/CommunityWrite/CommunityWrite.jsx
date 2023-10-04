@@ -1,100 +1,91 @@
 import React, { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
+
 import { useNavigate } from 'react-router-dom';
-import img from 'assets/image.png';
 import { axiosTokenPost } from 'utils/AxiosUtils';
+
+import img from 'assets/image.png';
+import backgroundimg from 'assets/background_write.png';
+import { SelectInput, SelectInputWrapper } from 'components/common/Input';
+import TextArea from 'antd/es/input/TextArea';
+import { Button, ButtonGroup } from 'components/common/Button';
+import DummyImg from 'assets/deagu.png';
+
 const Wrapper = styled.div`
-	height: 100%;
+	padding-bottom: 12rem;
 	width: 100%;
-	font-size: 16px;
-	color: #959696;
 `;
 
-const SectionDiv = styled.div`
-	display: grid;
-	grid-template-rows: 14rem 8rem 8rem 20rem 80rem 20rem;
+const Benner = styled.div`
+	padding-bottom: 30rem;
+	background: url(${backgroundimg}) no-repeat center;
+	background-size: cover;
+`;
+
+const SectionDiv = styled.form`
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	padding: 4rem 0;
+`;
+
+const InputWrapper = styled.div`
 	padding: 2rem;
-	gap: 2rem;
+	display: flex;
+	gap: 6rem;
+	width: 100%;
+	font-size: 1.6rem;
+	border: 0.1rem solid #cfcfcf;
+	border-radius: 0.8rem;
 `;
 
-const CategoryDiv = styled.div`
-	border: 0.5px solid grey;
-	border-radius: 8px;
-	display: grid;
-	grid-template-columns: 8rem 8rem 8rem;
-	grid-template-rows: 3rem 3rem;
-	padding: 3rem;
-	gap: 2rem;
-`;
-const TitleDiv = styled.div`
-	display: grid;
-	grid-template-columns: 15rem 60rem;
-	grid-template-rows: 1.5rem;
-	gap: 2rem;
-	padding: 3rem;
-	border: 0.5px solid grey;
-	border-radius: 8px;
+const TitleLabel = styled.label`
+	flex: 0.5;
+	color: #303133;
 `;
 const TitleInput = styled.input`
+	flex: 7.5;
+	font-size: 1.6rem;
 	border: 0;
-	font-size: 16px;
+
 	&:focus {
 		border: 0;
 		outline: none;
 	}
 `;
 
-const ImageDiv = styled.div`
-	display: flex;
-	align-items: center;
-	border: 0.5px solid grey;
-	border-radius: 8px;
-	padding-left: 3rem;
-`;
 const ImgBtnDiv = styled.button`
-	padding: 3rem;
-	background-image: url(${img});
+	width: 6.4rem;
+	height: 6.4rem;
+	background: url(${img}) no-repeat;
 `;
-const TextAreaDiv = styled.div`
-	border: 0.5px solid grey;
-	border-radius: 8px;
-`;
-const FormSubmitBtn = styled.div`
-	margin: 0 auto;
-`;
-const SubmitBtn = styled.div`
-	background: #3ad0ff;
-	font-size: 16px;
-	font-weight: bold;
-	color: white;
+const PostImgWrapper = styled.div`
+	flex: 7.5;
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 2rem 18rem;
-	border-radius: 8px;
-	cursor: pointer;
+	gap: 2rem;
+	overflow: scroll;
 `;
-const CloseBtn = styled.div`
-	background: #cfcfcf;
-	font-size: 16px;
-	font-weight: bold;
-	color: white;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 2rem 18rem;
-	border-radius: 8px;
-	margin-top: 2rem;
-	cursor: pointer;
+const PostImg = styled.img`
+	display: block;
+	height: 12rem;
 `;
 const InPutImg = styled.input`
 	display: none;
 `;
-const PostImg = styled.img`
-	visibility: visible;
-	width: 20rem;
-	height: 18rem;
+
+const TextAreaWrapper = styled(TextArea)`
+	font-size: 1.6rem;
+
+	textarea {
+		padding: 2rem;
+		border: 0.1rem solid #cfcfcf;
+	}
+
+	.ant-input-data-count {
+		bottom: -30px;
+	}
 `;
+
 const CommunityWrite = () => {
 	const [Imgsrc, setImgsrc] = useState('');
 	const navigate = useNavigate();
@@ -145,45 +136,89 @@ const CommunityWrite = () => {
 	// 	console.log(e.target.files[0]);
 	// }, []);
 
+	// 상태 선택
+	const [value, setValue] = useState('EMAIL');
+
 	return (
 		<Wrapper>
+			<Benner />
 			<SectionDiv>
-				<CategoryDiv>
-					<span>카테고리</span>
-					<span>자유게시판</span>
-					<span>동행게시판</span>
-					<span>모집상태</span>
-					<span>모집중</span>
-					<span>모집완료</span>
-				</CategoryDiv>
-				<TitleDiv>
-					<div>제목</div>
+				<InputWrapper style={{ flexDirection: 'column', gap: '3rem' }}>
+					<SelectInputWrapper label="카테고리" value={value} onChange={setValue}>
+						<SelectInput value="EMAIL">자유게시판</SelectInput>
+						<SelectInput value="PHONE">동행게시판</SelectInput>
+					</SelectInputWrapper>
+
+					<SelectInputWrapper label="모집상태" value={value} onChange={setValue}>
+						<SelectInput value="EMAIL">모집 중</SelectInput>
+						<SelectInput value="PHONE">모집 완료</SelectInput>
+					</SelectInputWrapper>
+				</InputWrapper>
+
+				<InputWrapper>
+					<TitleLabel>제목</TitleLabel>
 					<TitleInput placeholder="ex) 1박 2일 대구 놀러갈 분 구해요" />
-				</TitleDiv>
-				<TitleDiv>
-					<div>참여링크</div>
-					<TitleInput placeholder="ex) 오픈채팅 URL 또는 편하신 URL을 입력해주세요. *개인정보는 올리시면 안돼요! " />
-				</TitleDiv>
-				<ImageDiv>
-					<InPutImg
-						type="file"
-						multiple
-						accept="image/*"
-						ref={inputRef}
-						onChange={e => onUploadImg(e)}
-					/>
-					{Imgsrc ? (
-						<PostImg src={Imgsrc} alt="사진추가 이미지" />
-					) : (
+				</InputWrapper>
+				<InputWrapper>
+					<TitleLabel>참여링크</TitleLabel>
+					<TitleInput placeholder="ex) 오픈채팅 URL 또는 편하신 URL을 입력해주세요. ( *개인정보는 올리시면 안돼요! ) " />
+				</InputWrapper>
+				{/* <InputWrapper>
+					<TitleLabel>이미지</TitleLabel>
+					<PostImgWrapper>
+						<PostImg src={DummyImg} alt="사진추가 이미지" />
+						<PostImg src={DummyImg} alt="사진추가 이미지" />
+						<PostImg src={DummyImg} alt="사진추가 이미지" />
+						<PostImg src={DummyImg} alt="사진추가 이미지" />
+						<PostImg src={DummyImg} alt="사진추가 이미지" />
+						<PostImg src={DummyImg} alt="사진추가 이미지" />
+						<PostImg src={DummyImg} alt="사진추가 이미지" />
+						<PostImg src={DummyImg} alt="사진추가 이미지" />
+						<PostImg src={DummyImg} alt="사진추가 이미지" />
+						<PostImg src={DummyImg} alt="사진추가 이미지" />
+						<PostImg src={DummyImg} alt="사진추가 이미지" />
+					</PostImgWrapper>
+				</InputWrapper> */}
+				{Imgsrc ? (
+					<InputWrapper>
+						<TitleLabel>이미지</TitleLabel>
+						<PostImgWrapper>
+							<PostImg src={Imgsrc} alt="사진추가 이미지" />
+						</PostImgWrapper>
+					</InputWrapper>
+				) : (
+					<InputWrapper style={{ justifyContent: 'center' }}>
+						<InPutImg
+							type="file"
+							multiple
+							accept="image/*"
+							ref={inputRef}
+							onChange={e => onUploadImg(e)}
+						/>
 						<ImgBtnDiv label="이미지업로드" onClick={onUploadImageButtonClick} />
-					)}
-				</ImageDiv>
-				<TextAreaDiv>TextArea 라이브러리 확인해봐야함</TextAreaDiv>
-				<FormSubmitBtn>
-					<SubmitBtn onClick={handleSubmit}>작성완료</SubmitBtn>
-					<CloseBtn onClick={handleClose}>취소</CloseBtn>
-				</FormSubmitBtn>
+					</InputWrapper>
+				)}
+				<TextAreaWrapper
+					showCount
+					maxLength={1000}
+					style={{
+						height: 500,
+						resize: 'none',
+					}}
+					// onChange={onChange}
+					placeholder="1. 현재 동행이 있나요?
+ex) 동행 1명 있어요
+2. 어떤 동행을 찾고 있나요?
+ex) 맛집  탐방을 좋아하는 20-30대 동행 찾아요!
+3. 함께 맞출부분이 있나요?
+ex) 원하시는 날짜가 있다면 알려주세요
+(1000자 이내)"
+				/>
 			</SectionDiv>
+			<ButtonGroup style={{ width: '40rem', margin: '0 auto' }}>
+				<Button onClick={handleSubmit} $sumbit text="작성완료" />
+				<Button onClick={handleClose} text="취소" variant="cancel" />
+			</ButtonGroup>
 		</Wrapper>
 	);
 };

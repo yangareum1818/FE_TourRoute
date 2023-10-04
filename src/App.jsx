@@ -17,19 +17,20 @@ import SignUpCompleteContainer from 'pages/auth/SignUpCompleteContainer';
 // 마이페이지
 import PostContentsLayout from 'components/Layout/PostContentsLayout';
 import ProfileContainer from 'pages/mypage/ProfileContainer';
+import ProfileManagementContainer from 'pages/mypage/ProfileManagementContainer';
 import RecordContainer from 'pages/mypage/RecordContainer';
 import WishListContainer from 'pages/mypage/WishListContainer';
 import WritingListContainer from 'pages/mypage/WritingListContainer';
 import CommentContainer from 'pages/mypage/CommentContainer';
 // 커뮤니티
 import Community from './pages/community/Community';
+import CommunityPost from 'pages/community/CommunityPost/CommunityPost';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
-import CommunityWriteLayout from './components/Layout/CommunityWriteLayout';
+
 import Info from 'pages/ info/Info';
 import MainLayOut from './components/Layout/MainLayOut';
 import Fastival from './pages/fastival/Fastival';
 import FastivalPost from './pages/fastival/FastivalPost';
-import ProfileManagementContainer from 'pages/mypage/ProfileManagementContainer';
 
 function App() {
 	return (
@@ -49,7 +50,6 @@ function App() {
 					<Route path="/auth/signup/terms" element={<SignUpTermsContainer />} />
 					<Route path="/auth/signup/information" element={<SignUpInfoInput />} />
 					<Route path="/auth/signup/complete" element={<SignUpCompleteContainer />} />
-
 					{/* 마이페이지 */}
 					<Route element={<PostContentsLayout text="마이페이지" />}>
 						<Route path="/my/profile" element={<ProfileContainer />} />
@@ -59,15 +59,19 @@ function App() {
 						<Route path="/my/wrtiting" element={<WritingListContainer />} />
 						<Route path="/my/comment" element={<CommentContainer />} />
 					</Route>
-
 					{/* 지역축제 */}
 					<Route path="festival" element={<Fastival />} />
 					<Route path="festival/:id" element={<FastivalPost />} />
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />} />
-					<Route element={<CommunityWriteLayout />}>
-						<Route path="/communitywrite" element={<CommunityWrite />} />
-					</Route>
+					<Route path="/community/:postId" element={<CommunityPost />} />
+					{/* /community/post=postId || /community/postId */}
+					<Route path="/communitywrite" element={<CommunityWrite />} />
+
+					{/* <Route element={<PostContentsLayout text="커뮤니티" />}>
+						<Route path="/community" element={<Community />} />
+						<Route path="/community/:postId" element={<CommunityPost />} />
+					</Route> */}
 				</Route>
 			</Routes>
 		</BrowserRouter>
