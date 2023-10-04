@@ -56,30 +56,29 @@ const LocalDate = styled.p`
 	font-size: 1.6rem;
 	font-weight: 500;
 `;
-const LocalButton = ({ status, city, name, subaddr, term, backimg }) => {
-	const img = 'http://13.209.56.221:8000/img/' + backimg;
+const LocalButton = ({ props }) => {
+	const img = process.env.REACT_APP_ENDPOINT + '/img/' + props.i_link;
 	return (
 		<MyWishList style={{ backgroundImage: `url(${img})` }}>
 			<ListIconWrapper>
-				{/*<WishHeartIcon /> 빈하트 */}
-				<WishHeartActiveIcon />
-				{status === '개최 예정' ? (
-					<TrackedProgressIcon text={status} />
+				{props.is_bookmark ? <WishHeartActiveIcon /> : <WishHeartIcon />}
+				{props.status === '개최 예정' ? (
+					<TrackedProgressIcon text={props.status} />
 				) : (
 					<TrackingProgressIcon text="진행 중" />
 				)}
 			</ListIconWrapper>
 
 			<ListContent>
-				<LocalName>{city}</LocalName>
+				<LocalName>{props.city}</LocalName>
 				<div>
-					<LocalTitle>{name}</LocalTitle>
+					<LocalTitle>{props.name}</LocalTitle>
 					<LocalAddr>
 						<FaMapMarkerAlt />
-						<span>{subaddr}</span>
+						<span>{props.subaddr}</span>
 					</LocalAddr>
 				</div>
-				<LocalDate>{term}</LocalDate>
+				<LocalDate>{props.term}</LocalDate>
 			</ListContent>
 		</MyWishList>
 	);
