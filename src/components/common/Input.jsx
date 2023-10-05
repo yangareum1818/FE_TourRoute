@@ -68,21 +68,36 @@ export const Input = ({ text, placeholder, type, onChange }) => {
 	);
 };
 
-// 게시글
-export const SelectInputContext = createContext({});
-export const SelectInputWrapper = ({ label, children, ...rest }) => {
-	return (
-		<fieldset style={{ border: 'none', padding: '0' }}>
-			<legend>{label}</legend>
-			<SelectInputContext.Provider value={rest}>{children}</SelectInputContext.Provider>
-		</fieldset>
-	);
-};
+// Community 카테고리 Input
+const CategoryLabel = styled.label`
+	position: relative;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: pointer;
+
+	& > input {
+		position: absolute;
+		width: 0;
+		height: 0;
+		opacity: 0;
+	}
+	& > span {
+		color: #959696;
+		font-size: 1.6rem;
+		font-weight: 500;
+	}
+
+	input:checked ~ span {
+		color: #3ad0ff;
+	}
+`;
 
 export const SelectInput = ({ children, value, name, disabled }) => {
 	const group = useContext(SelectInputContext);
 	return (
-		<label>
+		<CategoryLabel>
 			<input
 				type="radio"
 				value={value}
@@ -91,7 +106,17 @@ export const SelectInput = ({ children, value, name, disabled }) => {
 				checked={group.value !== undefined ? value === group.value : undefined}
 				onChange={e => group.onChange && group.onChange(e.target.value)}
 			/>
-			{children}
-		</label>
+			<span>{children}</span>
+		</CategoryLabel>
+	);
+};
+
+export const SelectInputContext = createContext({});
+export const SelectInputWrapper = ({ label, children, ...rest }) => {
+	return (
+		<>
+			<span style={{ marginRight: '3rem' }}>{label}</span>
+			<SelectInputContext.Provider value={rest}>{children}</SelectInputContext.Provider>
+		</>
 	);
 };
