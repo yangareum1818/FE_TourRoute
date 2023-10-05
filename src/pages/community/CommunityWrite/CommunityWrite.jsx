@@ -32,7 +32,6 @@ const SectionDiv = styled.form`
 const InputWrapper = styled.div`
 	padding: 2rem;
 	display: flex;
-	gap: 6rem;
 	width: 100%;
 	font-size: 1.6rem;
 	border: 0.1rem solid #cfcfcf;
@@ -40,11 +39,11 @@ const InputWrapper = styled.div`
 `;
 
 const TitleLabel = styled.label`
-	flex: 0.5;
+	flex: 1;
 	color: #303133;
 `;
 const TitleInput = styled.input`
-	flex: 7.5;
+	flex: 7;
 	font-size: 1.6rem;
 	border: 0;
 
@@ -87,6 +86,10 @@ const TextAreaWrapper = styled(TextArea)`
 `;
 
 const CommunityWrite = () => {
+	// 상태 선택
+	const [category, setCategory] = useState('FREE');
+	const [recruitment, setRecruitment] = useState('RECRUITING');
+
 	const [Imgsrc, setImgsrc] = useState('');
 	const navigate = useNavigate();
 	const inputRef = useRef();
@@ -136,23 +139,24 @@ const CommunityWrite = () => {
 	// 	console.log(e.target.files[0]);
 	// }, []);
 
-	// 상태 선택
-	const [value, setValue] = useState('EMAIL');
-
 	return (
 		<Wrapper>
 			<Benner />
 			<SectionDiv>
 				<InputWrapper style={{ flexDirection: 'column', gap: '3rem' }}>
-					<SelectInputWrapper label="카테고리" value={value} onChange={setValue}>
-						<SelectInput value="EMAIL">자유게시판</SelectInput>
-						<SelectInput value="PHONE">동행게시판</SelectInput>
-					</SelectInputWrapper>
+					<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
+						<SelectInputWrapper label="카테고리" value={category} onChange={setCategory}>
+							<SelectInput value="FREE">자유게시판</SelectInput>
+							<SelectInput value="TOGETHER">동행게시판</SelectInput>
+						</SelectInputWrapper>
+					</div>
 
-					<SelectInputWrapper label="모집상태" value={value} onChange={setValue}>
-						<SelectInput value="EMAIL">모집 중</SelectInput>
-						<SelectInput value="PHONE">모집 완료</SelectInput>
-					</SelectInputWrapper>
+					<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
+						<SelectInputWrapper label="모집상태" value={recruitment} onChange={setRecruitment}>
+							<SelectInput value="RECRUITING">모집 중</SelectInput>
+							<SelectInput value="RECRUITMENT_COMPLETED">모집 완료</SelectInput>
+						</SelectInputWrapper>
+					</div>
 				</InputWrapper>
 
 				<InputWrapper>
