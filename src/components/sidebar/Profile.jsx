@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import dummyMyImage from '../../assets/Mask_group.svg';
 import ManagementIcon from '../../assets/brightness_high.png';
 import SidebarLayout from 'components/Layout/SidebarLayout';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { axiosTokenGet } from 'utils/AxiosUtils';
 
 const ProfileWrapper = styled.div`
 	display: flex;
@@ -45,14 +47,33 @@ const ProfileManagement = styled(Link)`
 `;
 
 const Profile = () => {
+	const [username, setUsername] = useState('');
+
+	const userName = useCallback(async () => {
+		const res = await axiosTokenGet('/users/mypage');
+		console.log(res);
+
+		setUsername(res.username);
+	}, [setUsername]);
+
+	useEffect(() => {
+		userName();
+	}, [userName]);
+
+	// 프로필 편집 클릭시 holding
+	const location = useLocation();
+	const holding = location.pathname.includes('/management');
+
 	return (
 		<ProfileWrapper>
 			<MyImage src={dummyMyImage} />
-			<MyName>홍길동</MyName>
-			<ProfileManagementInner>
-				<ProfileManagementIcon src={ManagementIcon} />
-				<ProfileManagement to="/my/profile/management">프로필 관리</ProfileManagement>
-			</ProfileManagementInner>
+			<MyName>{username}</MyName>
+			{holding === false ? (
+				<ProfileManagementInner>
+					<ProfileManagementIcon src={ManagementIcon} />
+					<ProfileManagement to="/my/profile/management">프로필 관리</ProfileManagement>
+				</ProfileManagementInner>
+			) : null}
 		</ProfileWrapper>
 	);
 };
