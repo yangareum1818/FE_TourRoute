@@ -143,8 +143,8 @@ const CommunityWrite = () => {
 	const [board, setBoard] = useState({
 		title: '',
 		contents: '',
-		category: '',
-		recruitment: '',
+		category: 'IS_FREE',
+		recruitment: 'RECRUITING',
 	});
 
 	const { title, contents, category, recruitment } = board;
@@ -165,12 +165,12 @@ const CommunityWrite = () => {
 
 	const onRadioChange = useCallback(
 		async data => {
-			console.log('data', data);
 			await setBoard({
 				...board,
 				category: data,
 				recruitment: data,
 			});
+			console.log('data', data);
 			console.log(board);
 		},
 		[board],
@@ -192,7 +192,7 @@ const CommunityWrite = () => {
 							label="카테고리"
 							value={category}
 							checked={category === 'IS_FREE'}
-							onChange={onRadioChange}
+							onChange={category => onRadioChange(category)}
 						>
 							<SelectInput name="IS_FREE" value="IS_FREE">
 								자유게시판
@@ -208,7 +208,8 @@ const CommunityWrite = () => {
 							label="모집상태"
 							defaultChecked="RECRUITING"
 							value={recruitment || ''}
-							onChange={recruitment => onRadioChange({ ...board, recruitment })}
+							checked={recruitment === 'RECRUITING'}
+							onChange={recruitment => onRadioChange(recruitment)}
 						>
 							<SelectInput name="RECRUITING" value="RECRUITING">
 								모집 중
