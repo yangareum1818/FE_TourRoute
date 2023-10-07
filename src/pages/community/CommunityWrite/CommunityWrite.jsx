@@ -91,6 +91,7 @@ const CommunityWrite = () => {
 	// const [recruitment, setRecruitment] = useState('RECRUITING');
 
 	const [Imgsrc, setImgsrc] = useState('');
+	const [Recruiting, SetRecruiting] = useState(false);
 	const navigate = useNavigate();
 	const inputRef = useRef();
 
@@ -144,7 +145,7 @@ const CommunityWrite = () => {
 		title: '',
 		contents: '',
 		category: 'IS_FREE',
-		recruitment: 'RECRUITING',
+		recruitment: null,
 	});
 
 	const { title, contents, category, recruitment } = board;
@@ -164,12 +165,19 @@ const CommunityWrite = () => {
 	);
 
 	const onRadioChange = useCallback(
-		async data => {
-			await setBoard({
-				...board,
-				category: data,
-				recruitment: data,
-			});
+		data => {
+			data === 'IS_FREE'
+				? setBoard({
+						...board,
+						category: data,
+						recruitment: null,
+				  })
+				: setBoard({
+						...board,
+						category: data,
+						recruitment: data,
+				  });
+			data === 'IS_FREE' ? SetRecruiting(false) : SetRecruiting(true);
 			console.log('data', data);
 			console.log(board);
 		},
@@ -204,20 +212,24 @@ const CommunityWrite = () => {
 					</div>
 
 					<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
-						<SelectInputWrapper
-							label="모집상태"
-							defaultChecked="RECRUITING"
-							value={recruitment || ''}
-							checked={recruitment === 'RECRUITING'}
-							onChange={recruitment => onRadioChange(recruitment)}
-						>
-							<SelectInput name="RECRUITING" value="RECRUITING">
-								모집 중
-							</SelectInput>
-							<SelectInput name="RECRUITMENT_COMPLETED" value="RECRUITMENT_COMPLETED">
-								모집 완료
-							</SelectInput>
-						</SelectInputWrapper>
+						{Recruiting ? (
+							<SelectInputWrapper
+								label="모집상태"
+								defaultChecked="RECRUITING"
+								value={recruitment || ''}
+								checked={recruitment === 'RECRUITING'}
+								onChange={recruitment => onRadioChange(recruitment)}
+							>
+								<SelectInput name="RECRUITING" value="RECRUITING">
+									모집 중
+								</SelectInput>
+								<SelectInput name="RECRUITMENT_COMPLETED" value="RECRUITMENT_COMPLETED">
+									모집 완료
+								</SelectInput>
+							</SelectInputWrapper>
+						) : (
+							''
+						)}
 					</div>
 				</InputWrapper>
 
