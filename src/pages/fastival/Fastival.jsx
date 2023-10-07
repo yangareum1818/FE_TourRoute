@@ -27,6 +27,13 @@ const LocalBtn = styled.button`
 	border-radius: 0.8rem;
 	padding: 1rem 5rem;
 `;
+const LocalBtnChecked = styled.button`
+	border: 1px solid #cfcfcf;
+	border-radius: 0.8rem;
+	padding: 1rem 5rem;
+	background-color: #3ad0ff;
+	color: white;
+`;
 const MyWishListWrapper = styled.ul`
 	margin-top: 4rem;
 	display: grid;
@@ -44,32 +51,45 @@ const PaginationDiv = styled.div`
 	font-size: 1.4rem;
 `;
 const Fastival = () => {
-	let { params } = useParams();
 	const [Data, setData] = useState([]);
-
-	const GetFestival = useCallback(async () => {
+	const [Category, setCategory] = useState('전체');
+	let local = ['전체', '부산', '대구', '경주', '포항'];
+	const GetAllFestival = useCallback(async e => {
 		localStorage.getItem('token')
 			? await axiosTokenGet('/festival/get_info').then(res => setData(res))
 			: await axiosGet('/festival/get_info').then(res => setData(res));
 	}, []);
 
+	const GetCityFestival = useCallback(async e => {
+		localStorage.getItem('token')
+			? await axiosTokenGet(`/festival/get_city_info?city_name=${e}`).then(res => setData(res))
+			: await axiosGet(`/festival/get_city_info?city_name=${e}`).then(res => setData(res));
+	}, []);
+
+	const GetFestival = useCallback(
+		e => {
+			setCategory(e);
+			Category === '전체' ? GetAllFestival(e) : GetCityFestival(e);
+		},
+		[Category, GetAllFestival, GetCityFestival],
+	);
 	useEffect(() => {
-		// GetBookmark();
 		GetFestival();
 	}, []);
 
-	console.log(params);
 	return (
 		<Wrapper>
 			<FastivalTitle>
 				<FastivalSubTitle>역사가 깊은, 경상도 각지에서 </FastivalSubTitle>열리는 축제를 즐겨보세요!
 			</FastivalTitle>
 			<LocalList>
-				<LocalBtn>전체</LocalBtn>
-				<LocalBtn>부산</LocalBtn>
-				<LocalBtn>대구</LocalBtn>
-				<LocalBtn>경주</LocalBtn>
-				<LocalBtn>포항</LocalBtn>
+				{local.map(e => {
+					return Category === e ? (
+						<LocalBtnChecked onClick={() => GetFestival(e)}>{e}</LocalBtnChecked>
+					) : (
+						<LocalBtn onClick={() => GetFestival(e)}>{e}</LocalBtn>
+					);
+				})}
 			</LocalList>
 			<MyWishListWrapper>
 				{Data.map((e, index) => {
