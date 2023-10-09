@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 const SideBarWrapper = styled.div`
@@ -38,6 +38,8 @@ const SideList = styled.li`
 const Sidebar = () => {
 	const [url, seturl] = useState('');
 	const [isLoading, setLoading] = useState(false);
+	const location = useLocation();
+	const urlName = location.pathname.split('/')[2];
 	const urlType = {
 		profile: '내 프로필',
 		record: '나의 여행기록',
@@ -47,9 +49,9 @@ const Sidebar = () => {
 	};
 
 	useEffect(() => {
-		seturl(window.location.pathname.split('/')[2]);
+		seturl(urlName);
 		setLoading(true);
-	}, [isLoading, urlType.url]);
+	}, [isLoading, urlType]);
 
 	return (
 		<SideBarWrapper>
