@@ -168,10 +168,10 @@ const MainHeader = () => {
 	const [UserList, setUserList] = useState([]);
 	const [Loading, setLoading] = useState(false);
 
-	const [LocalName, setLocalName] = useState(null);
+	const [LocalName, setLocalName] = useState('대구');
 	const [StartDate, setStartDate] = useState(null);
 	const [FinishDate, setFinishDate] = useState(null);
-	const [People, setPeople] = useState('');
+	const [People, setPeople] = useState(1);
 	const { RangePicker } = DatePicker;
 	const name = useSelector(state => state.Info);
 	const dispatch = useDispatch();
@@ -214,8 +214,9 @@ const MainHeader = () => {
 	};
 	const handleDate = e => {
 		const [start, finish] = e;
-		setStartDate(start.$d.toLocaleDateString());
-		setFinishDate(finish.$d.toLocaleDateString());
+		console.log(start.$d.toLocaleDateString());
+		setStartDate(start.$d.toLocaleDateString().trim());
+		setFinishDate(finish.$d.toLocaleDateString().trim());
 	};
 	const handlepeople = useCallback(
 		async e => {
@@ -294,19 +295,19 @@ const MainHeader = () => {
 										onChange={e => setLocalName(e)}
 										options={[
 											{
-												value: '대구광역시',
+												value: '대구',
 												label: '대구광역시',
 											},
 											{
-												value: '부산광역시',
+												value: '부산',
 												label: '부산광역시',
 											},
 											{
-												value: '경주시',
+												value: '경주',
 												label: '경주시',
 											},
 											{
-												value: '포항시',
+												value: '포항',
 												label: '포항시',
 											},
 										]}

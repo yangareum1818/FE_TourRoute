@@ -42,7 +42,7 @@ function App() {
 					<Route path="/tourplan/" element={<Plan />}>
 						<Route path="1" element={<PlanCheck />} />
 						<Route path="2" element={<PlanList />} />
-						<Route path="3" element={<MapLayOut />} />
+						<Route path="3/:day" element={<MapLayOut />} />
 					</Route>
 					<Route path="/login" element={<LoginContainer />} />
 					{/* 회원가입 */}
