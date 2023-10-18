@@ -89,10 +89,20 @@ const CategoryLabel = styled.label`
 		font-weight: 500;
 	}
 
-	input:checked ~ span {
+	input[type='radio']:checked ~ span {
 		color: #3ad0ff;
 	}
 `;
+
+export const SelectInputContext = createContext({});
+export const SelectInputWrapper = ({ label, children, ...rest }) => {
+	return (
+		<>
+			<span style={{ marginRight: '3rem' }}>{label}</span>
+			<SelectInputContext.Provider value={rest}>{children}</SelectInputContext.Provider>
+		</>
+	);
+};
 
 export const SelectInput = ({ children, value, name, disabled }) => {
 	const group = useContext(SelectInputContext);
@@ -108,15 +118,5 @@ export const SelectInput = ({ children, value, name, disabled }) => {
 			/>
 			<span>{children}</span>
 		</CategoryLabel>
-	);
-};
-
-export const SelectInputContext = createContext({});
-export const SelectInputWrapper = ({ label, children, ...rest }) => {
-	return (
-		<>
-			<span style={{ marginRight: '3rem' }}>{label}</span>
-			<SelectInputContext.Provider value={rest}>{children}</SelectInputContext.Provider>
-		</>
 	);
 };
