@@ -60,8 +60,8 @@ function App() {
 						<Route path="/my/comment" element={<CommentContainer />} />
 					</Route>
 					{/* 지역축제 */}
-					<Route path="festival" element={<Fastival />} />
-					<Route path="festival/:id" element={<FastivalPost />} />
+					<Route path="festival/:city" element={<Fastival />} />
+					<Route path="festival/board/:id" element={<FastivalPost />} />
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />} />
 					<Route path="/community/:postId" element={<CommunityPost />} />
