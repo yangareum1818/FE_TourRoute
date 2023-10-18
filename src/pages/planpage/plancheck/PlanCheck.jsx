@@ -4,10 +4,14 @@ import Logo from 'assets/serch_logo.svg';
 import barcord from 'assets/barcord.png';
 import { FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
 import { DatePicker, InputNumber, Select } from 'antd';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import useInput from 'hooks/useInput';
 import { FaX } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import dayjs from 'dayjs';
+import { tour } from 'store/PostRedux';
+dayjs.extend(customParseFormat);
 const SerchContainer = styled.div`
 	border: 0.5px solid grey;
 	border-radius: 8px;
@@ -131,12 +135,30 @@ const NextText = styled.span`
 `;
 const DeletBtn = styled.div``;
 const PlanCheck = () => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [UserId, setUserId] = useInput('');
 	const [UserList, setUserList] = useState([]);
 	const Tour = useSelector(state => state.Tour);
 	const name = useSelector(state => state.Info);
+	const [LocalName, setLocalName] = useState(Tour.Tour.LocalName);
+	const [StartDate, setStartDate] = useState(Tour.Tour.StartDate);
+	const [FinishDate, setFinishDate] = useState(Tour.Tour.FinishDate);
+	const [People, setPeople] = useState(Tour.Tour.People);
 	const { RangePicker } = DatePicker;
+	const dateFormat = 'YYYY .MM .DD.';
+	const HandlePage = useCallback(() => {
+		dispatch(
+			tour({
+				LocalName: LocalName,
+				StartDate: StartDate,
+				FinishDate: FinishDate,
+				People: People,
+				UserList: UserList,
+			}),
+		);
+		navigate('/tourplan/2');
+	}, [dispatch, LocalName, StartDate, FinishDate, People, UserList, navigate]);
 	const handleDel = useCallback(
 		e => {
 			UserList.splice(UserList.indexOf(e), 1);
@@ -155,9 +177,6 @@ const PlanCheck = () => {
 		},
 		[UserId, UserList],
 	);
-	const HandlePage = () => {
-		navigate('/tourplan/2');
-	};
 
 	return (
 		<>
@@ -174,8 +193,7 @@ const PlanCheck = () => {
 							<div>
 								목적지
 								<Select
-									defaultValue="대구광역시"
-									value={Tour.Tour.LocalName}
+									defaultValue={Tour.Tour.LocalName + '광역시'}
 									options={[
 										{
 											value: '대구광역시',
@@ -202,11 +220,18 @@ const PlanCheck = () => {
 						</UserInput>
 						<UserInput>
 							{/*<div style={{ marginRight: '1rem' }}>YYYY-MM-DD ~ YYYY-MM-DD</div>*/}
-							<RangePicker />
+
+							<RangePicker
+								defaultValue={[
+									dayjs(Tour.Tour.StartDate, dateFormat),
+									dayjs(Tour.Tour.FinishDate, dateFormat),
+								]}
+								format={dateFormat}
+							/>
 						</UserInput>
 						<UserInput>
 							<PeopleNum>
-								인원 <InputNumber defaultValue="1" />
+								인원 <InputNumber defaultValue={Tour.Tour.People} />
 							</PeopleNum>
 							<InputIcon>
 								<FaUserFriends />

@@ -42,7 +42,7 @@ function App() {
 					<Route path="/tourplan/" element={<Plan />}>
 						<Route path="1" element={<PlanCheck />} />
 						<Route path="2" element={<PlanList />} />
-						<Route path="3" element={<MapLayOut />} />
+						<Route path="3/:day" element={<MapLayOut />} />
 					</Route>
 					<Route path="/login" element={<LoginContainer />} />
 					{/* 회원가입 */}
@@ -60,8 +60,8 @@ function App() {
 						<Route path="/my/comment" element={<CommentContainer />} />
 					</Route>
 					{/* 지역축제 */}
-					<Route path="festival" element={<Fastival />} />
-					<Route path="festival/:id" element={<FastivalPost />} />
+					<Route path="festival/:city" element={<Fastival />} />
+					<Route path="festival/board/:id" element={<FastivalPost />} />
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />} />
 					<Route path="/community/:postId" element={<CommunityPost />} />
