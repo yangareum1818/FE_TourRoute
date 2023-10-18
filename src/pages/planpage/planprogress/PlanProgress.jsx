@@ -29,8 +29,7 @@ const PlanProgress = () => {
 					싶으신가요?
 				</HeaderTItle>
 				<HeadersubTitle>
-					<span style={{ color: '#000000' }}>여행정보</span>
-					투어리스트 &gt; 여행저장
+					<span style={{ color: '#000000' }}>여행정보</span> &gt; 투어리스트 &gt; 여행저장
 				</HeadersubTitle>
 			</Header>
 		</Wrapper>
