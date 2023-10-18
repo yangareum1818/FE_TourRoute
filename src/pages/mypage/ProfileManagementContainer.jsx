@@ -6,8 +6,8 @@ import { axiosTokenGet } from 'utils/AxiosUtils';
 const MyProfileContent = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 3rem;
-	padding: 4rem 4rem 2rem;
+	gap: 2rem;
+	padding: 3rem 4rem 2rem;
 	border: 0.1rem solid #cfcfcf;
 	border-radius: 0.8rem;
 `;
@@ -59,26 +59,38 @@ const ProfileChangeBtn = styled.button`
 `;
 
 const ProfileManagementContainer = () => {
-	const [username, setUsername] = useState('');
-	const [email, setEmail] = useState('');
-	const [changeData, setChangeData] = useState('');
+	const [user, setUser] = useState({
+		username: '',
+		email: '',
+		latest: '',
+	});
+	const { username, email, latest } = user;
+	const LastChangeDate = latest.replace('T', ' ').split('.', 1);
 
+	// 사용자 정보 불러오기.
 	const userInfo = useCallback(async () => {
 		const res = await axiosTokenGet('/users/mypage');
 		console.log('res', res);
 
-		setUsername(res.username);
-		setEmail(res.email);
-		setChangeData(res.latest);
-	}, [setEmail, setUsername, setChangeData]);
+		setUser(res);
+	}, [setUser]);
 
 	useEffect(() => {
 		userInfo();
 	}, [userInfo]);
 
-	const ProfileValueChange = () => {
-		return <ProfileInfoValue value={username} />;
-	};
+	// 수정 버튼 클릭시
+	const ProfileValueChange = () => {};
+
+	/**
+	 * 프로필 수정 완룔 버튼 클릭 시
+	 * 조건
+	 * 1. input값이 비었을 경우.
+	 * 2. DB와 동일한 이메일이 있을 경우.
+	 */
+	const onChangeCompleted = useCallback(async () => {
+		// await axios.put('users/update_mypage', user,)
+	}, []);
 
 	return (
 		<>
@@ -97,10 +109,10 @@ const ProfileManagementContainer = () => {
 					<ProfileInfoTitle>마케팅 수신동의</ProfileInfoTitle>
 					<ProfileInfoValueText>수신거부</ProfileInfoValueText>
 				</ProfileInfoWrpper>
-				<ProfileInfoChangeText>최근 수정일 : {changeData}</ProfileInfoChangeText>
+				<ProfileInfoChangeText>최근 수정일 : {LastChangeDate}</ProfileInfoChangeText>
 			</MyProfileContent>
 			<ButtonGroup style={{ maxWidth: '40rem', margin: '0 auto', paddingTop: '4rem' }}>
-				<Button text="프로필 수정 완료" />
+				<Button $submit text="프로필 수정 완료" />
 				<Button text="취소" variant="cancel" />
 			</ButtonGroup>
 		</>

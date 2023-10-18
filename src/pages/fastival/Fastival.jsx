@@ -46,13 +46,29 @@ const PaginationDiv = styled.div`
 const Fastival = () => {
 	let { params } = useParams();
 	const [Data, setData] = useState([]);
-
-	const GetFestival = useCallback(async () => {
+	const city = window.location.pathname.split('/')[2];
+	const GetFestival = useCallback(
+		() =>
+			city === 'all'
+				? ALLFestival()
+				: city === 'busan'
+				? deorderFestival('부산')
+				: city === 'daegu'
+				? deorderFestival('대구')
+				: '',
+		[city],
+	);
+	const ALLFestival = async () => {
 		localStorage.getItem('token')
 			? await axiosTokenGet('/festival/get_info').then(res => setData(res))
 			: await axiosGet('/festival/get_info').then(res => setData(res));
-	}, []);
-
+	};
+	const deorderFestival = async e => {
+		console.log(e);
+		localStorage.getItem('token')
+			? await axiosTokenGet(`/festival/get_city_info?city_name=${e}`).then(res => setData(res))
+			: await axiosGet(`/festival/get_city_info?city_name=${e}`).then(res => setData(res));
+	};
 	useEffect(() => {
 		// GetBookmark();
 		GetFestival();
@@ -65,9 +81,15 @@ const Fastival = () => {
 				<FastivalSubTitle>역사가 깊은, 경상도 각지에서 </FastivalSubTitle>열리는 축제를 즐겨보세요!
 			</FastivalTitle>
 			<LocalList>
-				<LocalBtn>전체</LocalBtn>
-				<LocalBtn>부산</LocalBtn>
-				<LocalBtn>대구</LocalBtn>
+				<Link to="/festival/all">
+					<LocalBtn>전체</LocalBtn>
+				</Link>
+				<Link to="/festival/busan">
+					<LocalBtn>부산</LocalBtn>
+				</Link>
+				<Link to="/festival/daegu">
+					<LocalBtn>대구</LocalBtn>
+				</Link>
 				<LocalBtn>경주</LocalBtn>
 				<LocalBtn>포항</LocalBtn>
 			</LocalList>
@@ -75,7 +97,7 @@ const Fastival = () => {
 				{Data.map((e, index) => {
 					return (
 						<MyWishList key={index}>
-							<Link to={`./${index}`} state={{ prop: e }}>
+							<Link to={`./board/${index}`} state={{ prop: e }}>
 								<LocalButton key={index} props={e} />
 							</Link>
 						</MyWishList>
