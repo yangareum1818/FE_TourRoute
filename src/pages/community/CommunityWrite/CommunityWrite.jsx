@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
@@ -87,25 +87,14 @@ const TextAreaWrapper = styled(TextArea)`
 
 const CommunityWrite = () => {
 	// 상태 선택
-	const [category, setCategory] = useState('FREE');
-	const [recruitment, setRecruitment] = useState('RECRUITING');
+	// const [category, setCategory] = useState('FREE');
+	// const [recruitment, setRecruitment] = useState('RECRUITING');
 
 	const [Imgsrc, setImgsrc] = useState('');
+	const [Recruiting, SetRecruiting] = useState(false);
 	const navigate = useNavigate();
 	const inputRef = useRef();
 
-	const handleSubmit = useCallback(async () => {
-		const res = await axiosTokenPost('/board/create_board');
-		console.log(res);
-		// navigate('/community');
-	}, []);
-
-	const handleClose = useCallback(
-		e => {
-			navigate(-1);
-		},
-		[navigate],
-	);
 	const onUploadImg = e => {
 		const img = e.target.files[0];
 		const formData = new FormData();
@@ -139,29 +128,119 @@ const CommunityWrite = () => {
 	// 	console.log(e.target.files[0]);
 	// }, []);
 
+	const handleClose = useCallback(
+		e => {
+			navigate(-1);
+		},
+		[navigate],
+	);
+
+	const handleSubmit = useCallback(async () => {
+		const res = await axiosTokenPost('/board/create_board');
+		console.log(res);
+		// navigate('/community');
+	}, []);
+
+	const [board, setBoard] = useState({
+		title: '',
+		contents: '',
+		category: 'IS_FREE',
+		recruitment: null,
+	});
+
+	const { title, contents, category, recruitment } = board;
+
+	const onChange = useCallback(
+		e => {
+			const { value, name } = e.target;
+
+			console.log(name, value);
+
+			setBoard({
+				...board,
+				[name]: value,
+			});
+		},
+		[board],
+	);
+
+	const onRadioChange = useCallback(
+		data => {
+			data === 'IS_FREE'
+				? setBoard({
+						...board,
+						category: data,
+						recruitment: null,
+				  })
+				: setBoard({
+						...board,
+						category: data,
+						recruitment: data,
+				  });
+			data === 'IS_FREE' ? SetRecruiting(false) : SetRecruiting(true);
+			console.log('data', data);
+			console.log(board);
+		},
+		[board],
+	);
+
+	const CommuWriteHandleSubmit = useCallback(async () => {
+		const res = await axiosTokenPost('/board/create_board', board);
+
+		console.log(res);
+	}, []);
+
 	return (
 		<Wrapper>
 			<Benner />
 			<SectionDiv>
 				<InputWrapper style={{ flexDirection: 'column', gap: '3rem' }}>
 					<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
-						<SelectInputWrapper label="카테고리" value={category} onChange={setCategory}>
-							<SelectInput value="FREE">자유게시판</SelectInput>
-							<SelectInput value="TOGETHER">동행게시판</SelectInput>
+						<SelectInputWrapper
+							label="카테고리"
+							value={category}
+							checked={category === 'IS_FREE'}
+							onChange={category => onRadioChange(category)}
+						>
+							<SelectInput name="IS_FREE" value="IS_FREE">
+								자유게시판
+							</SelectInput>
+							<SelectInput name="IS_ACCOMPANY" value="IS_ACCOMPANY">
+								동행게시판
+							</SelectInput>
 						</SelectInputWrapper>
 					</div>
 
 					<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
-						<SelectInputWrapper label="모집상태" value={recruitment} onChange={setRecruitment}>
-							<SelectInput value="RECRUITING">모집 중</SelectInput>
-							<SelectInput value="RECRUITMENT_COMPLETED">모집 완료</SelectInput>
-						</SelectInputWrapper>
+						{Recruiting ? (
+							<SelectInputWrapper
+								label="모집상태"
+								defaultChecked="RECRUITING"
+								value={recruitment || ''}
+								checked={recruitment === 'RECRUITING'}
+								onChange={recruitment => onRadioChange(recruitment)}
+							>
+								<SelectInput name="RECRUITING" value="RECRUITING">
+									모집 중
+								</SelectInput>
+								<SelectInput name="RECRUITMENT_COMPLETED" value="RECRUITMENT_COMPLETED">
+									모집 완료
+								</SelectInput>
+							</SelectInputWrapper>
+						) : (
+							''
+						)}
 					</div>
 				</InputWrapper>
 
 				<InputWrapper>
 					<TitleLabel>제목</TitleLabel>
-					<TitleInput placeholder="ex) 1박 2일 대구 놀러갈 분 구해요" />
+					<TitleInput
+						name="title"
+						value={title}
+						onChange={onChange}
+						placeholder="ex) 1박 2일 대구 놀러갈 분 구해요"
+					/>
 				</InputWrapper>
 				<InputWrapper>
 					<TitleLabel>참여링크</TitleLabel>
@@ -209,7 +288,9 @@ const CommunityWrite = () => {
 						height: 500,
 						resize: 'none',
 					}}
-					// onChange={onChange}
+					name="contents"
+					value={contents}
+					onChange={onChange}
 					placeholder="1. 현재 동행이 있나요?
 ex) 동행 1명 있어요
 2. 어떤 동행을 찾고 있나요?
@@ -220,7 +301,7 @@ ex) 원하시는 날짜가 있다면 알려주세요
 				/>
 			</SectionDiv>
 			<ButtonGroup style={{ width: '40rem', margin: '0 auto' }}>
-				<Button onClick={handleSubmit} $sumbit text="작성완료" />
+				<Button onClick={CommuWriteHandleSubmit} $sumbit text="작성완료" />
 				<Button onClick={handleClose} text="취소" variant="cancel" />
 			</ButtonGroup>
 		</Wrapper>
