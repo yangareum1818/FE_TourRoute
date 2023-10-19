@@ -42,14 +42,14 @@ const MapList = ({ props }) => {
 					<p style={{ color: '#959696' }}>금액</p>
 
 					<FoodContainer>
-						{/* <FoodDiv>
-							<FoodName>{props.menu.menu_1.name}</FoodName>
-							<FoodMoney>{props.menu.menu_1.fee}</FoodMoney>
-						</FoodDiv>
-						<FoodDiv>
-							<FoodName>{props.menu.menu_2.name}</FoodName>
-							<FoodMoney>{props.menu.menu_2.fee}</FoodMoney>
-						</FoodDiv> */}
+						{props.menu.map(e => {
+							return (
+								<FoodDiv>
+									<FoodName>{e[0]}</FoodName>
+									<FoodMoney>{e[1]}</FoodMoney>
+								</FoodDiv>
+							);
+						})}
 					</FoodContainer>
 				</TourBox>
 			) : props.category === 'park' ? (
