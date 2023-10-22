@@ -6,10 +6,11 @@ import { axiosTokenPost } from 'utils/AxiosUtils';
 
 import img from 'assets/image.png';
 import backgroundimg from 'assets/background_write.png';
-import { SelectInput, SelectInputWrapper } from 'components/common/Input';
 import TextArea from 'antd/es/input/TextArea';
 import { Button, ButtonGroup } from 'components/common/Button';
 import DummyImg from 'assets/deagu.png';
+import RefForm from 'rc-field-form';
+import { Radio } from 'antd';
 
 const Wrapper = styled.div`
 	padding-bottom: 12rem;
@@ -52,7 +53,33 @@ const TitleInput = styled.input`
 		outline: none;
 	}
 `;
+const RadioInput = styled.input`
+	display: none;
+`;
+const CategoryLabel = styled.label`
+	position: relative;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: pointer;
 
+	& > input {
+		position: absolute;
+		width: 0;
+		height: 0;
+		opacity: 0;
+	}
+	& > span {
+		color: #959696;
+		font-size: 1.6rem;
+		font-weight: 500;
+	}
+
+	input[type='radio']:checked ~ span {
+		color: #3ad0ff;
+	}
+`;
 const ImgBtnDiv = styled.button`
 	width: 6.4rem;
 	height: 6.4rem;
@@ -84,7 +111,7 @@ const TextAreaWrapper = styled(TextArea)`
 		bottom: -30px;
 	}
 `;
-
+const SelectInput = styled.input``;
 const CommunityWrite = () => {
 	// 상태 선택
 	// const [category, setCategory] = useState('FREE');
@@ -94,7 +121,10 @@ const CommunityWrite = () => {
 	const [Recruiting, SetRecruiting] = useState(false);
 	const navigate = useNavigate();
 	const inputRef = useRef();
-
+	const freeRef = useRef();
+	const commpanyRef = useRef();
+	const RecruitingRef = useRef();
+	const RecruitEndRef = useRef();
 	const onUploadImg = e => {
 		const img = e.target.files[0];
 		const formData = new FormData();
@@ -111,7 +141,6 @@ const CommunityWrite = () => {
 			setImgsrc(previewImgUrl);
 			console.log(previewImgUrl);
 		};
-
 		//데이터 전송
 		// const formData = new FormData();
 		// formData.append('image', e.target.files[0]);
@@ -186,47 +215,68 @@ const CommunityWrite = () => {
 
 	const CommuWriteHandleSubmit = useCallback(async () => {
 		const res = await axiosTokenPost('/board/create_board', board);
-
 		console.log(res);
 	}, []);
-
+	//onClick={category => onRadioChange(category)
 	return (
 		<Wrapper>
 			<Benner />
 			<SectionDiv>
 				<InputWrapper style={{ flexDirection: 'column', gap: '3rem' }}>
 					<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
-						<SelectInputWrapper
-							label="카테고리"
-							value={category}
-							checked={category === 'IS_FREE'}
-							onChange={category => onRadioChange(category)}
-						>
-							<SelectInput name="IS_FREE" value="IS_FREE">
-								자유게시판
-							</SelectInput>
-							<SelectInput name="IS_ACCOMPANY" value="IS_ACCOMPANY">
-								동행게시판
-							</SelectInput>
-						</SelectInputWrapper>
+						{/* <input type="radio" name="IS_FREE" value="IS_FREE">
+							자유게시판
+						</input>
+						<input type="radio" name="IS_ACCOMPANY" value="IS_ACCOMPANY">
+							동행게시판
+						</input> */}
+						<CategoryLabel>
+							<RadioInput
+								type="radio"
+								name="POST_FREE"
+								value="IS_FREE"
+								onClick={e => {
+									onRadioChange(e.target.value);
+								}}
+								ref={freeRef}
+							/>
+							<span onClick={() => freeRef.current.click()}>자유게시판</span>
+						</CategoryLabel>
+						<CategoryLabel>
+							<RadioInput
+								type="radio"
+								name="POST_FREE"
+								value="IS_ACCOMPANY"
+								onClick={e => {
+									onRadioChange(e.target.value);
+								}}
+								ref={commpanyRef}
+							/>
+							<span onClick={() => commpanyRef.current.click()}>동행게시판</span>
+						</CategoryLabel>
 					</div>
-
-					<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
+					<div>
 						{Recruiting ? (
-							<SelectInputWrapper
-								label="모집상태"
-								defaultChecked="RECRUITING"
-								value={recruitment || ''}
-								checked={recruitment === 'RECRUITING'}
-								onChange={recruitment => onRadioChange(recruitment)}
-							>
-								<SelectInput name="RECRUITING" value="RECRUITING">
-									모집 중
-								</SelectInput>
-								<SelectInput name="RECRUITMENT_COMPLETED" value="RECRUITMENT_COMPLETED">
-									모집 완료
-								</SelectInput>
-							</SelectInputWrapper>
+							<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
+								<CategoryLabel>
+									<RadioInput
+										type="radio"
+										name="RECRUITING"
+										value="RECRUITING"
+										ref={RecruitingRef}
+									></RadioInput>
+									<span onClick={() => RecruitingRef.current.click()}>모집 중</span>
+								</CategoryLabel>
+								<CategoryLabel>
+									<RadioInput
+										type="radio"
+										name="RECRUITING"
+										value="RECRUITMENT_COMPLETED"
+										ref={RecruitEndRef}
+									></RadioInput>
+									<span onClick={() => RecruitEndRef.current.click()}>모집 완료</span>
+								</CategoryLabel>
+							</div>
 						) : (
 							''
 						)}
