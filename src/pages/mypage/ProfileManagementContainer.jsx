@@ -1,14 +1,17 @@
 import styled from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { axiosTokenGet, axiosTokenPut } from 'utils/AxiosUtils';
 import { Button, ButtonGroup } from 'components/common/Button';
-import { useNavigate } from 'react-router-dom';
+
+import dummyMyImage from '../../assets/Mask_group.svg';
 
 const MyProfileContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 3rem;
-	padding: 4rem 4rem 2rem;
+	padding: 4rem 4rem 3rem;
 	border: 0.1rem solid #cfcfcf;
 	border-radius: 0.8rem;
 `;
@@ -16,7 +19,8 @@ const MyProfileContent = styled.div`
 const ProfileInfoWrpper = styled.div`
 	display: flex;
 	align-items: center;
-	gap & > * {
+	gap: 2rem;
+	& > * {
 		font-size: 1.6rem;
 	}
 `;
@@ -54,6 +58,7 @@ const ProfileManagementContainer = () => {
 		username: '',
 		email: '',
 		latest: '',
+		img_link: '',
 	});
 	const { username, email, latest } = user;
 	let LastChangeDate = latest.replace('T', ' ').split('.', 1).join('');
@@ -72,6 +77,27 @@ const ProfileManagementContainer = () => {
 		});
 	};
 
+	// 프로필 이미지
+	const [profileImage, setProfileImage] = useState(user.img_link);
+	const profileImgFileInput = useRef(null);
+
+	// const profileChange = e => {
+	// 	if (e.target.files[0]) {
+	// 		setProfileFiles(e.target.files[0]);
+	// 	} else {
+	// 		setProfileImage(user.profileImg);
+	// 		return;
+	// 	}
+	// 	const reader = new FileReader();
+	// 	reader.onload = () => {
+	// 		if (reader.readyState === 2) {
+	// 			setProfileImage(reader.result);
+	// 		}
+	// 	};
+	// 	reader.readAsDataURL(e.target.files[0]);
+	// };
+
+	// 프로필 수정 완료
 	const onUpdateProfile = useCallback(async () => {
 		const updateData = await axiosTokenPut('/users/update_mypage');
 		setUser(updateData);
@@ -86,14 +112,46 @@ const ProfileManagementContainer = () => {
 	return (
 		<>
 			<MyProfileContent>
-				<div style={{ display: 'flex', gap: '2rem' }}>
-					<div style={{ flex: 1 }}>
+				<div style={{ display: 'flex', gap: '3rem' }}>
+					<div
+						style={{
+							flex: 0.9,
+							display: 'flex',
+							alignItems: 'center',
+							borderRight: '.1rem solid #cfcfcf',
+						}}
+					>
 						<label htmlFor="ex_file">
-							<div className="btn_select">이미지 선택</div>
+							<img
+								style={{ margin: '0 auto', display: 'block' }}
+								src={dummyMyImage}
+								alt="proifle change"
+								onClick={() => {
+									profileImgFileInput.current.click();
+								}}
+							/>
+							<input
+								type="file"
+								accept="image/*"
+								// onChange={profileChange}
+								ref={profileImgFileInput}
+								name="profile_img"
+								style={{ display: 'none' }}
+							/>
+							<span
+								style={{
+									display: 'block',
+									paddingTop: '1rem',
+									fontSize: '1.3rem',
+									fontWeight: '500',
+									textAlign: 'center',
+								}}
+							>
+								이미지 변경
+							</span>
 						</label>
-						<input type="file" id="ex_file" accept="image/*" name="profile_img" />
 					</div>
-					<div style={{ flex: 4 }}>
+					<div style={{ flex: 4.4, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 						<ProfileInfoWrpper>
 							<ProfileInfoTitle>이름</ProfileInfoTitle>
 							<ProfileInfoValue
