@@ -39,3 +39,8 @@ export const axiosTokenPost = async (url, body, headers = defaultHeaders) => {
 	const res = await axios.post(ENDPOINT + url, body, headerConfiguration(headers));
 	return res.data;
 };
+
+export const axiosTokenPut = async (url, body, headers = defaultHeaders) => {
+	const res = await axios.put(ENDPOINT + url, headerConfiguration(headers));
+	return res.data;
+};
