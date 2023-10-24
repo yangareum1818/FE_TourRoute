@@ -25,7 +25,7 @@ const SideList = styled.li`
 	font-weight: 300;
 
 	&:hover > a,
-	& > a.active {
+	&.active > a {
 		color: #000;
 		font-weight: 500;
 	}
@@ -58,7 +58,7 @@ const CommunitySide = () => {
 		<SideBarWrapper>
 			<SideMenu>
 				<SideList>
-					<NavLink to="/my/profile">전체게시판</NavLink>
+					<NavLink to="/community">전체게시판</NavLink>
 				</SideList>
 				<SideList>
 					<NavLink>자유게시판</NavLink>
