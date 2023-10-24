@@ -58,7 +58,7 @@ const ProfileManagementContainer = () => {
 		username: '',
 		email: '',
 		latest: '',
-		img_link: '',
+		img_link: dummyMyImage,
 	});
 	const { username, email, latest } = user;
 	let LastChangeDate = latest.replace('T', ' ').split('.', 1).join('');
@@ -81,22 +81,22 @@ const ProfileManagementContainer = () => {
 	const [profileImage, setProfileImage] = useState(user.img_link);
 	const profileImgFileInput = useRef(null);
 
-	// const profileChange = e => {
-	// 	if (e.target.files[0]) {
-	// 		setProfileFiles(e.target.files[0]);
-	// 	} else {
-	// 	업로드 취소 시 기본 더미 이미지
-	// 		setProfileImage(user.profileImg);
-	// 		return;
-	// 	}
-	// 	const reader = new FileReader();
-	// 	reader.onload = () => {
-	// 		if (reader.readyState === 2) {
-	// 			setProfileImage(reader.result);
-	// 		}
-	// 	};
-	// 	reader.readAsDataURL(e.target.files[0]);
-	// };
+	const profileChange = e => {
+		if (e.target.files[0]) {
+			setProfileImage(e.target.files[0]);
+		} else {
+			// 업로드 취소 시 기본 더미 이미지
+			setProfileImage(user.profileImg);
+			return;
+		}
+		const reader = new FileReader();
+		reader.onload = () => {
+			if (reader.readyState === 2) {
+				setProfileImage(reader.result);
+			}
+		};
+		reader.readAsDataURL(e.target.files[0]);
+	};
 
 	// 프로필 수정 완료
 	const onUpdateProfile = useCallback(async () => {
@@ -124,8 +124,15 @@ const ProfileManagementContainer = () => {
 					>
 						<label htmlFor="ex_file">
 							<img
-								style={{ margin: '0 auto', display: 'block' }}
-								src={dummyMyImage}
+								style={{
+									margin: '0 auto',
+									display: 'block',
+									width: '8rem',
+									height: '8rem',
+									borderRadius: '50%',
+									cursor: 'pointer',
+								}}
+								src={profileImage}
 								alt="proifle change"
 								onClick={() => {
 									profileImgFileInput.current.click();
@@ -134,7 +141,7 @@ const ProfileManagementContainer = () => {
 							<input
 								type="file"
 								accept="image/*"
-								// onChange={profileChange}
+								onChange={profileChange}
 								ref={profileImgFileInput}
 								name="profile_img"
 								style={{ display: 'none' }}
