@@ -126,13 +126,13 @@ export const RecruitmentStatus = ({ statusText }) => {
 	`;
 
 	return (
-		<>
+		<div>
 			{statusText === '모집 중' ? (
 				<Status>{statusText}</Status>
 			) : (
 				<Status className="complete">{statusText}</Status>
 			)}
-		</>
+		</div>
 	);
 };
 
