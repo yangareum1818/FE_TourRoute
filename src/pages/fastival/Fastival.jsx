@@ -95,9 +95,7 @@ const Fastival = () => {
 				{Data.map((e, index) => {
 					return (
 						<MyWishList key={index}>
-							<Link to={`./board/${index}`} state={{ prop: e }}>
-								<LocalButton key={index} props={e} />
-							</Link>
+							<LocalButton key={index} props={e} />
 						</MyWishList>
 					);
 				})}

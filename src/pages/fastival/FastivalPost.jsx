@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Fastivalaticle from './fastivalaticle/Fastivalaticle';
 import Fastivalnav from './fastivalnav/Fastivalnav';
 import { useLocation } from 'react-router-dom';
+
 const Wrapper = styled.div`
 	height: 100%;
 	width: 100%;

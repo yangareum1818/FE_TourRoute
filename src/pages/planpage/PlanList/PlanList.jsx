@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { axiosTokenGet } from 'utils/AxiosUtils';
 import { useDispatch, useSelector } from 'react-redux';
 import { result } from 'store/TourResult';
+// import { result } from '../../../store/TourResult';
 const CategoryContainer = styled.div`
 	display: grid;
 	grid-template-columns: 25rem 25rem 25rem 25rem;
