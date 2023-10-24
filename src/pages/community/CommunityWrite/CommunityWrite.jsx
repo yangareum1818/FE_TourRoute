@@ -56,14 +56,26 @@ const TitleInput = styled.input`
 const RadioInput = styled.input`
 	display: none;
 `;
+
+// START : radio Input
+const CategoryInner = styled.div`
+	display: flex;
+`;
 const CategoryLabel = styled.label`
-	position: relative;
+	flex: 1;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 	cursor: pointer;
-
+`;
+const CategoryValue = styled.div`
+	flex: 7;
+	display: flex;
+	gap: 3rem;
+	position: relative;
+`;
+const CategoryInputInner = styled.div`
 	& > input {
 		position: absolute;
 		width: 0;
@@ -74,12 +86,15 @@ const CategoryLabel = styled.label`
 		color: #959696;
 		font-size: 1.6rem;
 		font-weight: 500;
+		cursor: pointer;
 	}
 
-	input[type='radio']:checked ~ span {
+	& > input[type='radio']:checked ~ span {
 		color: #3ad0ff;
 	}
 `;
+// END : radio Input
+
 const ImgBtnDiv = styled.button`
 	width: 6.4rem;
 	height: 6.4rem;
@@ -111,43 +126,8 @@ const TextAreaWrapper = styled(TextArea)`
 		bottom: -30px;
 	}
 `;
-const SelectInput = styled.input``;
+
 const CommunityWrite = () => {
-	// 상태 선택
-	// const [category, setCategory] = useState('FREE');
-	// const [recruitment, setRecruitment] = useState('RECRUITING');
-
-	const [Imgsrc, setImgsrc] = useState('');
-	const [Recruiting, SetRecruiting] = useState(false);
-	const navigate = useNavigate();
-	const inputRef = useRef();
-	const freeRef = useRef();
-	const commpanyRef = useRef();
-	const RecruitingRef = useRef();
-	const RecruitEndRef = useRef();
-	const onUploadImg = e => {
-		const img = e.target.files[0];
-		const formData = new FormData();
-		formData.append('file', img);
-
-		if (!e.target.files === undefined) return;
-		const reader = new FileReader();
-		if (e.target.files[0]) {
-			reader.readAsDataURL(e.target.files[0]);
-		}
-		console.log(reader);
-		reader.onloadend = () => {
-			const previewImgUrl = reader.result;
-			setImgsrc(previewImgUrl);
-			console.log(previewImgUrl);
-		};
-		//데이터 전송
-		// const formData = new FormData();
-		// formData.append('image', e.target.files[0]);
-	};
-	const onUploadImageButtonClick = useCallback(() => {
-		inputRef.current.click();
-	}, []);
 	// const ImageUpload = useCallback(e => {
 	// 	var reader = new FileReader();
 	// 	reader.onload = function (e) {
@@ -155,35 +135,32 @@ const CommunityWrite = () => {
 	// 	};
 	// 	reader.readAsDataURL(e.target.files[0]);
 	// 	console.log(e.target.files[0]);
-	// }, []);
+	// }, [])
 
-	const handleClose = useCallback(
-		e => {
-			navigate(-1);
-		},
-		[navigate],
-	);
+	const navigate = useNavigate();
 
-	const handleSubmit = useCallback(async () => {
-		const res = await axiosTokenPost('/board/create_board');
-		console.log(res);
-		// navigate('/community');
-	}, []);
+	const [Imgsrc, setImgsrc] = useState('');
+	const [Recruiting, SetRecruiting] = useState(false);
+	const freeRef = useRef();
+	const commpanyRef = useRef();
+	const RecruitingRef = useRef();
+	const RecruitEndRef = useRef();
+
+	const imgesInputRef = useRef();
 
 	const [board, setBoard] = useState({
 		title: '',
 		contents: '',
 		category: 'IS_FREE',
 		recruitment: null,
+		r_link: '',
 	});
 
-	const { title, contents, category, recruitment } = board;
+	const { title, contents, category, recruitment, r_link } = board;
 
 	const onChange = useCallback(
 		e => {
 			const { value, name } = e.target;
-
-			console.log(name, value);
 
 			setBoard({
 				...board,
@@ -193,6 +170,7 @@ const CommunityWrite = () => {
 		[board],
 	);
 
+	// 카테고리, 모집상태
 	const onRadioChange = useCallback(
 		data => {
 			data === 'IS_FREE'
@@ -213,74 +191,108 @@ const CommunityWrite = () => {
 		[board],
 	);
 
+	// 이미지 업로드
+	const onUploadImg = e => {
+		const img = e.target.files[0];
+		const formData = new FormData();
+		formData.append('file', img);
+
+		if (!e.target.files === undefined) return;
+		const reader = new FileReader();
+		if (e.target.files[0]) {
+			reader.readAsDataURL(e.target.files[0]);
+		}
+		console.log(reader);
+		reader.onloadend = () => {
+			const previewImgUrl = reader.result;
+			setImgsrc(previewImgUrl);
+			console.log(previewImgUrl);
+		};
+		//데이터 전송
+		// const formData = new FormData();
+		// formData.append('image', e.target.files[0]);
+	};
+
+	// 2개 이상 이미지업로드
+	const onUploadImageButtonClick = useCallback(() => {
+		imgesInputRef.current.click();
+	}, []);
+
+	// 작성완료
 	const CommuWriteHandleSubmit = useCallback(async () => {
 		const res = await axiosTokenPost('/board/create_board', board);
 		console.log(res);
+		// navigate('/community');
 	}, []);
-	//onClick={category => onRadioChange(category)
+
+	// 취소
+	const handleClose = useCallback(
+		e => {
+			navigate(-1);
+		},
+		[navigate],
+	);
+
 	return (
 		<Wrapper>
 			<Benner />
 			<SectionDiv>
 				<InputWrapper style={{ flexDirection: 'column', gap: '3rem' }}>
-					<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
-						{/* <input type="radio" name="IS_FREE" value="IS_FREE">
-							자유게시판
-						</input>
-						<input type="radio" name="IS_ACCOMPANY" value="IS_ACCOMPANY">
-							동행게시판
-						</input> */}
-						<CategoryLabel>
-							<RadioInput
-								type="radio"
-								name="POST_FREE"
-								value="IS_FREE"
-								onClick={e => {
-									onRadioChange(e.target.value);
-								}}
-								ref={freeRef}
-							/>
-							<span onClick={() => freeRef.current.click()}>자유게시판</span>
-						</CategoryLabel>
-						<CategoryLabel>
-							<RadioInput
-								type="radio"
-								name="POST_FREE"
-								value="IS_ACCOMPANY"
-								onClick={e => {
-									onRadioChange(e.target.value);
-								}}
-								ref={commpanyRef}
-							/>
-							<span onClick={() => commpanyRef.current.click()}>동행게시판</span>
-						</CategoryLabel>
-					</div>
-					<div>
-						{Recruiting ? (
-							<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem' }}>
-								<CategoryLabel>
+					<CategoryInner>
+						<CategoryLabel>카테고리</CategoryLabel>
+						<CategoryValue>
+							<CategoryInputInner>
+								<RadioInput
+									type="radio"
+									name="POST_FREE"
+									value="IS_FREE"
+									onClick={e => {
+										onRadioChange(e.target.value);
+									}}
+									ref={freeRef}
+								/>
+								<span onClick={() => freeRef.current.click()}>자유게시판</span>
+							</CategoryInputInner>
+							<CategoryInputInner>
+								<RadioInput
+									type="radio"
+									name="POST_FREE"
+									value="IS_ACCOMPANY"
+									onClick={e => {
+										onRadioChange(e.target.value);
+									}}
+									ref={commpanyRef}
+								/>
+								<span onClick={() => commpanyRef.current.click()}>동행게시판</span>
+							</CategoryInputInner>
+						</CategoryValue>
+					</CategoryInner>
+
+					{Recruiting ? (
+						<CategoryInner>
+							<CategoryLabel>모집상태</CategoryLabel>
+							<CategoryValue>
+								<CategoryInputInner>
 									<RadioInput
 										type="radio"
 										name="RECRUITING"
 										value="RECRUITING"
 										ref={RecruitingRef}
-									></RadioInput>
+									/>
 									<span onClick={() => RecruitingRef.current.click()}>모집 중</span>
-								</CategoryLabel>
-								<CategoryLabel>
+								</CategoryInputInner>
+								<CategoryInputInner>
 									<RadioInput
 										type="radio"
 										name="RECRUITING"
 										value="RECRUITMENT_COMPLETED"
 										ref={RecruitEndRef}
-									></RadioInput>
+									/>
 									<span onClick={() => RecruitEndRef.current.click()}>모집 완료</span>
-								</CategoryLabel>
-							</div>
-						) : (
-							''
-						)}
-					</div>
+								</CategoryInputInner>
+							</CategoryValue>
+						</CategoryInner>
+					) : null}
 				</InputWrapper>
 
 				<InputWrapper>
@@ -292,10 +304,18 @@ const CommunityWrite = () => {
 						placeholder="ex) 1박 2일 대구 놀러갈 분 구해요"
 					/>
 				</InputWrapper>
-				<InputWrapper>
-					<TitleLabel>참여링크</TitleLabel>
-					<TitleInput placeholder="ex) 오픈채팅 URL 또는 편하신 URL을 입력해주세요. ( *개인정보는 올리시면 안돼요! ) " />
-				</InputWrapper>
+
+				{Recruiting ? (
+					<InputWrapper>
+						<TitleLabel>참여링크</TitleLabel>
+						<TitleInput
+							type="text"
+							name="recruit"
+							placeholder="ex) 오픈채팅 URL 또는 편하신 URL을 입력해주세요. ( *개인정보는 올리시면 안돼요! ) "
+						/>
+					</InputWrapper>
+				) : null}
+
 				{/* <InputWrapper>
 					<TitleLabel>이미지</TitleLabel>
 					<PostImgWrapper>
@@ -312,6 +332,7 @@ const CommunityWrite = () => {
 						<PostImg src={DummyImg} alt="사진추가 이미지" />
 					</PostImgWrapper>
 				</InputWrapper> */}
+
 				{Imgsrc ? (
 					<InputWrapper>
 						<TitleLabel>이미지</TitleLabel>
@@ -321,16 +342,18 @@ const CommunityWrite = () => {
 					</InputWrapper>
 				) : (
 					<InputWrapper style={{ justifyContent: 'center' }}>
+						{/* multiple : 두개 이상의 파일 선택 */}
 						<InPutImg
 							type="file"
 							multiple
 							accept="image/*"
-							ref={inputRef}
+							ref={imgesInputRef}
 							onChange={e => onUploadImg(e)}
 						/>
 						<ImgBtnDiv label="이미지업로드" onClick={onUploadImageButtonClick} />
 					</InputWrapper>
 				)}
+
 				<TextAreaWrapper
 					showCount
 					maxLength={1000}

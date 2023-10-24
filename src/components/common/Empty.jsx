@@ -1,14 +1,15 @@
 import { styled } from 'styled-components';
 
 const EmptyWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	height: 24.5rem;
 	border: 0.1rem solid #cfcfcf;
 	border-radius: 0.8rem;
 `;
 
 const EmptyText = styled.p`
-	height: inherit;
-	line-height: 24.5rem;
 	color: #959696;
 	font-size: 1.6rem;
 	font-weight: 500;

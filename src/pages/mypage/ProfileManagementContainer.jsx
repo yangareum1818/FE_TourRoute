@@ -85,6 +85,7 @@ const ProfileManagementContainer = () => {
 	// 	if (e.target.files[0]) {
 	// 		setProfileFiles(e.target.files[0]);
 	// 	} else {
+	// 	업로드 취소 시 기본 더미 이미지
 	// 		setProfileImage(user.profileImg);
 	// 		return;
 	// 	}
