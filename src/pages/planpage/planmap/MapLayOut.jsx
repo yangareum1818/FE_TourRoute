@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import MapList from './maplist/MapList';
 import { useSelector } from 'react-redux';
+import { axiosPost } from '../../../utils/AxiosUtils';
 const Wrapper = styled.div`
 	display: flex;
 	gap: 3rem;
@@ -78,7 +79,9 @@ const RecordInfoTourValuesInner = styled.div`
 const MapLayOut = () => {
 	const navigate = useNavigate();
 	const result = useSelector(state1 => state1.Result);
-	console.log(result);
+	const Tour = useSelector(state => state.Tour);
+	const name = useSelector(state => state.Info);
+	console.log(result.Result);
 	const day = window.location.pathname.split('/')[3];
 	const HandleDayChoice = useCallback(
 		e => {
@@ -86,6 +89,16 @@ const MapLayOut = () => {
 		},
 		[navigate],
 	);
+	const HandleFinish = async () => {
+		await axiosPost('/plan/save-plan', {
+			city: Tour.Tour.LocalName,
+			theme: 'park',
+			period: ['2023-10-22', '2023-10-24'],
+			accompany: [],
+			email: 'tester3@test.com',
+			tourList: result.Result,
+		});
+	};
 	return (
 		<>
 			<Wrapper>
@@ -111,7 +124,7 @@ const MapLayOut = () => {
 					;
 				</ListContainer>
 			</Wrapper>
-			<NextBtn>
+			<NextBtn onClick={HandleFinish}>
 				<NextText>다음</NextText>
 			</NextBtn>
 		</>
