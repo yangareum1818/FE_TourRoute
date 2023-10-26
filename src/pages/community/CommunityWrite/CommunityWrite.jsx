@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { axiosTokenPost } from 'utils/AxiosUtils';
 
-import img from 'assets/image.png';
+import DummyImges from 'assets/image.png';
 import backgroundimg from 'assets/background_write.png';
 import TextArea from 'antd/es/input/TextArea';
 import { Button, ButtonGroup } from 'components/common/Button';
@@ -95,10 +95,13 @@ const CategoryInputInner = styled.div`
 `;
 // END : radio Input
 
-const ImgBtnDiv = styled.button`
+const Images = styled.img`
 	width: 6.4rem;
 	height: 6.4rem;
-	background: url(${img}) no-repeat;
+	cursor: pointer;
+`;
+const InputImges = styled.input`
+	display: none;
 `;
 const PostImgWrapper = styled.div`
 	flex: 7.5;
@@ -109,9 +112,6 @@ const PostImgWrapper = styled.div`
 const PostImg = styled.img`
 	display: block;
 	height: 12rem;
-`;
-const InPutImg = styled.input`
-	display: none;
 `;
 
 const TextAreaWrapper = styled(TextArea)`
@@ -139,14 +139,11 @@ const CommunityWrite = () => {
 
 	const navigate = useNavigate();
 
-	const [Imgsrc, setImgsrc] = useState('');
 	const [Recruiting, SetRecruiting] = useState(false);
 	const freeRef = useRef();
 	const commpanyRef = useRef();
 	const RecruitingRef = useRef();
 	const RecruitEndRef = useRef();
-
-	const imgesInputRef = useRef();
 
 	const [board, setBoard] = useState({
 		title: '',
@@ -192,31 +189,39 @@ const CommunityWrite = () => {
 	);
 
 	// 이미지 업로드
-	const onUploadImg = e => {
-		const img = e.target.files[0];
-		const formData = new FormData();
-		formData.append('file', img);
-
-		if (!e.target.files === undefined) return;
-		const reader = new FileReader();
-		if (e.target.files[0]) {
-			reader.readAsDataURL(e.target.files[0]);
-		}
-		console.log(reader);
-		reader.onloadend = () => {
-			const previewImgUrl = reader.result;
-			setImgsrc(previewImgUrl);
-			console.log(previewImgUrl);
-		};
-		//데이터 전송
-		// const formData = new FormData();
-		// formData.append('image', e.target.files[0]);
-	};
-
-	// 2개 이상 이미지업로드
+	const imgesInputRef = useRef('');
 	const onUploadImageButtonClick = useCallback(() => {
 		imgesInputRef.current.click();
 	}, []);
+
+	const [Imgsrc, setImgsrc] = useState([]);
+	const onUploadImg = e => {
+		console.log('images', e.target.files);
+
+		// const imageFormData = new FormData();
+		// [].forEach.call(e.target.files, file => {
+		// 	imageFormData.append('image', file);
+		// });
+
+		// 이미지 1개일 경우임. 2개이상은 조건문 변경바람.
+		if (e.target.files[0]) {
+			setImgsrc(e.target.files[0]);
+		} else {
+			setImgsrc(DummyImges);
+			return;
+		}
+		// console.log('imageFormData', imageFormData);
+		const render = new FileReader();
+
+		console.log(render);
+
+		render.onload = () => {
+			if (render.readyState === 2) {
+				setImgsrc(render.result);
+			}
+		};
+		render.readAsDataURL(e.target.files[0]);
+	};
 
 	// 작성완료
 	const CommuWriteHandleSubmit = useCallback(async () => {
@@ -333,24 +338,25 @@ const CommunityWrite = () => {
 					</PostImgWrapper>
 				</InputWrapper> */}
 
-				{Imgsrc ? (
-					<InputWrapper>
-						<TitleLabel>이미지</TitleLabel>
-						<PostImgWrapper>
-							<PostImg src={Imgsrc} alt="사진추가 이미지" />
-						</PostImgWrapper>
-					</InputWrapper>
-				) : (
+				{Imgsrc.length === 0 ? (
 					<InputWrapper style={{ justifyContent: 'center' }}>
-						{/* multiple : 두개 이상의 파일 선택 */}
-						<InPutImg
+						<Images src={DummyImges} alt="community_imgaes" onClick={onUploadImageButtonClick} />
+						<InputImges
 							type="file"
 							multiple
 							accept="image/*"
+							name="commun_imgaes"
 							ref={imgesInputRef}
-							onChange={e => onUploadImg(e)}
+							onChange={onUploadImg}
 						/>
-						<ImgBtnDiv label="이미지업로드" onClick={onUploadImageButtonClick} />
+					</InputWrapper>
+				) : (
+					<InputWrapper>
+						<TitleLabel>이미지</TitleLabel>
+						<PostImgWrapper>
+							{/* {Imgsrc.forEach(() => {})} */}
+							<PostImg src={Imgsrc} alt="사진추가 이미지" />
+						</PostImgWrapper>
 					</InputWrapper>
 				)}
 
