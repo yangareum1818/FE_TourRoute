@@ -189,7 +189,22 @@ const CommunityPost = () => {
 							참여하기 누르시면 옵챗링크로 가집니다 비번 2234
 							<br />
 						</CommunityContent>
-						<ContentImg src={dummyContentImage} />
+						<div
+							style={{
+								display: 'flex',
+								alignItems: 'center',
+								gap: '1.5rem',
+								maxWidth: '79.5rem',
+								overflow: 'scroll',
+							}}
+						>
+							<ContentImg src={dummyContentImage} />
+							<ContentImg src={dummyContentImage} />
+							<ContentImg src={dummyContentImage} />
+							<ContentImg src={dummyContentImage} />
+							<ContentImg src={dummyContentImage} />
+							<ContentImg src={dummyContentImage} />
+						</div>
 					</CommunityContentWrapper>
 					<CommentWrapper>
 						<div>
