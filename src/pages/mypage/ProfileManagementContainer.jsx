@@ -61,7 +61,7 @@ const ProfileManagementContainer = () => {
 		img_link: dummyMyImage,
 	});
 	const { username, email, latest, img_link } = user;
-	let LastChangeDate = latest.replace('T', ' ').split('.', 1).join('');
+	// let LastChangeDate = latest.replace('T', ' ').split('.', 1).join('');
 
 	const userInfo = useCallback(async () => {
 		const data = await axiosTokenGet('/users/mypage');
@@ -79,10 +79,12 @@ const ProfileManagementContainer = () => {
 
 	// 프로필 이미지
 	const [profileImage, setProfileImage] = useState(img_link);
+	const [imagesrc, setimagesrc] = useState();
+	const formData = new FormData();
 	const profileImgFileInput = useRef(null);
 
-	const profileChange = useCallback(e => {
-		const formData = new FormData();
+	const profileChange = e => {
+		formData.append('img_link', e.target.files[0]);
 		// console.log(user.username);
 
 		if (e.target.files[0]) {
@@ -100,7 +102,7 @@ const ProfileManagementContainer = () => {
 			}
 		};
 		reader.readAsDataURL(e.target.files[0]);
-	}, []);
+	};
 
 	// 기본 프로필 이미지
 	const onDefaultImage = () => {
@@ -110,16 +112,19 @@ const ProfileManagementContainer = () => {
 	// 프로필 수정 완
 	const onUpdateProfile = useCallback(async () => {
 		try {
-			const formData = new FormData();
+			formData.append('file', imagesrc);
 			formData.append('username', user.username);
-			const updateData = await axiosTokenPut(`/users/update_mypage?username=${username}`, formData);
-			setUser(updateData);
+			const updateData = await axiosTokenPut(
+				`/users/update_mypage?username=${user.username}`,
+				formData,
+			);
+			// setUser(updateData);
 
 			console.log(updateData);
 		} catch (error) {
 			console.error(error);
 		}
-	}, []);
+	}, [formData, user.username]);
 
 	useEffect(() => {
 		userInfo();
@@ -128,7 +133,7 @@ const ProfileManagementContainer = () => {
 	return (
 		<>
 			<MyProfileContent>
-				<div style={{ display: 'flex', gap: '3rem' }}>
+				<form style={{ display: 'flex', gap: '3rem' }}>
 					<div
 						style={{
 							flex: 0.9,
@@ -209,8 +214,8 @@ const ProfileManagementContainer = () => {
 							<ProfileInfoValueText>수신거부</ProfileInfoValueText>
 						</ProfileInfoWrpper>
 					</div>
-				</div>
-				<ProfileInfoChangeText>최근 수정일 : {LastChangeDate}</ProfileInfoChangeText>
+				</form>
+				{/* <ProfileInfoChangeText>최근 수정일 : {LastChangeDate}</ProfileInfoChangeText> */}
 			</MyProfileContent>
 			<ButtonGroup style={{ maxWidth: '40rem', margin: '0 auto', paddingTop: '4rem' }}>
 				<Button onSubmit={onUpdateProfile} text="프로필 수정 완료" type="primary" />
