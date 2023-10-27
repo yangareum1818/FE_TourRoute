@@ -60,7 +60,7 @@ const ProfileManagementContainer = () => {
 		latest: '',
 		img_link: dummyMyImage,
 	});
-	const { username, email, latest } = user;
+	const { username, email, latest, img_link } = user;
 	let LastChangeDate = latest.replace('T', ' ').split('.', 1).join('');
 
 	const userInfo = useCallback(async () => {
@@ -78,7 +78,7 @@ const ProfileManagementContainer = () => {
 	};
 
 	// 프로필 이미지
-	const [profileImage, setProfileImage] = useState(user.img_link);
+	const [profileImage, setProfileImage] = useState(img_link);
 	const profileImgFileInput = useRef(null);
 
 	const profileChange = e => {
@@ -86,7 +86,7 @@ const ProfileManagementContainer = () => {
 			setProfileImage(e.target.files[0]);
 		} else {
 			// 업로드 취소 시 기본 더미 이미지
-			setProfileImage(user.profileImg);
+			setProfileImage(profileImage);
 			return;
 		}
 		const reader = new FileReader();
@@ -96,6 +96,12 @@ const ProfileManagementContainer = () => {
 			}
 		};
 		reader.readAsDataURL(e.target.files[0]);
+	};
+
+	// 기본 프로필 이미지
+	const onDefaultImage = () => {
+		console.log('기본프로필로 변경되라고');
+		setProfileImage(dummyMyImage);
 	};
 
 	// 프로필 수정 완료
@@ -119,6 +125,8 @@ const ProfileManagementContainer = () => {
 							flex: 0.9,
 							display: 'flex',
 							alignItems: 'center',
+							flexDirection: 'column',
+							padding: '1rem',
 							borderRight: '.1rem solid #cfcfcf',
 						}}
 					>
@@ -155,11 +163,24 @@ const ProfileManagementContainer = () => {
 									textAlign: 'center',
 								}}
 							>
-								이미지 변경
+								프로필 변경
 							</span>
 						</label>
+						<button
+							style={{
+								marginTop: '1.2rem',
+								padding: '.8rem .4rem',
+								color: '#959696',
+								border: '0.1rem solid #cfcfcf',
+								borderRadius: '.4rem',
+								cursor: 'pointer',
+							}}
+							onClick={onDefaultImage}
+						>
+							기본 이미지로 변경
+						</button>
 					</div>
-					<div style={{ flex: 4.4, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+					<div style={{ flex: 4.4, display: 'flex', flexDirection: 'column', gap: '2rem' }}>
 						<ProfileInfoWrpper>
 							<ProfileInfoTitle>이름</ProfileInfoTitle>
 							<ProfileInfoValue
@@ -171,7 +192,7 @@ const ProfileManagementContainer = () => {
 						</ProfileInfoWrpper>
 						<ProfileInfoWrpper>
 							<ProfileInfoTitle>이메일</ProfileInfoTitle>
-							<ProfileInfoValue name="email" defaultValue={email} onChange={onChange} />
+							<ProfileInfoValue name="email" disabled defaultValue={email} onChange={onChange} />
 						</ProfileInfoWrpper>
 						<ProfileInfoWrpper>
 							<ProfileInfoTitle>마케팅 수신동의</ProfileInfoTitle>

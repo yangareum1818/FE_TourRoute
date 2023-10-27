@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { axiosTokenGet } from 'utils/AxiosUtils';
+import { result } from 'store/TourResult';
+
 import artimg from 'assets/category_art.png';
 import foodimg from 'assets/category_food.png';
 import mountin from 'assets/category_mount.png';
 import hotplace from 'assets/category_hotlocation.png';
 import history from 'assets/category_history.png';
 import walking from 'assets/category_walk.png';
-import { useNavigate } from 'react-router-dom';
-import { axiosTokenGet } from 'utils/AxiosUtils';
-import { useDispatch, useSelector } from 'react-redux';
-import { result } from 'store/TourResult';
-// import { result } from '../../../store/TourResult';
+
 const CategoryContainer = styled.div`
 	display: grid;
 	grid-template-columns: 25rem 25rem 25rem 25rem;
