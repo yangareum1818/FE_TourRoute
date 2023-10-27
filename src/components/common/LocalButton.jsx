@@ -11,7 +11,8 @@ import { Link } from 'react-router-dom';
 import { axiosTokenPost } from 'utils/AxiosUtils';
 import isBetween from 'dayjs/plugin/isBetween';
 import dayjs from 'dayjs';
-dayjs.extend(isBetween);
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+dayjs.extend(isBetween, isSameOrBefore);
 const WishListItem = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -81,7 +82,6 @@ const LocalButton = ({ props, index }) => {
 	// const [bookmark, setBookmark] = useState(false)
 	const [onChecked, setonChecked] = useState(props.is_bookmark);
 	const data = dayjs();
-	const currentTime = data.format('YYYY.MM.DD');
 	// const [startTime]
 	console.log(props.term.split('~'));
 	const [startTime, FinishTime] = props.term.split('~');
