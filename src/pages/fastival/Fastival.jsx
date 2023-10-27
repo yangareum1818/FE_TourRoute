@@ -95,7 +95,7 @@ const Fastival = () => {
 				{Data.map((e, index) => {
 					return (
 						<MyWishList key={index}>
-							<LocalButton key={index} props={e} />
+							<LocalButton key={index} props={e} index={index} />
 						</MyWishList>
 					);
 				})}
