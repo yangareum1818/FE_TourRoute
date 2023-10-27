@@ -1,11 +1,16 @@
-import { Title } from 'components/common/Title';
 import { styled } from 'styled-components';
-import dummyMyImage from '../../../assets/Mask_group.svg';
-import dummyContentImage from '../../../assets/busan.png';
-import { RecruitmentStatus } from 'components/common/Icon';
+import { useCallback, useState } from 'react';
+
+import { axiosTokenPost } from 'utils/AxiosUtils';
+
+import { Title } from 'components/common/Title';
 import { Button, ButtonGroup } from 'components/common/Button';
 import { Input } from 'components/common/Input';
+
 import { FaUserGroup } from 'react-icons/fa6';
+import { RecruitmentStatus } from 'components/common/Icon';
+import dummyMyImage from '../../../assets/Mask_group.svg';
+import dummyContentImage from '../../../assets/busan.png';
 
 const WritingListWrapper = styled.div`
 	flex: 3;
@@ -151,6 +156,12 @@ const Comment = styled.p`
 `;
 
 const CommunityPost = () => {
+	const [comment, setComment] = useState('');
+	const onCommentClick = useCallback(async () => {
+		const commentData = await axiosTokenPost('/comment/create_comment');
+		setComment(commentData);
+	}, []);
+
 	return (
 		<div
 			style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: '8rem 0 16rem' }}
@@ -212,8 +223,8 @@ const CommunityPost = () => {
 							<CommentLength>· 댓글 3</CommentLength>
 						</div>
 						<CommentInput>
-							<Input type="text" placeholder="댓글을 입력해주세요." />
-							<CommentBtn>게시</CommentBtn>
+							<Input type="text" value={comment} placeholder="댓글을 입력해주세요." />
+							<CommentBtn onClick={onCommentClick}>게시</CommentBtn>
 						</CommentInput>
 						<CommentListWrapper>
 							<CommentList>
