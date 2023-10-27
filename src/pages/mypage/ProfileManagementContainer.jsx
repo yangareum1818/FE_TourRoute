@@ -103,7 +103,7 @@ const ProfileManagementContainer = () => {
 		const updateData = await axiosTokenPut('/users/update_mypage');
 		setUser(updateData);
 
-		console.log(updateData);
+		// console.log(updateData);
 	}, []);
 
 	useEffect(() => {
