@@ -6,6 +6,11 @@ const defaultHeaders = {
 		'Content-Type': 'application/json',
 	},
 };
+const formDataHeaders = {
+	headers: {
+		'Content-Type': 'multipart/form-data',
+	},
+};
 const headerConfiguration = header => {
 	const config = { ...header };
 	const token = localStorage.getItem('token');
@@ -40,7 +45,7 @@ export const axiosTokenPost = async (url, body, headers = defaultHeaders) => {
 	return res.data;
 };
 
-export const axiosTokenPut = async (url, body, headers = defaultHeaders) => {
-	const res = await axios.put(ENDPOINT + url, headerConfiguration(headers));
+export const axiosTokenPut = async (url, body, headers = formDataHeaders) => {
+	const res = await axios.put(ENDPOINT + url, body, headerConfiguration(headers));
 	return res.data;
 };
