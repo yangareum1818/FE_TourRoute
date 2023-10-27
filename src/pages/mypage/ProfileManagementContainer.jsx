@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 
 import { axiosTokenGet, axiosTokenPut } from 'utils/AxiosUtils';
 import { Button, ButtonGroup } from 'components/common/Button';
@@ -79,11 +79,10 @@ const ProfileManagementContainer = () => {
 
 	// 프로필 이미지
 	const [profileImage, setProfileImage] = useState(img_link);
-	const formData = new FormData();
 	const profileImgFileInput = useRef(null);
 
-	const profileChange = e => {
-		formData.append('img_link', e.target.files[0]);
+	const profileChange = useCallback(e => {
+		const formData = new FormData();
 		// console.log(user.username);
 
 		if (e.target.files[0]) {
@@ -93,6 +92,7 @@ const ProfileManagementContainer = () => {
 			setProfileImage(profileImage);
 			return;
 		}
+		formData.append('image', e.target.files[0]);
 		const reader = new FileReader();
 		reader.onload = () => {
 			if (reader.readyState === 2) {
@@ -100,7 +100,7 @@ const ProfileManagementContainer = () => {
 			}
 		};
 		reader.readAsDataURL(e.target.files[0]);
-	};
+	}, []);
 
 	// 기본 프로필 이미지
 	const onDefaultImage = () => {
@@ -110,12 +110,12 @@ const ProfileManagementContainer = () => {
 	// 프로필 수정 완
 	const onUpdateProfile = useCallback(async () => {
 		try {
-			// formData.append('username', user.username);
-			const updateData = await axiosTokenPut('/users/update_mypage', formData);
+			const formData = new FormData();
+			formData.append('username', user.username);
+			const updateData = await axiosTokenPut(`/users/update_mypage?username=${username}`, formData);
 			setUser(updateData);
 
 			console.log(updateData);
-			// if ()
 		} catch (error) {
 			console.error(error);
 		}
@@ -128,7 +128,7 @@ const ProfileManagementContainer = () => {
 	return (
 		<>
 			<MyProfileContent>
-				<form id="profileEditForm" style={{ display: 'flex', gap: '3rem' }}>
+				<div style={{ display: 'flex', gap: '3rem' }}>
 					<div
 						style={{
 							flex: 0.9,
@@ -194,6 +194,7 @@ const ProfileManagementContainer = () => {
 							<ProfileInfoTitle>이름</ProfileInfoTitle>
 							<ProfileInfoValue
 								name="username"
+								multiple
 								defaultValue={username}
 								required
 								onChange={onChange}
@@ -208,11 +209,11 @@ const ProfileManagementContainer = () => {
 							<ProfileInfoValueText>수신거부</ProfileInfoValueText>
 						</ProfileInfoWrpper>
 					</div>
-				</form>
+				</div>
 				<ProfileInfoChangeText>최근 수정일 : {LastChangeDate}</ProfileInfoChangeText>
 			</MyProfileContent>
 			<ButtonGroup style={{ maxWidth: '40rem', margin: '0 auto', paddingTop: '4rem' }}>
-				<Button text="프로필 수정 완료" $submit onClick={onUpdateProfile} />
+				<Button onSubmit={onUpdateProfile} text="프로필 수정 완료" type="primary" />
 				<Button text="취소" variant="cancel" />
 			</ButtonGroup>
 		</>
