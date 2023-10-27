@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
 	TrackedProgressIcon,
 	TrackingProgressIcon,
@@ -6,7 +6,6 @@ import {
 	WishHeartIcon,
 } from './Icon';
 import { styled } from 'styled-components';
-import img from 'assets/testbag.png';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -72,11 +71,10 @@ const LocalDate = styled.p`
 	font-size: 1.6rem;
 	font-weight: 500;
 `;
-const LocalButton = ({ props }) => {
+const LocalButton = ({ props, index }) => {
 	// const [bookmark, setBookmark] = useState(false)
 	const img = process.env.REACT_APP_ENDPOINT + '/img/' + props.i_link;
 
-	console.log(props);
 	return (
 		<WishListItem style={{ backgroundImage: `url(${img})` }}>
 			<ListIconWrapper>
@@ -89,8 +87,7 @@ const LocalButton = ({ props }) => {
 				)}
 			</ListIconWrapper>
 
-			{/* 병규쓰 ListContent가 Link임 여기에 to={} state={} 하면됌. */}
-			<ListContent>
+			<ListContent to={`/festival/board/${index}`} state={{ prop: props }}>
 				<LocalName>{props.city}</LocalName>
 				<div>
 					<LocalTitle>{props.f_name}</LocalTitle>
