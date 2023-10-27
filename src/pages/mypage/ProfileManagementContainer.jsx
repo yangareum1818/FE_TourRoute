@@ -61,7 +61,7 @@ const ProfileManagementContainer = () => {
 		img_link: dummyMyImage,
 	});
 	const { username, email, latest, img_link } = user;
-	let LastChangeDate = latest.replace('T', ' ').split('.', 1).join('');
+	// let LastChangeDate = latest.replace('T', ' ').split('.', 1).join('');
 
 	const userInfo = useCallback(async () => {
 		const data = await axiosTokenGet('/users/mypage');
@@ -79,13 +79,12 @@ const ProfileManagementContainer = () => {
 
 	// 프로필 이미지
 	const [profileImage, setProfileImage] = useState(img_link);
+	const [imagesrc, setimagesrc] = useState();
 	const formData = new FormData();
 	const profileImgFileInput = useRef(null);
 
-	const profileChange = e => {
-		formData.append('img_link', e.target.files[0]);
-		// console.log(user.username);
-
+	const profileChange = async e => {
+		setimagesrc(e.target.files[0]);
 		if (e.target.files[0]) {
 			setProfileImage(e.target.files[0]);
 		} else {
@@ -110,16 +109,20 @@ const ProfileManagementContainer = () => {
 	// 프로필 수정 완
 	const onUpdateProfile = useCallback(async () => {
 		try {
-			// formData.append('username', user.username);
-			const updateData = await axiosTokenPut('/users/update_mypage', formData);
-			setUser(updateData);
+			formData.append('file', imagesrc);
+			formData.append('username', user.username);
+			const updateData = await axiosTokenPut(
+				`/users/update_mypage?username=${user.username}`,
+				formData,
+			);
+			// setUser(updateData);
 
 			console.log(updateData);
 			// if ()
 		} catch (error) {
 			console.error(error);
 		}
-	}, []);
+	}, [formData, user.username]);
 
 	useEffect(() => {
 		userInfo();
@@ -209,7 +212,7 @@ const ProfileManagementContainer = () => {
 						</ProfileInfoWrpper>
 					</div>
 				</form>
-				<ProfileInfoChangeText>최근 수정일 : {LastChangeDate}</ProfileInfoChangeText>
+				{/* <ProfileInfoChangeText>최근 수정일 : {LastChangeDate}</ProfileInfoChangeText> */}
 			</MyProfileContent>
 			<ButtonGroup style={{ maxWidth: '40rem', margin: '0 auto', paddingTop: '4rem' }}>
 				<Button text="프로필 수정 완료" $submit onClick={onUpdateProfile} />
