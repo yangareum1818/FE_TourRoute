@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import Empty from 'components/common/Empty';
 import { useCallback, useEffect, useState } from 'react';
 import { axiosTokenGet } from 'utils/AxiosUtils';
 import { useSelector } from 'react-redux';
+import Empty from 'components/common/Empty';
 import TourList from 'components/common/TourList';
 
 const MyRecordWrppaer = styled.div`
