@@ -146,7 +146,8 @@ const PlanCheck = () => {
 	const [FinishDate, setFinishDate] = useState(Tour.Tour.FinishDate);
 	const [People, setPeople] = useState(Tour.Tour.People);
 	const { RangePicker } = DatePicker;
-	const dateFormat = 'YYYY .MM .DD.';
+	const dateFormat = 'YYYY-MM-DD';
+
 	const HandlePage = useCallback(() => {
 		dispatch(
 			tour({

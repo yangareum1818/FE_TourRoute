@@ -8,6 +8,7 @@ import Plan from 'pages/planpage/Plan';
 import PlanCheck from 'pages/planpage/plancheck/PlanCheck';
 import PlanList from 'pages/planpage/PlanList/PlanList';
 import MapLayOut from 'pages/planpage/planmap/MapLayOut';
+import PlanResult from 'pages/planpage/planresult/PlanResult';
 // 로그인, 회원가입
 import LoginContainer from 'pages/auth/LoginContainer';
 import SignUpContainer from 'pages/auth/SignUpContainer';
@@ -43,6 +44,7 @@ function App() {
 						<Route path="1" element={<PlanCheck />} />
 						<Route path="2" element={<PlanList />} />
 						<Route path="3/:day" element={<MapLayOut />} />
+						<Route path="4" element={<PlanResult />} />
 					</Route>
 					<Route path="/login" element={<LoginContainer />} />
 					{/* 회원가입 */}
