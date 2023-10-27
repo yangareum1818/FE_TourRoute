@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Form, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { axiosTokenGet, axiosTokenPut } from 'utils/AxiosUtils';
 import { Button, ButtonGroup } from 'components/common/Button';
@@ -83,10 +83,8 @@ const ProfileManagementContainer = () => {
 	const formData = new FormData();
 	const profileImgFileInput = useRef(null);
 
-	const profileChange = e => {
-		formData.append('img_link', e.target.files[0]);
-		// console.log(user.username);
-
+	const profileChange = async e => {
+		setimagesrc(e.target.files[0]);
 		if (e.target.files[0]) {
 			setProfileImage(e.target.files[0]);
 		} else {
@@ -94,7 +92,6 @@ const ProfileManagementContainer = () => {
 			setProfileImage(profileImage);
 			return;
 		}
-		formData.append('image', e.target.files[0]);
 		const reader = new FileReader();
 		reader.onload = () => {
 			if (reader.readyState === 2) {
@@ -121,6 +118,7 @@ const ProfileManagementContainer = () => {
 			// setUser(updateData);
 
 			console.log(updateData);
+			// if ()
 		} catch (error) {
 			console.error(error);
 		}
@@ -133,7 +131,7 @@ const ProfileManagementContainer = () => {
 	return (
 		<>
 			<MyProfileContent>
-				<form style={{ display: 'flex', gap: '3rem' }}>
+				<form id="profileEditForm" style={{ display: 'flex', gap: '3rem' }}>
 					<div
 						style={{
 							flex: 0.9,
@@ -199,7 +197,6 @@ const ProfileManagementContainer = () => {
 							<ProfileInfoTitle>이름</ProfileInfoTitle>
 							<ProfileInfoValue
 								name="username"
-								multiple
 								defaultValue={username}
 								required
 								onChange={onChange}
@@ -218,7 +215,7 @@ const ProfileManagementContainer = () => {
 				{/* <ProfileInfoChangeText>최근 수정일 : {LastChangeDate}</ProfileInfoChangeText> */}
 			</MyProfileContent>
 			<ButtonGroup style={{ maxWidth: '40rem', margin: '0 auto', paddingTop: '4rem' }}>
-				<Button onSubmit={onUpdateProfile} text="프로필 수정 완료" type="primary" />
+				<Button text="프로필 수정 완료" $submit onClick={onUpdateProfile} />
 				<Button text="취소" variant="cancel" />
 			</ButtonGroup>
 		</>
