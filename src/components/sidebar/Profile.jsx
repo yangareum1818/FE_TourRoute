@@ -48,12 +48,14 @@ const ProfileManagement = styled(Link)`
 
 const Profile = () => {
 	const [username, setUsername] = useState('');
+	const [userimg, setUserimg] = useState('');
 
 	const userName = useCallback(async () => {
 		const res = await axiosTokenGet('/users/mypage');
 		console.log(res);
 
 		setUsername(res.username);
+		setUserimg(res.img_link);
 	}, [setUsername]);
 
 	useEffect(() => {
@@ -66,7 +68,7 @@ const Profile = () => {
 
 	return (
 		<ProfileWrapper>
-			<MyImage src={dummyMyImage} />
+			<MyImage src={userimg} />
 			<MyName>{username}</MyName>
 			{holding === false ? (
 				<ProfileManagementInner>

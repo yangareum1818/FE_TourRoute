@@ -31,7 +31,7 @@ const RecordContainer = () => {
 
 	return (
 		<MyRecordWrppaer>
-			{tour === 0 ? (
+			{tour.length === 0 ? (
 				<Empty text="여행계획에서 나의 여행정보를 추천받고 저장해보세요!" />
 			) : (
 				<>
