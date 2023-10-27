@@ -81,7 +81,7 @@ const MapLayOut = () => {
 	const result = useSelector(state1 => state1.Result);
 	const Tour = useSelector(state => state.Tour);
 	const name = useSelector(state => state.Info);
-	console.log(result.Result);
+	console.log(window.location.pathname.split('/')[2]);
 	const day = window.location.pathname.split('/')[3];
 	const HandleDayChoice = useCallback(
 		e => {
