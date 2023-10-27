@@ -24,6 +24,8 @@ const WishListContainer = () => {
 		userWishList();
 	}, []);
 
+	// console.log(bookmarkData);
+
 	return (
 		<div>
 			{bookmarkData.length === 0 ? (
