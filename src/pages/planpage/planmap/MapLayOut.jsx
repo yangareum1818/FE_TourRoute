@@ -89,14 +89,6 @@ const MapLayOut = () => {
 		[navigate],
 	);
 	const HandleFinish = async () => {
-		// await axiosPost('/plan/save-plan', {
-		// 	city: Tour.Tour.LocalName,
-		// 	theme: 'park',
-		// 	period: ['2023-10-22', '2023-10-24'],
-		// 	accompany: [],
-		// 	email: 'tester3@test.com',
-		// 	tourList: result.Result,
-		// });
 		navigate('/tourplan/4');
 	};
 	return (

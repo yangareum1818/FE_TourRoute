@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
 import { tour } from 'store/PostRedux';
+import { axiosTokenGet } from 'utils/AxiosUtils';
+import { message } from 'antd';
 dayjs.extend(customParseFormat);
 const SerchContainer = styled.div`
 	border: 0.5px solid grey;
@@ -138,13 +140,14 @@ const PlanCheck = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [UserId, setUserId] = useInput('');
-	const [UserList, setUserList] = useState([]);
 	const Tour = useSelector(state => state.Tour);
 	const name = useSelector(state => state.Info);
+	const [UserList, setUserList] = useState(Tour.Tour.UserList);
 	const [LocalName, setLocalName] = useState(Tour.Tour.LocalName);
 	const [StartDate, setStartDate] = useState(Tour.Tour.StartDate);
 	const [FinishDate, setFinishDate] = useState(Tour.Tour.FinishDate);
 	const [People, setPeople] = useState(Tour.Tour.People);
+	const [messageApi, contextHolder] = message.useMessage();
 	const { RangePicker } = DatePicker;
 	const dateFormat = 'YYYY-MM-DD';
 
@@ -172,9 +175,23 @@ const PlanCheck = () => {
 			handlepeople(e);
 		}
 	};
+	const alert = async (type, content) => {
+		return messageApi.open({
+			type: type,
+			content: content,
+		});
+	};
 	const handlepeople = useCallback(
-		e => {
-			setUserList([...UserList, UserId]);
+		async e => {
+			const res = await axiosTokenGet(`/users/get-user/${e.target.value}`);
+			console.log(res.status_code);
+			if (res.status_code === 200) {
+				alert('success', '확인되었습니다');
+				setUserList([...UserList, UserId]);
+			}
+			if (res.status_code === 400) {
+				alert('warning', res.detail);
+			}
 		},
 		[UserId, UserList],
 	);
