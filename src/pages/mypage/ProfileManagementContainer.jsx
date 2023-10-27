@@ -79,9 +79,13 @@ const ProfileManagementContainer = () => {
 
 	// 프로필 이미지
 	const [profileImage, setProfileImage] = useState(img_link);
+	const formData = new FormData();
 	const profileImgFileInput = useRef(null);
 
 	const profileChange = e => {
+		formData.append('img_link', e.target.files[0]);
+		// console.log(user.username);
+
 		if (e.target.files[0]) {
 			setProfileImage(e.target.files[0]);
 		} else {
@@ -100,16 +104,21 @@ const ProfileManagementContainer = () => {
 
 	// 기본 프로필 이미지
 	const onDefaultImage = () => {
-		console.log('기본프로필로 변경되라고');
 		setProfileImage(dummyMyImage);
 	};
 
-	// 프로필 수정 완료
+	// 프로필 수정 완
 	const onUpdateProfile = useCallback(async () => {
-		const updateData = await axiosTokenPut('/users/update_mypage');
-		setUser(updateData);
+		try {
+			// formData.append('username', user.username);
+			const updateData = await axiosTokenPut('/users/update_mypage', formData);
+			setUser(updateData);
 
-		console.log(updateData);
+			console.log(updateData);
+			// if ()
+		} catch (error) {
+			console.error(error);
+		}
 	}, []);
 
 	useEffect(() => {
@@ -119,7 +128,7 @@ const ProfileManagementContainer = () => {
 	return (
 		<>
 			<MyProfileContent>
-				<div style={{ display: 'flex', gap: '3rem' }}>
+				<form id="profileEditForm" style={{ display: 'flex', gap: '3rem' }}>
 					<div
 						style={{
 							flex: 0.9,
@@ -199,7 +208,7 @@ const ProfileManagementContainer = () => {
 							<ProfileInfoValueText>수신거부</ProfileInfoValueText>
 						</ProfileInfoWrpper>
 					</div>
-				</div>
+				</form>
 				<ProfileInfoChangeText>최근 수정일 : {LastChangeDate}</ProfileInfoChangeText>
 			</MyProfileContent>
 			<ButtonGroup style={{ maxWidth: '40rem', margin: '0 auto', paddingTop: '4rem' }}>
