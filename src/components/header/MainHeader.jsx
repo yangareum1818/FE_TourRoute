@@ -13,6 +13,7 @@ import { axiosTokenGet } from 'utils/AxiosUtils';
 import { useDispatch } from 'react-redux';
 import { Info } from 'store/UserInfo';
 import { tour } from 'store/PostRedux';
+import { message } from 'antd';
 const WrapperContainer = styled.div`
 	padding-bottom: 5rem;
 	margin: 0 auto;
@@ -171,6 +172,7 @@ const MainHeader = () => {
 	const [LocalName, setLocalName] = useState('대구');
 	const [StartDate, setStartDate] = useState(null);
 	const [FinishDate, setFinishDate] = useState(null);
+	const [messageApi, contextHolder] = message.useMessage();
 	const [People, setPeople] = useState(1);
 	const { RangePicker } = DatePicker;
 	const name = useSelector(state => state.Info);
@@ -185,6 +187,12 @@ const MainHeader = () => {
 			console.log('로그인을 하셔야합니다.');
 		}
 	}, [dispatch]);
+	const alert = async (type, content) => {
+		return messageApi.open({
+			type: type,
+			content: content,
+		});
+	};
 	const HandleLogout = useCallback(() => {
 		setToken(window.localStorage.removeItem('token'));
 	}, []);
