@@ -61,7 +61,7 @@ const ProfileManagementContainer = () => {
 		img_link: dummyMyImage,
 	});
 	const { username, email, latest, img_link } = user;
-	// let LastChangeDate = latest.replace('T', ' ').split('.', 1).join('');
+	let LastChangeDate = latest.replace('T', ' ').split('.', 1).join('');
 
 	const userInfo = useCallback(async () => {
 		const data = await axiosTokenGet('/users/mypage');
@@ -111,18 +111,23 @@ const ProfileManagementContainer = () => {
 		try {
 			formData.append('file', imagesrc);
 			formData.append('username', user.username);
-			const updateData = await axiosTokenPut(
-				`/users/update_mypage?username=${user.username}`,
-				formData,
-			);
-			// setUser(updateData);
+			const res = await axiosTokenPut(`/users/update_mypage?username=${user.username}`, formData);
 
-			console.log(updateData);
-			// if ()
+			if (res) {
+				alert('수정이 완료되었습니다.');
+				window.location.replace('/my/profile');
+			}
 		} catch (error) {
 			console.error(error);
 		}
 	}, [formData, user.username]);
+
+	const onCancle = () => {
+		if (window.confirm('변경사항이 사라집니다.')) {
+			navigate(-1);
+		}
+	};
+	console.log('username, user.username', username, user.username);
 
 	useEffect(() => {
 		userInfo();
@@ -212,11 +217,11 @@ const ProfileManagementContainer = () => {
 						</ProfileInfoWrpper>
 					</div>
 				</form>
-				{/* <ProfileInfoChangeText>최근 수정일 : {LastChangeDate}</ProfileInfoChangeText> */}
+				<ProfileInfoChangeText>최근 수정일 : {LastChangeDate}</ProfileInfoChangeText>
 			</MyProfileContent>
 			<ButtonGroup style={{ maxWidth: '40rem', margin: '0 auto', paddingTop: '4rem' }}>
 				<Button text="프로필 수정 완료" $submit onClick={onUpdateProfile} />
-				<Button text="취소" variant="cancel" />
+				<Button text="취소" onClick={onCancle} variant="cancel" />
 			</ButtonGroup>
 		</>
 	);
