@@ -33,7 +33,7 @@ const WishListContainer = () => {
 			) : (
 				<MyWishListWrapper>
 					{bookmarkData.map((data, index) => {
-						return data.is_bookmark === true ? <LocalButton key={index} props={data} /> : '';
+						return data.is_bookmark === true ? <LocalButton key={index} props={data} /> : null;
 					})}
 				</MyWishListWrapper>
 			)}

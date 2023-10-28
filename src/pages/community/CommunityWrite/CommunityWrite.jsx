@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
-import { axiosTokenPost } from 'utils/AxiosUtils';
+import { axiosTokenFormPost } from 'utils/AxiosUtils';
 
 import DummyImges from 'assets/image.png';
 import backgroundimg from 'assets/background_write.png';
@@ -139,17 +139,18 @@ const CommunityWrite = () => {
 
 	const navigate = useNavigate();
 
-	const [Recruiting, SetRecruiting] = useState(false);
 	const freeRef = useRef();
 	const commpanyRef = useRef();
 	const RecruitingRef = useRef();
 	const RecruitEndRef = useRef();
+	const [Recruiting, SetRecruiting] = useState(false);
+	const [checkedHandle, setCheckedHandle] = useState(true);
 
 	const [board, setBoard] = useState({
 		title: '',
 		contents: '',
 		category: 'IS_FREE',
-		recruitment: null,
+		recruitment: '',
 		r_link: '',
 	});
 
@@ -168,25 +169,33 @@ const CommunityWrite = () => {
 	);
 
 	// 카테고리, 모집상태
-	const onRadioChange = useCallback(
-		data => {
-			data === 'IS_FREE'
-				? setBoard({
-						...board,
-						category: data,
-						recruitment: null,
-				  })
-				: setBoard({
-						...board,
-						category: data,
-						recruitment: data,
-				  });
-			data === 'IS_FREE' ? SetRecruiting(false) : SetRecruiting(true);
-			console.log('data', data);
-			console.log(board);
+	const onCategoryChange = useCallback(
+		e => {
+			const { value, name, checked } = e.target;
+			console.log(value, name, checked);
+
+			value === 'IS_FREE' ? SetRecruiting(false) : SetRecruiting(true);
+
+			// 문제야 문제 ! : 동행에서 모집상태를 선택하고, 다시 자유로 바꾸면 모집상태 ''값을 넣어야함. (checked는 어찌저찌 함 .. 되긴되는데 기본디폴드값만 자유게시판에 설정함. 위에 useState만들어놨어요. checked)
+			setBoard({
+				...board,
+				category: value,
+				// category: value === 'IS_FREE' ? board.recruitment === '' : board.recruitment === value,
+			});
 		},
 		[board],
 	);
+	const onRecruitMentChange = useCallback(
+		data => {
+			setBoard({
+				...board,
+				recruitment: data,
+			});
+		},
+		[board],
+	);
+
+	console.log('board', board);
 
 	// 이미지 업로드
 	const imgesInputRef = useRef('');
@@ -203,7 +212,7 @@ const CommunityWrite = () => {
 		// 	imageFormData.append('image', file);
 		// });
 
-		// 이미지 1개일 경우임. 2개이상은 조건문 변경바람.
+		// 이미지 1개일 경우임. 2개이상은 조건문 변경바람 (위 주석).
 		if (e.target.files[0]) {
 			setImgsrc(e.target.files[0]);
 		} else {
@@ -225,10 +234,22 @@ const CommunityWrite = () => {
 
 	// 작성완료
 	const CommuWriteHandleSubmit = useCallback(async () => {
-		const res = await axiosTokenPost('/board/create_board', board);
-		console.log(res);
-		// navigate('/community');
-	}, []);
+		try {
+			// 422떠요 ..
+			const formData = new FormData();
+
+			formData.append('board', board);
+
+			const res = await axiosTokenFormPost(
+				`/board/create_board?title=${title}&content=${contents}&category=${category}&recruitment=${recruitment}`,
+				formData,
+			);
+			console.log(res);
+			// navigate('/community');
+		} catch (error) {
+			console.error(error);
+		}
+	}, [title, contents, category, recruitment]);
 
 	// 취소
 	const handleClose = useCallback(
@@ -249,10 +270,11 @@ const CommunityWrite = () => {
 							<CategoryInputInner>
 								<RadioInput
 									type="radio"
-									name="POST_FREE"
+									name="category"
 									value="IS_FREE"
+									defaultChecked={checkedHandle}
 									onClick={e => {
-										onRadioChange(e.target.value);
+										onCategoryChange(e);
 									}}
 									ref={freeRef}
 								/>
@@ -261,10 +283,10 @@ const CommunityWrite = () => {
 							<CategoryInputInner>
 								<RadioInput
 									type="radio"
-									name="POST_FREE"
+									name="category"
 									value="IS_ACCOMPANY"
 									onClick={e => {
-										onRadioChange(e.target.value);
+										onCategoryChange(e);
 									}}
 									ref={commpanyRef}
 								/>
@@ -280,8 +302,9 @@ const CommunityWrite = () => {
 								<CategoryInputInner>
 									<RadioInput
 										type="radio"
-										name="RECRUITING"
+										name="recruitment"
 										value="RECRUITING"
+										onClick={e => onRecruitMentChange(e.target.value)}
 										ref={RecruitingRef}
 									/>
 									<span onClick={() => RecruitingRef.current.click()}>모집 중</span>
@@ -289,8 +312,9 @@ const CommunityWrite = () => {
 								<CategoryInputInner>
 									<RadioInput
 										type="radio"
-										name="RECRUITING"
+										name="recruitment"
 										value="RECRUITMENT_COMPLETED"
+										onClick={e => onRecruitMentChange(e.target.value)}
 										ref={RecruitEndRef}
 									/>
 									<span onClick={() => RecruitEndRef.current.click()}>모집 완료</span>
