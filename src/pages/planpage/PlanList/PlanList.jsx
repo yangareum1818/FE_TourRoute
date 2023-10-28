@@ -11,6 +11,7 @@ import { axiosTokenGet } from 'utils/AxiosUtils';
 import { useDispatch, useSelector } from 'react-redux';
 import { result } from 'store/TourResult';
 import { message } from 'antd';
+import { tour } from 'store/PostRedux';
 // import { result } from '../../../store/TourResult';
 const CategoryContainer = styled.div`
 	display: grid;
@@ -66,6 +67,11 @@ const PlanList = () => {
 	const dispatch = useDispatch();
 	const [messageApi, contextHolder] = message.useMessage();
 	const Tour = useSelector(state => state.Tour);
+	const [UserList, setUserList] = useState(Tour.Tour.UserList);
+	const [LocalName, setLocalName] = useState(Tour.Tour.LocalName);
+	const [StartDate, setStartDate] = useState(Tour.Tour.StartDate);
+	const [FinishDate, setFinishDate] = useState(Tour.Tour.FinishDate);
+	const [People, setPeople] = useState(Tour.Tour.People);
 	const getDateDiff = (d1, d2) => {
 		const date1 = new Date(d1);
 		const date2 = new Date(d2);
@@ -91,6 +97,16 @@ const PlanList = () => {
 				)}`,
 			);
 			dispatch(result(res));
+			dispatch(
+				tour({
+					LocalName: LocalName,
+					StartDate: StartDate,
+					FinishDate: FinishDate,
+					People: People,
+					UserList: UserList,
+					Theme: Checked,
+				}),
+			);
 			navigate('/tourplan/3/0');
 		}
 	};

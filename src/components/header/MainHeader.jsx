@@ -209,7 +209,7 @@ const MainHeader = () => {
 		if (StartDate !== null && FinishDate !== null) {
 			navigate('/tourplan/1');
 		} else {
-			alert('warning', '여행일정을 확인해주세요.');
+			alert('warning', '여행계획 확인해주세요');
 		}
 	}, [dispatch, LocalName, StartDate, FinishDate, People, UserList, navigate]);
 	const handleDel = useCallback(
@@ -226,9 +226,30 @@ const MainHeader = () => {
 	};
 	const handleDate = e => {
 		const [start, finish] = e;
-		console.log(start.$d.toLocaleDateString());
-		setStartDate(start.$d.toLocaleDateString().trim());
-		setFinishDate(finish.$d.toLocaleDateString().trim());
+		console.log(
+			start.$d
+				.toLocaleDateString()
+				.replace(/\./g, '')
+				.split(' ')
+				.map((v, i) => (i > 0 && v.length < 2 ? '0' + v : v))
+				.join('-'),
+		);
+		setStartDate(
+			start.$d
+				.toLocaleDateString()
+				.replace(/\./g, '')
+				.split(' ')
+				.map((v, i) => (i > 0 && v.length < 2 ? '0' + v : v))
+				.join('-'),
+		);
+		setFinishDate(
+			finish.$d
+				.toLocaleDateString()
+				.replace(/\./g, '')
+				.split(' ')
+				.map((v, i) => (i > 0 && v.length < 2 ? '0' + v : v))
+				.join('-'),
+		);
 	};
 	const handlepeople = useCallback(
 		async e => {
