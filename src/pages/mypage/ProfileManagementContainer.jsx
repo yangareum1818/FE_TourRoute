@@ -60,7 +60,7 @@ const ProfileManagementContainer = () => {
 		latest: '',
 		img_link: dummyMyImage,
 	});
-	const { username, email, latest } = user;
+	const { username, email, latest, img_link } = user;
 	let LastChangeDate = latest.replace('T', ' ').split('.', 1).join('');
 
 	const userInfo = useCallback(async () => {
@@ -78,15 +78,18 @@ const ProfileManagementContainer = () => {
 	};
 
 	// 프로필 이미지
-	const [profileImage, setProfileImage] = useState(user.img_link);
+	const [profileImage, setProfileImage] = useState(img_link);
+	const [imagesrc, setimagesrc] = useState();
+	const formData = new FormData();
 	const profileImgFileInput = useRef(null);
 
-	const profileChange = e => {
+	const profileChange = async e => {
+		setimagesrc(e.target.files[0]);
 		if (e.target.files[0]) {
 			setProfileImage(e.target.files[0]);
 		} else {
 			// 업로드 취소 시 기본 더미 이미지
-			setProfileImage(user.profileImg);
+			setProfileImage(profileImage);
 			return;
 		}
 		const reader = new FileReader();
@@ -98,13 +101,33 @@ const ProfileManagementContainer = () => {
 		reader.readAsDataURL(e.target.files[0]);
 	};
 
-	// 프로필 수정 완료
-	const onUpdateProfile = useCallback(async () => {
-		const updateData = await axiosTokenPut('/users/update_mypage');
-		setUser(updateData);
+	// 기본 프로필 이미지
+	const onDefaultImage = () => {
+		setProfileImage(dummyMyImage);
+	};
 
-		console.log(updateData);
-	}, []);
+	// 프로필 수정 완
+	const onUpdateProfile = useCallback(async () => {
+		try {
+			formData.append('file', imagesrc);
+			formData.append('username', user.username);
+			const res = await axiosTokenPut(`/users/update_mypage?username=${user.username}`, formData);
+
+			if (res) {
+				alert('수정이 완료되었습니다.');
+				window.location.replace('/my/profile');
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	}, [formData, user.username]);
+
+	const onCancle = () => {
+		if (window.confirm('변경사항이 사라집니다.')) {
+			navigate(-1);
+		}
+	};
+	console.log('username, user.username', username, user.username);
 
 	useEffect(() => {
 		userInfo();
@@ -113,12 +136,14 @@ const ProfileManagementContainer = () => {
 	return (
 		<>
 			<MyProfileContent>
-				<div style={{ display: 'flex', gap: '3rem' }}>
+				<form id="profileEditForm" style={{ display: 'flex', gap: '3rem' }}>
 					<div
 						style={{
 							flex: 0.9,
 							display: 'flex',
 							alignItems: 'center',
+							flexDirection: 'column',
+							padding: '1rem',
 							borderRight: '.1rem solid #cfcfcf',
 						}}
 					>
@@ -155,11 +180,24 @@ const ProfileManagementContainer = () => {
 									textAlign: 'center',
 								}}
 							>
-								이미지 변경
+								프로필 변경
 							</span>
 						</label>
+						<button
+							style={{
+								marginTop: '1.2rem',
+								padding: '.8rem .4rem',
+								color: '#959696',
+								border: '0.1rem solid #cfcfcf',
+								borderRadius: '.4rem',
+								cursor: 'pointer',
+							}}
+							onClick={onDefaultImage}
+						>
+							기본 이미지로 변경
+						</button>
 					</div>
-					<div style={{ flex: 4.4, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+					<div style={{ flex: 4.4, display: 'flex', flexDirection: 'column', gap: '2rem' }}>
 						<ProfileInfoWrpper>
 							<ProfileInfoTitle>이름</ProfileInfoTitle>
 							<ProfileInfoValue
@@ -171,19 +209,19 @@ const ProfileManagementContainer = () => {
 						</ProfileInfoWrpper>
 						<ProfileInfoWrpper>
 							<ProfileInfoTitle>이메일</ProfileInfoTitle>
-							<ProfileInfoValue name="email" defaultValue={email} onChange={onChange} />
+							<ProfileInfoValue name="email" disabled defaultValue={email} onChange={onChange} />
 						</ProfileInfoWrpper>
 						<ProfileInfoWrpper>
 							<ProfileInfoTitle>마케팅 수신동의</ProfileInfoTitle>
 							<ProfileInfoValueText>수신거부</ProfileInfoValueText>
 						</ProfileInfoWrpper>
 					</div>
-				</div>
+				</form>
 				<ProfileInfoChangeText>최근 수정일 : {LastChangeDate}</ProfileInfoChangeText>
 			</MyProfileContent>
 			<ButtonGroup style={{ maxWidth: '40rem', margin: '0 auto', paddingTop: '4rem' }}>
 				<Button text="프로필 수정 완료" $submit onClick={onUpdateProfile} />
-				<Button text="취소" variant="cancel" />
+				<Button text="취소" onClick={onCancle} variant="cancel" />
 			</ButtonGroup>
 		</>
 	);
