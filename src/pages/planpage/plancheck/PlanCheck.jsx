@@ -152,8 +152,8 @@ const PlanCheck = () => {
 		dispatch(
 			tour({
 				LocalName: LocalName,
-				StartDate: StartDate,
-				FinishDate: FinishDate,
+				StartDate: Tour.Tour.StartDate,
+				FinishDate: Tour.Tour.FinishDate,
 				People: People,
 				UserList: UserList,
 			}),

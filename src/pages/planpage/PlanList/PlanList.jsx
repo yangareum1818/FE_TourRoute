@@ -13,7 +13,13 @@ import mountin from 'assets/category_mount.png';
 import hotplace from 'assets/category_hotlocation.png';
 import history from 'assets/category_history.png';
 import walking from 'assets/category_walk.png';
-
+import { useNavigate } from 'react-router-dom';
+import { axiosTokenGet } from 'utils/AxiosUtils';
+import { useDispatch, useSelector } from 'react-redux';
+import { result } from 'store/TourResult';
+import { message } from 'antd';
+import { tour } from 'store/PostRedux';
+// import { result } from '../../../store/TourResult';
 const CategoryContainer = styled.div`
 	display: grid;
 	grid-template-columns: 25rem 25rem 25rem 25rem;
@@ -63,31 +69,60 @@ const NextText = styled.span`
 	font-weight: bold;
 `;
 const PlanList = () => {
-	const [Checked, setChecked] = useState('');
+	const [Checked, setChecked] = useState(null);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const [messageApi, contextHolder] = message.useMessage();
 	const Tour = useSelector(state => state.Tour);
+	const [UserList, setUserList] = useState(Tour.Tour.UserList);
+	const [LocalName, setLocalName] = useState(Tour.Tour.LocalName);
+	const [StartDate, setStartDate] = useState(Tour.Tour.StartDate);
+	const [FinishDate, setFinishDate] = useState(Tour.Tour.FinishDate);
+	const [People, setPeople] = useState(Tour.Tour.People);
 	const getDateDiff = (d1, d2) => {
 		const date1 = new Date(d1);
 		const date2 = new Date(d2);
 		const diffDate = date1.getTime() - date2.getTime();
 		return Math.abs(diffDate / (1000 * 60 * 60 * 24)); // 밀리세컨 * 초 * 분 * 시 = 일
 	};
+	const alert = async (type, content) => {
+		return messageApi.open({
+			type: type,
+			content: content,
+		});
+	};
+
 	const HandlePage = async () => {
-		const res = await axiosTokenGet(
-			`/plan/recommand-plan/?city=${Tour.Tour.LocalName}&theme=${Checked}&period=${getDateDiff(
-				Tour.Tour.StartDate,
-				Tour.Tour.FinishDate,
-			)}`,
-		);
-		dispatch(result(res));
-		navigate('/tourplan/3/0');
+		if (Checked === null) {
+			alert('warning', '여행일정을 확인해주세요.');
+		} else {
+			console.log(Checked);
+			const res = await axiosTokenGet(
+				`/plan/recommand-plan/?city=${Tour.Tour.LocalName}&theme=${Checked}&period=${getDateDiff(
+					Tour.Tour.StartDate,
+					Tour.Tour.FinishDate,
+				)}`,
+			);
+			dispatch(result(res));
+			dispatch(
+				tour({
+					LocalName: LocalName,
+					StartDate: StartDate,
+					FinishDate: FinishDate,
+					People: People,
+					UserList: UserList,
+					Theme: Checked,
+				}),
+			);
+			navigate('/tourplan/3/0');
+		}
 	};
 	const HandleCheck = e => {
 		setChecked(e);
 	};
 	return (
 		<div>
+			{contextHolder}
 			<CategoryContainer>
 				{Checked === 'museum' ? (
 					<CheckedLocation

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ResultImg from 'assets/resultImg.svg';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-
+import { axiosPost } from 'utils/AxiosUtils';
+import { useSelector, useDispatch } from 'react-redux';
+import dayjs from 'dayjs';
 const NextBtn = styled.div`
 	background-color: #3ad0ff;
 	width: 40rem;
@@ -24,7 +26,17 @@ const NextText = styled.span`
 
 const PlanResult = () => {
 	const navigate = useNavigate();
-	const HandleFinish = () => {
+	const dispatch = useDispatch();
+	const Tour = useSelector(state => state.Tour);
+	const result = useSelector(state => state.Result);
+	const HandleFinish = async () => {
+		await axiosPost('/plan/save-plan', {
+			city: Tour.Tour.LocalName,
+			theme: Tour.Tour.Theme,
+			period: [Tour.Tour.StartDate, Tour.Tour.FinishDate],
+			accompany: Tour.Tour.UserList,
+			tourList: result.Result,
+		});
 		navigate('/');
 	};
 	return (

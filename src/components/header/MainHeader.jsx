@@ -206,7 +206,11 @@ const MainHeader = () => {
 				UserList: UserList,
 			}),
 		);
-		navigate('/tourplan/1');
+		if (StartDate !== null && FinishDate !== null) {
+			navigate('/tourplan/1');
+		} else {
+			alert('warning', '여행계획 확인해주세요');
+		}
 	}, [dispatch, LocalName, StartDate, FinishDate, People, UserList, navigate]);
 	const handleDel = useCallback(
 		e => {
@@ -222,15 +226,42 @@ const MainHeader = () => {
 	};
 	const handleDate = e => {
 		const [start, finish] = e;
-		console.log(start.$d.toLocaleDateString());
-		setStartDate(start.$d.toLocaleDateString().trim());
-		setFinishDate(finish.$d.toLocaleDateString().trim());
+		console.log(
+			start.$d
+				.toLocaleDateString()
+				.replace(/\./g, '')
+				.split(' ')
+				.map((v, i) => (i > 0 && v.length < 2 ? '0' + v : v))
+				.join('-'),
+		);
+		setStartDate(
+			start.$d
+				.toLocaleDateString()
+				.replace(/\./g, '')
+				.split(' ')
+				.map((v, i) => (i > 0 && v.length < 2 ? '0' + v : v))
+				.join('-'),
+		);
+		setFinishDate(
+			finish.$d
+				.toLocaleDateString()
+				.replace(/\./g, '')
+				.split(' ')
+				.map((v, i) => (i > 0 && v.length < 2 ? '0' + v : v))
+				.join('-'),
+		);
 	};
 	const handlepeople = useCallback(
 		async e => {
 			const res = await axiosTokenGet(`/users/get-user/${e.target.value}`);
-			console.log(res);
-			setUserList([...UserList, UserId]);
+			console.log(res.status_code);
+			if (res.status_code === 200) {
+				alert('success', '확인되었습니다');
+				setUserList([...UserList, UserId]);
+			}
+			if (res.status_code === 400) {
+				alert('warning', res.detail);
+			}
 		},
 		[UserId, UserList],
 	);
@@ -240,6 +271,7 @@ const MainHeader = () => {
 	}, [setToken]);
 	return (
 		<WrapperContainer>
+			{contextHolder}
 			<Wrapper>
 				<LogoContainer>
 					<Link to="/">
@@ -344,7 +376,7 @@ const MainHeader = () => {
 							<UserInput>
 								<InputId
 									type="text"
-									placeholder="동행인 아이디 입력"
+									placeholder="동행인 이메일 입력"
 									value={UserId}
 									onChange={setUserId}
 									onKeyPress={handleKeyEnter}
