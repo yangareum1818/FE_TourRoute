@@ -40,7 +40,7 @@ const Sidebar = () => {
 	const [isLoading, setLoading] = useState(false);
 	const location = useLocation();
 	const urlName = location.pathname;
-	console.log(urlName);
+	console.log('pathname', urlName);
 	const mypageSide = [
 		{
 			id: 401,
@@ -69,20 +69,19 @@ const Sidebar = () => {
 		},
 	];
 
+	const side = mypageSide.filter(v => (urlName === v.url ? v.tilte : ''));
+	console.log('side', side[0].tilte);
+	console.log('pathname === sideURL', urlName === mypageSide[0].url);
+
 	useEffect(() => {
 		seturl(urlName);
 		setLoading(true);
 	}, [isLoading, mypageSide]);
-	console.log(urlName === mypageSide[0].url);
 
 	return (
 		<SideBarWrapper>
-			{isLoading ? <SideMenuLocation>{mypageSide[url]}</SideMenuLocation> : ''}
-			{/* {mypageSide.filter(v => {
-				if (urlName === v.url) {
-					<SideMenuLocation>{v.title}</SideMenuLocation>;
-				}
-			})} */}
+			{isLoading ? <SideMenuLocation>{side[0].tilte}</SideMenuLocation> : ''}
+			{/* {isLoading ? <SideMenuLocation>{mypageSide[url]}</SideMenuLocation> : ''} */}
 
 			<SideMenu>
 				{mypageSide.map(my => {
