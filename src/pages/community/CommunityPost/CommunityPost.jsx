@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { axiosTokenPost } from 'utils/AxiosUtils';
+import { axiosTokenGet, axiosTokenPost } from 'utils/AxiosUtils';
 
 import { Title } from 'components/common/Title';
 import { Button, ButtonGroup } from 'components/common/Button';
@@ -155,7 +155,22 @@ const Comment = styled.p`
 	font-weight: 300;
 `;
 
-const CommunityPost = () => {
+const CommunityPost = ({ b_id }) => {
+	// 게시글 상세 데이터
+	const [detail, setDetail] = useState();
+	const DetailGetToken = useCallback(async () => {
+		const res = await axiosTokenGet(`/board/get_board/${b_id}`);
+		setDetail(res);
+		console.log(res);
+	}, []);
+
+	// console.log(detail);
+
+	useEffect(() => {
+		DetailGetToken();
+	}, [DetailGetToken]);
+
+	// 댓글
 	const [comment, setComment] = useState('');
 	const onCommentClick = useCallback(async () => {
 		const commentData = await axiosTokenPost('/comment/create_comment');

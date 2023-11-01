@@ -2,15 +2,15 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
-import { axiosTokenFormPost } from 'utils/AxiosUtils';
+import { axiosTokenFormPost, axiosTokenPost } from 'utils/AxiosUtils';
 
 import DummyImges from 'assets/image.png';
 import backgroundimg from 'assets/background_write.png';
 import TextArea from 'antd/es/input/TextArea';
 import { Button, ButtonGroup } from 'components/common/Button';
-import DummyImg from 'assets/deagu.png';
-import RefForm from 'rc-field-form';
-import { Radio } from 'antd';
+// import DummyImg from 'assets/deagu.png';
+// import RefForm from 'rc-field-form';
+// import { Radio } from 'antd';
 
 const Wrapper = styled.div`
 	padding-bottom: 12rem;
@@ -128,15 +128,6 @@ const TextAreaWrapper = styled(TextArea)`
 `;
 
 const CommunityWrite = () => {
-	// const ImageUpload = useCallback(e => {
-	// 	var reader = new FileReader();
-	// 	reader.onload = function (e) {
-	// 		setImgsrc(e.target.result);
-	// 	};
-	// 	reader.readAsDataURL(e.target.files[0]);
-	// 	console.log(e.target.files[0]);
-	// }, [])
-
 	const navigate = useNavigate();
 
 	const freeRef = useRef();
@@ -144,6 +135,9 @@ const CommunityWrite = () => {
 	const RecruitingRef = useRef();
 	const RecruitEndRef = useRef();
 	const [Recruiting, SetRecruiting] = useState(false);
+	const [ImageData, setImageData] = useState('');
+
+	const [ImageChecked, setImageShecked] = useState(false);
 	const [checkedHandle, setCheckedHandle] = useState(true);
 
 	const [board, setBoard] = useState({
@@ -160,6 +154,8 @@ const CommunityWrite = () => {
 		e => {
 			const { value, name } = e.target;
 
+			contents.replace('\r\n', '<br>');
+
 			setBoard({
 				...board,
 				[name]: value,
@@ -174,14 +170,13 @@ const CommunityWrite = () => {
 			const { value, name, checked } = e.target;
 			console.log(value, name, checked);
 
-			value === 'IS_FREE' ? SetRecruiting(false) : SetRecruiting(true);
-
-			// 문제야 문제 ! : 동행에서 모집상태를 선택하고, 다시 자유로 바꾸면 모집상태 ''값을 넣어야함. (checked는 어찌저찌 함 .. 되긴되는데 기본디폴드값만 자유게시판에 설정함. 위에 useState만들어놨어요. checked)
-			setBoard({
-				...board,
-				category: value,
-				// category: value === 'IS_FREE' ? board.recruitment === '' : board.recruitment === value,
-			});
+			if (value === 'IS_FREE') {
+				SetRecruiting(false);
+				setBoard({ ...board, category: value, recruitment: '' });
+			} else {
+				SetRecruiting(true);
+				setBoard({ ...board, category: value });
+			}
 		},
 		[board],
 	);
@@ -202,15 +197,16 @@ const CommunityWrite = () => {
 	const onUploadImageButtonClick = useCallback(() => {
 		imgesInputRef.current.click();
 	}, []);
-
+	const formData = new FormData();
 	const [Imgsrc, setImgsrc] = useState([]);
 	const onUploadImg = e => {
-		console.log('images', e.target.files);
-
+		setImageShecked(true);
+		setImageData(e.target.files[0]);
 		// const imageFormData = new FormData();
 		// [].forEach.call(e.target.files, file => {
 		// 	imageFormData.append('image', file);
 		// });
+		// console.log('imageFormData', imageFormData);
 
 		// 이미지 1개일 경우임. 2개이상은 조건문 변경바람 (위 주석).
 		if (e.target.files[0]) {
@@ -219,7 +215,6 @@ const CommunityWrite = () => {
 			setImgsrc(DummyImges);
 			return;
 		}
-		// console.log('imageFormData', imageFormData);
 		const render = new FileReader();
 
 		console.log(render);
@@ -235,21 +230,21 @@ const CommunityWrite = () => {
 	// 작성완료
 	const CommuWriteHandleSubmit = useCallback(async () => {
 		try {
-			// 422떠요 ..
-			const formData = new FormData();
-
-			formData.append('board', board);
-
-			const res = await axiosTokenFormPost(
-				`/board/create_board?title=${title}&content=${contents}&category=${category}&recruitment=${recruitment}`,
-				formData,
-			);
-			console.log(res);
-			// navigate('/community');
+			formData.append('file', ImageData);
+			ImageChecked === false
+				? await axiosTokenPost(
+						`/board/create_board?title=${title}&contents=${contents}&category=${category}&recruitment=${recruitment}`,
+				  )
+				: await axiosTokenFormPost(
+						`/board/create_board?title=${title}&contents=${contents}&category=${category}&recruitment=${recruitment}`,
+						formData,
+				  );
+			alert('게시글 작성이 완료되었습니다.');
+			navigate('/community');
 		} catch (error) {
 			console.error(error);
 		}
-	}, [title, contents, category, recruitment]);
+	}, [title, contents, category, recruitment, ImageData, ImageChecked, formData]);
 
 	// 취소
 	const handleClose = useCallback(
@@ -386,7 +381,7 @@ const CommunityWrite = () => {
 
 				<TextAreaWrapper
 					showCount
-					maxLength={1000}
+					maxLength={1500}
 					style={{
 						height: 500,
 						resize: 'none',
@@ -400,7 +395,7 @@ ex) 동행 1명 있어요
 ex) 맛집  탐방을 좋아하는 20-30대 동행 찾아요!
 3. 함께 맞출부분이 있나요?
 ex) 원하시는 날짜가 있다면 알려주세요
-(1000자 이내)"
+(1500자 이내)"
 				/>
 			</SectionDiv>
 			<ButtonGroup style={{ width: '40rem', margin: '0 auto' }}>
