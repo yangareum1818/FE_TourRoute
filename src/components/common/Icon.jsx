@@ -111,26 +111,25 @@ export const ImgWhether = () => {
 };
 
 // 게시판 모집상태
+const Status = styled.span`
+	padding: 0.4rem 0.8rem;
+	font-size: 1.4rem;
+	font-weight: 500;
+	border: 0.1rem solid #000;
+	border-radius: 0.4rem;
+
+	&.complete {
+		color: #959696;
+		border: 0.1rem solid #959696;
+	}
+`;
 export const RecruitmentStatus = ({ statusText }) => {
-	const Status = styled.span`
-		padding: 0.4rem 0.8rem;
-		font-size: 1.4rem;
-		font-weight: 500;
-		border: 0.1rem solid #000;
-		border-radius: 0.4rem;
-
-		&.complete {
-			color: #959696;
-			border: 0.1rem solid #959696;
-		}
-	`;
-
 	return (
 		<div>
-			{statusText === '모집 중' ? (
-				<Status>{statusText}</Status>
+			{statusText === 'RECRUITING' ? (
+				<Status>모집 중</Status>
 			) : (
-				<Status className="complete">{statusText}</Status>
+				<Status className="complete">모집완료</Status>
 			)}
 		</div>
 	);
