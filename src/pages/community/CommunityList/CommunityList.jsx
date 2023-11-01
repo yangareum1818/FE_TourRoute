@@ -73,117 +73,11 @@ const CommunityList = () => {
 		setCommunityList(res);
 	}, []);
 
-	const test = [
-		{
-			id: 1,
-			title: '자유게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-		{
-			id: 2,
-			title: '동행게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-		{
-			id: 3,
-			title: '동행게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-		{
-			id: 4,
-			title: '동행게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-		{
-			id: 5,
-			title: '동행게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-		{
-			id: 6,
-			title: '동행게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-		{
-			id: 7,
-			title: '동행게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-		{
-			id: 8,
-			title: '동행게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-		{
-			id: 9,
-			title: '자유게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-		{
-			id: 10,
-			title: '자유게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-		{
-			id: 11,
-			title: '자유게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-		{
-			id: 12,
-			title: '자유게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-		{
-			id: 13,
-			title: '동행게시판',
-			content:
-				'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
-			data: '2023-01-22',
-		},
-	];
-
-	// b_id: 0,
-	// username: '',
-	// user_email: '',
-	// user_img_link: '',
-	// title: '',
-	// contents: '',
-	// category: '',
-	// recruitment: '',
-	// r_link: '',
-	// created_at: '',
-	// board_img_link: '',
-
 	console.log(communityList);
 
 	useEffect(() => {
 		ListGet();
-	}, []);
+	}, [ListGet]);
 
 	return (
 		<WritingListWrapper>
@@ -194,15 +88,18 @@ const CommunityList = () => {
 					{communityList.map(list => {
 						const { b_id, title, category, recruitment, board_img_link, created_at } = list;
 						const data = created_at.split('T', 1);
+
 						return (
-							<WritingList key={b_id}>
+							<WritingList key={b_id} index={b_id}>
 								{category === 'IS_FREE' ? (
 									<WritingListCategory>자유게시판</WritingListCategory>
 								) : (
 									<WritingListCategory>동행게시판</WritingListCategory>
 								)}
 								<WritingListTitle>
-									<Link>{title}</Link>
+									<Link to={`/community/${b_id}`} state={{ prop: b_id }}>
+										{title}
+									</Link>
 									{category === 'IS_ACCOMPANY' ? (
 										<RecruitmentStatus statusText={recruitment} />
 									) : null}
