@@ -1,9 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { Pagination } from 'antd';
 import Empty from 'components/common/Empty';
 import { Link } from 'react-router-dom';
 import { ImgWhether, RecruitmentStatus } from 'components/common/Icon';
+import { axiosGet } from 'utils/AxiosUtils';
 const WritingListWrapper = styled.div`
 	flex: 3;
 `;
@@ -59,6 +60,11 @@ const CommunityList = () => {
 		},
 		[setPage],
 	);
+	const ListGet = async () => {
+		const res = await axiosGet('/board/get_board_all');
+		console.log(res);
+	};
+
 	const test = [
 		{
 			id: 1,
@@ -152,6 +158,9 @@ const CommunityList = () => {
 			data: '2023-01-22',
 		},
 	];
+	useEffect(() => {
+		ListGet();
+	}, []);
 	return (
 		<WritingListWrapper>
 			<Empty text="커뮤니티에서 동행인을 구하거나, 자유롭게 글을 작성해보세요!" />

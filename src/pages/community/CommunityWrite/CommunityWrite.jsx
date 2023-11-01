@@ -2,15 +2,15 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
-import { axiosTokenFormPost } from 'utils/AxiosUtils';
+import { axiosTokenFormPost, axiosTokenPost } from 'utils/AxiosUtils';
 
 import DummyImges from 'assets/image.png';
 import backgroundimg from 'assets/background_write.png';
 import TextArea from 'antd/es/input/TextArea';
 import { Button, ButtonGroup } from 'components/common/Button';
-import DummyImg from 'assets/deagu.png';
-import RefForm from 'rc-field-form';
-import { Radio } from 'antd';
+// import DummyImg from 'assets/deagu.png';
+// import RefForm from 'rc-field-form';
+// import { Radio } from 'antd';
 
 const Wrapper = styled.div`
 	padding-bottom: 12rem;
@@ -144,6 +144,9 @@ const CommunityWrite = () => {
 	const RecruitingRef = useRef();
 	const RecruitEndRef = useRef();
 	const [Recruiting, SetRecruiting] = useState(false);
+	const [ImageData, setImageData] = useState('');
+
+	const [ImageChecked, setImageShecked] = useState(false);
 	const [checkedHandle, setCheckedHandle] = useState(true);
 
 	const [board, setBoard] = useState({
@@ -202,11 +205,11 @@ const CommunityWrite = () => {
 	const onUploadImageButtonClick = useCallback(() => {
 		imgesInputRef.current.click();
 	}, []);
-
+	const formData = new FormData();
 	const [Imgsrc, setImgsrc] = useState([]);
 	const onUploadImg = e => {
-		console.log('images', e.target.files);
-
+		setImageShecked(true);
+		setImageData(e.target.files[0]);
 		// const imageFormData = new FormData();
 		// [].forEach.call(e.target.files, file => {
 		// 	imageFormData.append('image', file);
@@ -235,21 +238,20 @@ const CommunityWrite = () => {
 	// 작성완료
 	const CommuWriteHandleSubmit = useCallback(async () => {
 		try {
-			// 422떠요 ..
-			const formData = new FormData();
-
-			formData.append('board', board);
-
-			const res = await axiosTokenFormPost(
-				`/board/create_board?title=${title}&content=${contents}&category=${category}&recruitment=${recruitment}`,
-				formData,
-			);
-			console.log(res);
+			formData.append('file', ImageData);
+			ImageChecked === false
+				? await axiosTokenPost(
+						`/board/create_board?title=하이2&contents=가작가자2&category=자유게시판&recruitment=null`,
+				  )
+				: await axiosTokenFormPost(
+						`/board/create_board?title=하이2&contents=가작가자2&category=자유게시판&recruitment=null`,
+						formData,
+				  );
 			// navigate('/community');
 		} catch (error) {
 			console.error(error);
 		}
-	}, [title, contents, category, recruitment]);
+	}, [title, contents, category, recruitment, ImageData, ImageChecked, formData]);
 
 	// 취소
 	const handleClose = useCallback(
