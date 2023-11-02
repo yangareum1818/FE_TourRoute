@@ -22,7 +22,7 @@ const MyImage = styled.img`
 	border-radius: 50%;
 `;
 const MyName = styled.span`
-	margin-top: 1rem;
+	margin-top: 2rem;
 	font-size: 1.6rem;
 	font-weight: 400;
 	color: #000;
@@ -64,14 +64,14 @@ const Profile = () => {
 
 	// 프로필 편집 클릭시 holding
 	const location = useLocation();
-	const holding = location.pathname.includes('/management');
-	const holding2 = location.pathname.includes('/my');
+	const holding = location.pathname.includes('management');
+	// const holding2 = location.pathname.includes('my');
 
 	return (
 		<ProfileWrapper>
-			<MyImage src={userimg} />
+			{userimg === '' ? <MyImage src={dummyMyImage} /> : <MyImage src={userimg} />}
 			<MyName>{username}</MyName>
-			{holding2 === true || holding === false ? (
+			{holding === false ? (
 				<ProfileManagementInner>
 					<ProfileManagementIcon src={ManagementIcon} />
 					<ProfileManagement to="/my/profile/management">프로필 관리</ProfileManagement>
