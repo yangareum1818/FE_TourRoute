@@ -8,6 +8,8 @@ import DummyImges from 'assets/image.png';
 import backgroundimg from 'assets/background_write.png';
 import TextArea from 'antd/es/input/TextArea';
 import { Button, ButtonGroup } from 'components/common/Button';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 // import DummyImg from 'assets/deagu.png';
 // import RefForm from 'rc-field-form';
 // import { Radio } from 'antd';
@@ -129,14 +131,13 @@ const TextAreaWrapper = styled(TextArea)`
 
 const CommunityWrite = () => {
 	const navigate = useNavigate();
-
 	const freeRef = useRef();
 	const commpanyRef = useRef();
 	const RecruitingRef = useRef();
 	const RecruitEndRef = useRef();
 	const [Recruiting, SetRecruiting] = useState(false);
 	const [ImageData, setImageData] = useState('');
-
+	const [TextData, SetTextData] = useState('');
 	const [ImageChecked, setImageShecked] = useState(false);
 	const [checkedHandle, setCheckedHandle] = useState(true);
 
@@ -149,6 +150,62 @@ const CommunityWrite = () => {
 	});
 
 	let { title, contents, category, recruitment, r_link } = board;
+
+	const modules = {
+		toolbar: {
+			container: [
+				[{ header: [1, 2, 3, 4, 5, 6, false] }],
+				[{ font: [] }],
+				[{ align: [] }],
+				['bold', 'italic', 'underline', 'strike', 'blockquote'],
+				[{ list: 'ordered' }, { list: 'bullet' }, 'link'],
+				[
+					{
+						color: [
+							'#000000',
+							'#e60000',
+							'#ff9900',
+							'#ffff00',
+							'#008a00',
+							'#0066cc',
+							'#9933ff',
+							'#ffffff',
+							'#facccc',
+							'#ffebcc',
+							'#ffffcc',
+							'#cce8cc',
+							'#cce0f5',
+							'#ebd6ff',
+							'#bbbbbb',
+							'#f06666',
+							'#ffc266',
+							'#ffff66',
+							'#66b966',
+							'#66a3e0',
+							'#c285ff',
+							'#888888',
+							'#a10000',
+							'#b26b00',
+							'#b2b200',
+							'#006100',
+							'#0047b2',
+							'#6b24b2',
+							'#444444',
+							'#5c0000',
+							'#663d00',
+							'#666600',
+							'#003700',
+							'#002966',
+							'#3d1466',
+							'custom-color',
+						],
+					},
+					{ background: [] },
+				],
+				['clean'],
+			],
+		},
+	};
 
 	const onChange = useCallback(
 		e => {
@@ -238,10 +295,10 @@ const CommunityWrite = () => {
 			formData.append('file', ImageData);
 			ImageChecked === false
 				? await axiosTokenPost(
-						`/board/create_board?title=${title}&contents=${contents}&category=${category}&recruitment=${recruitment}`,
+						`/board/create_board?title=${title}&contents=${TextData}&category=${category}&recruitment=${recruitment}`,
 				  )
 				: await axiosTokenFormPost(
-						`/board/create_board?title=${title}&contents=${contents}&category=${category}&recruitment=${recruitment}&r_link=${r_link}`,
+						`/board/create_board?title=${title}&contents=${TextData}&category=${category}&recruitment=${recruitment}&r_link=${r_link}`,
 						formData,
 				  );
 			alert('게시글 작성이 완료되었습니다.');
@@ -385,8 +442,24 @@ const CommunityWrite = () => {
 						</PostImgWrapper>
 					</InputWrapper>
 				)}
-
-				<TextAreaWrapper
+				<ReactQuill
+					name="contents"
+					onChange={e => SetTextData(e)}
+					maxLength={1500}
+					style={{
+						height: 500,
+						resize: 'none',
+					}}
+					modules={modules}
+					placeholder="1. 현재 동행이 있나요?
+ex) 동행 1명 있어요
+2. 어떤 동행을 찾고 있나요?
+ex) 맛집  탐방을 좋아하는 20-30대 동행 찾아요!
+3. 함께 맞출부분이 있나요?
+ex) 원하시는 날짜가 있다면 알려주세요
+(1500자 이내)"
+				/>
+				{/* <TextAreaWrapper
 					showCount
 					maxLength={1500}
 					style={{
@@ -403,7 +476,7 @@ ex) 맛집  탐방을 좋아하는 20-30대 동행 찾아요!
 3. 함께 맞출부분이 있나요?
 ex) 원하시는 날짜가 있다면 알려주세요
 (1500자 이내)"
-				/>
+				/> */}
 			</SectionDiv>
 			<ButtonGroup style={{ width: '40rem', margin: '0 auto' }}>
 				<Button onClick={CommuWriteHandleSubmit} $sumbit text="작성완료" />

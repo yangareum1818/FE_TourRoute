@@ -179,12 +179,15 @@ const CommunityPost = () => {
 		user_img_link,
 		username,
 	} = data;
-
+	const img = process.env.REACT_APP_ENDPOINT + '/img/' + board_img_link;
 	const c = contents.replace('\r\n/g', <br />);
+	console.log(contents);
 	console.log('c', c);
-
 	// 댓글
 	const [comment, setComment] = useState('');
+	const transform = e => {
+		return e.replace(/\n/g, '<br/>');
+	};
 	const onCommentClick = useCallback(async () => {
 		const commentData = await axiosTokenPost('/comment/create_comment');
 		setComment(commentData);
@@ -208,7 +211,8 @@ const CommunityPost = () => {
 							<CommuTitle>{title}</CommuTitle>
 						</CommunityTitleWrapper>
 
-						<CommunityContent>{c}</CommunityContent>
+						<CommunityContent dangerouslySetInnerHTML={{ __html: transform(contents) }} />
+
 						<div
 							style={{
 								display: 'flex',
@@ -218,7 +222,7 @@ const CommunityPost = () => {
 								overflow: 'scroll',
 							}}
 						>
-							<ContentImg src={board_img_link} />
+							<ContentImg src={img} />
 							{/* <ContentImg src={dummyContentImage} />
 							<ContentImg src={dummyContentImage} />
 							<ContentImg src={dummyContentImage} />
