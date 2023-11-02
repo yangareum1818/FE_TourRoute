@@ -10,10 +10,9 @@ import { Title } from 'components/common/Title';
 import { Button, ButtonGroup } from 'components/common/Button';
 import { Input } from 'components/common/Input';
 import { RecruitmentStatus } from 'components/common/Icon';
-import Profile from 'components/sidebar/Profile';
 
 import dummyMyImage from '../../../assets/Mask_group.svg';
-import dummyContentImage from '../../../assets/busan.png';
+import { useSelector } from 'react-redux';
 
 const day = require('dayjs');
 day.locale('ko');
@@ -36,17 +35,23 @@ const SideMenuLocation = styled.span`
 	font-weight: 600;
 	color: #959696;
 `;
-
-const CommunityUserInfo = styled.div`
+const CommunityUserInfoInner = styled.div`
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
-	gap: 1rem;
 	padding: 1rem 2rem;
 	border-top: 0.1rem solid #cfcfcf;
 	border-bottom: 0.1rem solid #cfcfcf;
 `;
+const CommunityUserInfo = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+`;
 const ProfileImg = styled.img`
 	display: block;
+	width: 4rem;
+	height: 4rem;
 	border-radius: 50%;
 `;
 const UserName = styled.span`
@@ -58,6 +63,17 @@ const CommunityData = styled.span`
 	color: #959696;
 	vertical-align: middle;
 `;
+const CommunityUserPostControl = styled.div`
+	display: flex;
+	gap: 2rem;
+
+	& > button {
+		color: #959696;
+		font-size: 1.6rem;
+		font-weight: 300;
+	}
+`;
+
 const CommunityContentWrapper = styled.div`
 	padding-top: 4rem;
 `;
@@ -182,14 +198,11 @@ const Comment = styled.p`
 `;
 
 const CommunityPost = () => {
+	const me = useSelector(state => state.Info);
 	// 게시글 상세 데이터
 	const location = useLocation();
 	const data = location.state.prop;
-	const contentReplaceNewLine = () => {
-		return data.contents.replace(<br />, '\r\n');
-	};
 
-	console.log(data);
 	let {
 		b_id,
 		board_img_link,
@@ -203,9 +216,10 @@ const CommunityPost = () => {
 		user_img_link,
 		username,
 	} = data;
+
 	const img = process.env.REACT_APP_ENDPOINT + '/img/' + board_img_link;
+
 	const YearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
-	console.log(YearMonthDay);
 
 	const transform = e => {
 		return e.replace(/\n/g, '<br/>');
@@ -225,16 +239,21 @@ const CommunityPost = () => {
 			<Title text="커뮤니티" />
 			<div style={{ position: 'relative', display: 'flex', gap: '2rem', marginTop: '3.2rem' }}>
 				<WritingListWrapper>
-					<CommunityUserInfo>
-						{user_img_link === '' ? (
-							<ProfileImg src={dummyMyImage} style={{ width: '4rem', height: '4rem' }} />
-						) : (
-							<ProfileImg src={user_img_link} style={{ width: '4rem', height: '4rem' }} />
-						)}
-
-						<UserName>{username}</UserName>
-						<CommunityData>{YearMonthDay}</CommunityData>
-					</CommunityUserInfo>
+					<CommunityUserInfoInner>
+						<CommunityUserInfo>
+							{user_img_link === '' ? (
+								<ProfileImg src={dummyMyImage} />
+							) : (
+								<ProfileImg src={user_img_link} />
+							)}
+							<UserName>{username}</UserName>
+							<CommunityData>{YearMonthDay}</CommunityData>
+						</CommunityUserInfo>
+						<CommunityUserPostControl>
+							<button>수정</button>
+							<button>삭제</button>
+						</CommunityUserPostControl>
+					</CommunityUserInfoInner>
 					<CommunityContentWrapper>
 						<CommunityTitleWrapper>
 							{category === 'IS_ACCOMPANY' ? <RecruitmentStatus statusText={recruitment} /> : null}

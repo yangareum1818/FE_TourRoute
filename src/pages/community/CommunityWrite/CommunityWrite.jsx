@@ -211,19 +211,12 @@ const CommunityWrite = () => {
 		e => {
 			const { value, name } = e.target;
 
-			if (e.keyCode === 13) {
-				e.preventDefault();
-			}
-
-			console.log(contents);
-
 			setBoard({
 				...board,
-				contents: contents.replace(<br />, '\r\n'),
 				[name]: value,
 			});
 		},
-		[board, contents],
+		[board],
 	);
 
 	// 카테고리, 모집상태
@@ -306,7 +299,7 @@ const CommunityWrite = () => {
 		} catch (error) {
 			console.error(error);
 		}
-	}, [title, contents, category, recruitment, r_link, ImageData, ImageChecked, formData]);
+	}, [title, category, recruitment, r_link, ImageData, ImageChecked, formData]);
 
 	// 취소
 	const handleClose = useCallback(

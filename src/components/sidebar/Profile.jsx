@@ -65,7 +65,6 @@ const Profile = () => {
 	// 프로필 편집 클릭시 holding
 	const location = useLocation();
 	const holding = location.pathname.includes('management');
-	// const holding2 = location.pathname.includes('my');
 
 	return (
 		<ProfileWrapper>
