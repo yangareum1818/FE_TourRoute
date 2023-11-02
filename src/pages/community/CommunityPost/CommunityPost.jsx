@@ -11,7 +11,7 @@ import { FaUserGroup } from 'react-icons/fa6';
 import { RecruitmentStatus } from 'components/common/Icon';
 import dummyMyImage from '../../../assets/Mask_group.svg';
 import dummyContentImage from '../../../assets/busan.png';
-
+import { useLocation } from 'react-router-dom';
 const WritingListWrapper = styled.div`
 	flex: 3;
 `;
@@ -155,11 +155,13 @@ const Comment = styled.p`
 	font-weight: 300;
 `;
 
-const CommunityPost = ({ b_id }) => {
+const CommunityPost = () => {
 	// 게시글 상세 데이터
+	const location = useLocation();
+	const data = location.state.prop;
 	const [detail, setDetail] = useState();
 	const DetailGetToken = useCallback(async () => {
-		const res = await axiosTokenGet(`/board/get_board/${b_id}`);
+		const res = await axiosTokenGet(`/board/get_board?b_id=${data.b_id}`);
 		setDetail(res);
 		console.log(res);
 	}, []);
@@ -168,7 +170,7 @@ const CommunityPost = ({ b_id }) => {
 
 	useEffect(() => {
 		DetailGetToken();
-	}, [DetailGetToken]);
+	}, []);
 
 	// 댓글
 	const [comment, setComment] = useState('');
@@ -192,7 +194,7 @@ const CommunityPost = ({ b_id }) => {
 					<CommunityContentWrapper>
 						<CommunityTitleWrapper>
 							<RecruitmentStatus statusText="모집 중" />
-							<CommuTitle>[남자마감] 안녕하세요! 여행 같이가실분!</CommuTitle>
+							<CommuTitle>{data.title}</CommuTitle>
 						</CommunityTitleWrapper>
 						<CommunityContent>
 							함께 관광 여행을 떠나려고 해요. 저는 친화력 좋은, 사진 찍는 여행자에요. <br />

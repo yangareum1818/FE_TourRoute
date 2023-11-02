@@ -97,7 +97,7 @@ const CommunityList = () => {
 									<WritingListCategory>동행게시판</WritingListCategory>
 								)}
 								<WritingListTitle>
-									<Link to={`/community/${b_id}`} state={{ prop: b_id }}>
+									<Link to={`/community/${b_id}`} state={{ prop: list }}>
 										{title}
 									</Link>
 									{category === 'IS_ACCOMPANY' ? (
