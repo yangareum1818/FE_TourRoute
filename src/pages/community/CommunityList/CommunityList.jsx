@@ -39,7 +39,7 @@ const WritingListTitle = styled.div`
 	font-size: 1.6rem;
 
 	a {
-		width: 45rem;
+		max-width: 45rem;
 		color: #000;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -60,7 +60,7 @@ const PageContainer = styled.div`
 `;
 
 const CommunityList = () => {
-	const [communityList, setCommunityList] = useState([]);
+	const [communityListData, setCommunityListData] = useState([]);
 	const [page, setPage] = useState(1);
 	const pageChange = useCallback(
 		value => {
@@ -70,10 +70,10 @@ const CommunityList = () => {
 	);
 	const ListGet = useCallback(async () => {
 		const res = await axiosGet('/board/get_board_all');
-		setCommunityList(res);
+		setCommunityListData(res);
 	}, []);
 
-	console.log(communityList);
+	console.log(communityListData);
 
 	useEffect(() => {
 		ListGet();
@@ -81,11 +81,11 @@ const CommunityList = () => {
 
 	return (
 		<WritingListWrapper>
-			{communityList.length === 0 ? (
+			{communityListData.length === 0 ? (
 				<Empty text="커뮤니티에서 동행인을 구하거나, 자유롭게 글을 작성해보세요!" />
 			) : (
 				<WritingListInner>
-					{communityList.map(list => {
+					{communityListData.map(list => {
 						const { b_id, title, category, recruitment, board_img_link, created_at } = list;
 						const data = created_at.split('T', 1);
 

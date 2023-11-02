@@ -32,7 +32,7 @@ const ProfileManagementInner = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 1rem;
-	padding-top: 3rem;
+	padding-top: 2rem;
 `;
 
 const ProfileManagementIcon = styled.img`
@@ -65,12 +65,13 @@ const Profile = () => {
 	// 프로필 편집 클릭시 holding
 	const location = useLocation();
 	const holding = location.pathname.includes('/management');
+	const holding2 = location.pathname.includes('/my');
 
 	return (
 		<ProfileWrapper>
 			<MyImage src={userimg} />
 			<MyName>{username}</MyName>
-			{holding === false ? (
+			{holding2 === true || holding === false ? (
 				<ProfileManagementInner>
 					<ProfileManagementIcon src={ManagementIcon} />
 					<ProfileManagement to="/my/profile/management">프로필 관리</ProfileManagement>

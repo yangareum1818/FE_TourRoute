@@ -148,20 +148,25 @@ const CommunityWrite = () => {
 		r_link: '',
 	});
 
-	const { title, contents, category, recruitment, r_link } = board;
+	let { title, contents, category, recruitment, r_link } = board;
 
 	const onChange = useCallback(
 		e => {
 			const { value, name } = e.target;
 
-			contents.replace('\r\n', '<br>');
+			if (e.keyCode === 13) {
+				e.preventDefault();
+			}
+
+			console.log(contents);
 
 			setBoard({
 				...board,
+				contents: contents.replace(<br />, '\r\n'),
 				[name]: value,
 			});
 		},
-		[board],
+		[board, contents],
 	);
 
 	// 카테고리, 모집상태
@@ -236,7 +241,7 @@ const CommunityWrite = () => {
 						`/board/create_board?title=${title}&contents=${contents}&category=${category}&recruitment=${recruitment}`,
 				  )
 				: await axiosTokenFormPost(
-						`/board/create_board?title=${title}&contents=${contents}&category=${category}&recruitment=${recruitment}`,
+						`/board/create_board?title=${title}&contents=${contents}&category=${category}&recruitment=${recruitment}&r_link=${r_link}`,
 						formData,
 				  );
 			alert('게시글 작성이 완료되었습니다.');
@@ -244,7 +249,7 @@ const CommunityWrite = () => {
 		} catch (error) {
 			console.error(error);
 		}
-	}, [title, contents, category, recruitment, ImageData, ImageChecked, formData]);
+	}, [title, contents, category, recruitment, r_link, ImageData, ImageChecked, formData]);
 
 	// 취소
 	const handleClose = useCallback(
@@ -335,6 +340,8 @@ const CommunityWrite = () => {
 						<TitleInput
 							type="text"
 							name="recruit"
+							value={r_link}
+							onChange={onChange}
 							placeholder="ex) 오픈채팅 URL 또는 편하신 URL을 입력해주세요. ( *개인정보는 올리시면 안돼요! ) "
 						/>
 					</InputWrapper>
