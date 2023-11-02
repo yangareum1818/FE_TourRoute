@@ -1,16 +1,21 @@
 import { styled } from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { FaUserGroup } from 'react-icons/fa6';
+import dayjs from 'dayjs';
 
-import { axiosTokenGet, axiosTokenPost } from 'utils/AxiosUtils';
+import { axiosTokenPost } from 'utils/AxiosUtils';
 
 import { Title } from 'components/common/Title';
 import { Button, ButtonGroup } from 'components/common/Button';
 import { Input } from 'components/common/Input';
-
-import { FaUserGroup } from 'react-icons/fa6';
 import { RecruitmentStatus } from 'components/common/Icon';
+
 import dummyMyImage from '../../../assets/Mask_group.svg';
-import dummyContentImage from '../../../assets/busan.png';
+import { useSelector } from 'react-redux';
+
+const day = require('dayjs');
+day.locale('ko');
 
 const WritingListWrapper = styled.div`
 	flex: 3;
@@ -22,17 +27,32 @@ const SideBarWrapper = styled.div`
 	flex-direction: column;
 	gap: 2rem;
 `;
-
-const CommunityUserInfo = styled.div`
+const SideMenuLocation = styled.span`
+	position: absolute;
+	top: -6rem;
+	right: 0;
+	font-size: 1.6rem;
+	font-weight: 600;
+	color: #959696;
+`;
+const CommunityUserInfoInner = styled.div`
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
-	gap: 1rem;
 	padding: 1rem 2rem;
 	border-top: 0.1rem solid #cfcfcf;
 	border-bottom: 0.1rem solid #cfcfcf;
 `;
+const CommunityUserInfo = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+`;
 const ProfileImg = styled.img`
 	display: block;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
 `;
 const UserName = styled.span`
 	font-size: 1.6rem;
@@ -43,36 +63,58 @@ const CommunityData = styled.span`
 	color: #959696;
 	vertical-align: middle;
 `;
+const CommunityUserPostControl = styled.div`
+	display: flex;
+	gap: 2rem;
+
+	& > button {
+		color: #959696;
+		font-size: 1.6rem;
+		font-weight: 300;
+	}
+`;
+
 const CommunityContentWrapper = styled.div`
 	padding-top: 4rem;
 `;
 const CommunityTitleWrapper = styled.div`
 	display: flex;
-	align-items: center;
+	align-items: baseline;
 	gap: 2rem;
 `;
 const CommuTitle = styled.p`
+	flex: 3;
 	font-size: 2.6rem;
 	font-weight: 700;
 `;
 const CommunityContent = styled.p`
 	padding: 4rem 0;
 	font-size: 1.5rem;
-	line-height: 200%;
 	color: #303133;
 `;
 const ContentImg = styled.img`
 	display: block;
+	width: 100%;
 `;
 const ProfileWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
-	gap: 1.5rem;
+	gap: 2rem;
 	height: 20rem;
 	border: 0.1rem solid #cfcfcf;
 	border-radius: 0.8rem;
+`;
+const MyImage = styled.img`
+	width: 8rem;
+	height: 8rem;
+	border-radius: 50%;
+`;
+const MyName = styled.span`
+	font-size: 1.6rem;
+	font-weight: 400;
+	color: #000;
 `;
 
 const CommentWrapper = styled.div`
@@ -155,20 +197,33 @@ const Comment = styled.p`
 	font-weight: 300;
 `;
 
-const CommunityPost = ({ b_id }) => {
+const CommunityPost = () => {
+	const me = useSelector(state => state.Info);
 	// 게시글 상세 데이터
-	const [detail, setDetail] = useState();
-	const DetailGetToken = useCallback(async () => {
-		const res = await axiosTokenGet(`/board/get_board/${b_id}`);
-		setDetail(res);
-		console.log(res);
-	}, []);
+	const location = useLocation();
+	const data = location.state.prop;
 
-	// console.log(detail);
+	let {
+		b_id,
+		board_img_link,
+		category,
+		contents,
+		created_at,
+		r_link,
+		recruitment,
+		title,
+		user_email,
+		user_img_link,
+		username,
+	} = data;
 
-	useEffect(() => {
-		DetailGetToken();
-	}, [DetailGetToken]);
+	const img = process.env.REACT_APP_ENDPOINT + '/img/' + board_img_link;
+
+	const YearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
+
+	const transform = e => {
+		return e.replace(/\n/g, '<br/>');
+	};
 
 	// 댓글
 	const [comment, setComment] = useState('');
@@ -182,59 +237,50 @@ const CommunityPost = ({ b_id }) => {
 			style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: '8rem 0 16rem' }}
 		>
 			<Title text="커뮤니티" />
-			<div style={{ display: 'flex', gap: '2rem', marginTop: '3.2rem' }}>
+			<div style={{ position: 'relative', display: 'flex', gap: '2rem', marginTop: '3.2rem' }}>
 				<WritingListWrapper>
-					<CommunityUserInfo>
-						<ProfileImg src={dummyMyImage} style={{ width: '4rem', height: '4rem' }} />
-						<UserName>김라온</UserName>
-						<CommunityData>2023-07-31 20:22</CommunityData>
-					</CommunityUserInfo>
+					<CommunityUserInfoInner>
+						<CommunityUserInfo>
+							{user_img_link === '' ? (
+								<ProfileImg src={dummyMyImage} />
+							) : (
+								<ProfileImg src={user_img_link} />
+							)}
+							<UserName>{username}</UserName>
+							<CommunityData>{YearMonthDay}</CommunityData>
+						</CommunityUserInfo>
+						<CommunityUserPostControl>
+							<button>수정</button>
+							<button>삭제</button>
+						</CommunityUserPostControl>
+					</CommunityUserInfoInner>
 					<CommunityContentWrapper>
 						<CommunityTitleWrapper>
-							<RecruitmentStatus statusText="모집 중" />
-							<CommuTitle>[남자마감] 안녕하세요! 여행 같이가실분!</CommuTitle>
+							{category === 'IS_ACCOMPANY' ? <RecruitmentStatus statusText={recruitment} /> : null}
+							<CommuTitle>{title}</CommuTitle>
 						</CommunityTitleWrapper>
-						<CommunityContent>
-							함께 관광 여행을 떠나려고 해요. 저는 친화력 좋은, 사진 찍는 여행자에요. <br />
-							1. 여행 기간 : 2023.09.23 ~ 2023.09.30 (예정) (항공권 기준) <br />
-							2. 여행 지역 : 남고비 + 테를지 (예정, 협의 가능) <br />
-							3. 컨택 여행사 : 고비 트래블 (지인이 있어 컨택 중에 있습니다) / 변경 가능
-							<br />
-							4. 항공권 : 여행 기간에 맞춰 발권 예정 <br />
-							5. 현재 동행 인원 : 3명 <br />
-							6. 우리 여행은요 : 저희는 99년생 대학생 남자 3명으로 모두 고등학교 친구 사이입니다.
-							<br />
-							모두 여행을 즐기는 쾌활한 친구들이고 함께 재미있게 여행 다녀오고자 합니다. <br />
-							1) 저희 중 흡연자는 없으나 담배에 거부감은 없어 흡연 여부는 상관 없습니다. <br />
-							2) 음주 여부도 상관 없습니다. 한 친구는 음주를 하지 않고 두 명은 적당히 즐기는
-							정도입니다.
-							<br /> 3) 성별도 상관 없습니다. 함께 유쾌하게 여행하고 사진도 서로 잘 찍어주면 좋을 것
-							같습니다.
-							<br /> 관심 있으신 분들은 해당 사이트 혹은 오픈카톡방 통해서 편하게 연락 부탁드립니다!
-							<br />
-							참여하기 누르시면 옵챗링크로 가집니다 비번 2234
-							<br />
-						</CommunityContent>
-						<div
-							style={{
-								display: 'flex',
-								alignItems: 'center',
-								gap: '1.5rem',
-								maxWidth: '79.5rem',
-								overflow: 'scroll',
-							}}
-						>
-							<ContentImg src={dummyContentImage} />
-							<ContentImg src={dummyContentImage} />
-							<ContentImg src={dummyContentImage} />
-							<ContentImg src={dummyContentImage} />
-							<ContentImg src={dummyContentImage} />
-							<ContentImg src={dummyContentImage} />
-						</div>
+
+						<CommunityContent dangerouslySetInnerHTML={{ __html: transform(contents) }} />
+
+						{board_img_link === '이미지 파일이 없습니다.' ? (
+							''
+						) : (
+							<div
+								style={{
+									display: 'flex',
+									alignItems: 'center',
+									gap: '1.5rem',
+									maxWidth: '79.5rem',
+									overflow: 'scroll',
+								}}
+							>
+								<ContentImg src={`http://13.209.56.221:8000/img/${img}`} />
+							</div>
+						)}
 					</CommunityContentWrapper>
 					<CommentWrapper>
 						<div>
-							<CommunityData>2023-07-31 20:22</CommunityData>
+							<CommunityData>{YearMonthDay}</CommunityData>
 							<CommentLength>· 댓글 3</CommentLength>
 						</div>
 						<CommentInput>
@@ -293,16 +339,32 @@ const CommunityPost = ({ b_id }) => {
 				</WritingListWrapper>
 
 				<SideBarWrapper>
+					{category === 'IS_ACCOMPANY' ? (
+						<SideMenuLocation>동행게시판</SideMenuLocation>
+					) : (
+						<SideMenuLocation>자유게시판</SideMenuLocation>
+					)}
 					<ProfileWrapper>
-						<ProfileImg src={dummyMyImage} />
-						<UserName>김라온</UserName>
+						{user_img_link === '' ? (
+							<MyImage src={dummyMyImage} />
+						) : (
+							<MyImage src={user_img_link} />
+						)}
+						<MyName>{username}</MyName>
 					</ProfileWrapper>
-					<ButtonGroup>
-						<Button text="참여하기">
-							<FaUserGroup style={{ display: 'block', color: '#fff' }} />
-						</Button>
-						<Button text="참여하기 종료" variant="cancel" />
-					</ButtonGroup>
+					{category === 'IS_ACCOMPANY' ? (
+						<ButtonGroup>
+							{recruitment === 'RECRUITING' ? (
+								<Button text="참여하기">
+									<FaUserGroup style={{ display: 'block', color: '#fff' }} />
+								</Button>
+							) : (
+								<Button text="모집완료" variant="cancel" />
+							)}
+
+							<Button text="참여하기 종료" variant="cancel" />
+						</ButtonGroup>
+					) : null}
 				</SideBarWrapper>
 			</div>
 		</div>
