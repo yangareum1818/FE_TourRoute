@@ -207,8 +207,9 @@ const CommunityPost = () => {
 	const YearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
 	console.log(YearMonthDay);
 
-	const c = contents.replace('\r\n/g', <br />);
-	// console.log('c', c);
+	const transform = e => {
+		return e.replace(/\n/g, '<br/>');
+	};
 
 	// 댓글
 	const [comment, setComment] = useState('');
