@@ -1,12 +1,16 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 
 import { Pagination } from 'antd';
 
 import Empty from 'components/common/Empty';
 import { axiosGet } from 'utils/AxiosUtils';
 import { ImgWhether, RecruitmentStatus } from 'components/common/Icon';
+
+const day = require('dayjs');
+day.locale('ko');
 
 const WritingListWrapper = styled.div`
 	flex: 3;
@@ -39,7 +43,7 @@ const WritingListTitle = styled.div`
 	font-size: 1.6rem;
 
 	a {
-		width: 45rem;
+		max-width: 45rem;
 		color: #000;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -60,7 +64,7 @@ const PageContainer = styled.div`
 `;
 
 const CommunityList = () => {
-	const [communityList, setCommunityList] = useState([]);
+	const [communityListData, setCommunityListData] = useState([]);
 	const [page, setPage] = useState(1);
 	const pageChange = useCallback(
 		value => {
@@ -70,10 +74,10 @@ const CommunityList = () => {
 	);
 	const ListGet = useCallback(async () => {
 		const res = await axiosGet('/board/get_board_all');
-		setCommunityList(res);
+		setCommunityListData(res);
 	}, []);
 
-	console.log(communityList);
+	console.log(communityListData);
 
 	useEffect(() => {
 		ListGet();
@@ -81,13 +85,14 @@ const CommunityList = () => {
 
 	return (
 		<WritingListWrapper>
-			{communityList.length === 0 ? (
+			{communityListData.length === 0 ? (
 				<Empty text="커뮤니티에서 동행인을 구하거나, 자유롭게 글을 작성해보세요!" />
 			) : (
 				<WritingListInner>
-					{communityList.map(list => {
+					{communityListData.map(list => {
 						const { b_id, title, category, recruitment, board_img_link, created_at } = list;
-						const data = created_at.split('T', 1);
+
+						const YearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
 
 						return (
 							<WritingList key={b_id} index={b_id}>
@@ -97,7 +102,7 @@ const CommunityList = () => {
 									<WritingListCategory>동행게시판</WritingListCategory>
 								)}
 								<WritingListTitle>
-									<Link to={`/community/${b_id}`} state={{ prop: b_id }}>
+									<Link to={`/community/${b_id}`} state={{ prop: list }}>
 										{title}
 									</Link>
 									{category === 'IS_ACCOMPANY' ? (
@@ -106,7 +111,7 @@ const CommunityList = () => {
 
 									{board_img_link === '이미지 파일이 없습니다.' ? null : <ImgWhether />}
 								</WritingListTitle>
-								<WritingListDate>{data}</WritingListDate>
+								<WritingListDate>{YearMonthDay}</WritingListDate>
 							</WritingList>
 						);
 					})}

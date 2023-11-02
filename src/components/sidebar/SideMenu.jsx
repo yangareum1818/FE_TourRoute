@@ -37,41 +37,59 @@ const SideList = styled.li`
 
 const Sidebar = () => {
 	const [url, seturl] = useState('');
-	const [isLoading, setLoading] = useState(false);
 	const location = useLocation();
-	const urlName = location.pathname.split('/')[2];
-	const urlType = {
-		profile: '내 프로필',
-		record: '나의 여행기록',
-		wishlist: '찜한 목록',
-		wrtiting: '내가 작성한 글',
-		comment: '내가 쓴 댓글',
-	};
+	const urlName = location.pathname;
+	const mypageSide = [
+		{
+			id: 401,
+			url: '/my/profile',
+			title: '내 프로필',
+		},
+		{
+			id: 402,
+			url: '/my/record',
+			title: '나의 여행기록',
+		},
+		{
+			id: 403,
+			url: '/my/wishlist',
+			title: '찜한 목록',
+		},
+		{
+			id: 404,
+			url: '/my/wrtiting',
+			title: '내가 작성한 글',
+		},
+		{
+			id: 405,
+			url: '/my/comment',
+			title: '내가 쓴 댓글',
+		},
+	];
+
+	const side = mypageSide.filter(v => (urlName === v.url ? v.title : null));
 
 	useEffect(() => {
 		seturl(urlName);
-		setLoading(true);
-	}, [isLoading, urlType]);
+	}, []);
 
 	return (
 		<SideBarWrapper>
-			{isLoading ? <SideMenuLocation>{urlType[url]}</SideMenuLocation> : ''}
+			{/* {isLoading ? <SideMenuLocation>{side[0].title}</SideMenuLocation> : ''} */}
+			{urlName.includes('management') === true ? (
+				<SideMenuLocation>내 프로필 편집</SideMenuLocation>
+			) : (
+				<SideMenuLocation>{side[0].title}</SideMenuLocation>
+			)}
+
 			<SideMenu>
-				<SideList>
-					<NavLink to="/my/profile">내 프로필</NavLink>
-				</SideList>
-				<SideList>
-					<NavLink to="/my/record">나의 여행기록</NavLink>
-				</SideList>
-				<SideList>
-					<NavLink to="/my/wishlist">찜한 목록</NavLink>
-				</SideList>
-				<SideList>
-					<NavLink to="/my/wrtiting">내가 작성한 글</NavLink>
-				</SideList>
-				<SideList>
-					<NavLink to="/my/comment">내가 쓴 댓글</NavLink>
-				</SideList>
+				{mypageSide.map(my => {
+					return (
+						<SideList key={my.id}>
+							<NavLink to={my.url}>{my.title}</NavLink>
+						</SideList>
+					);
+				})}
 			</SideMenu>
 		</SideBarWrapper>
 	);
