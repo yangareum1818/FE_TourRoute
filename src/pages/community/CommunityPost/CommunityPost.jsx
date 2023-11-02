@@ -1,18 +1,23 @@
 import { styled } from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { FaUserGroup } from 'react-icons/fa6';
+import dayjs from 'dayjs';
 
-import { axiosTokenGet, axiosTokenPost } from 'utils/AxiosUtils';
+import { axiosTokenPost } from 'utils/AxiosUtils';
 
 import { Title } from 'components/common/Title';
 import { Button, ButtonGroup } from 'components/common/Button';
 import { Input } from 'components/common/Input';
-
-import { FaUserGroup } from 'react-icons/fa6';
 import { RecruitmentStatus } from 'components/common/Icon';
+import Profile from 'components/sidebar/Profile';
+
 import dummyMyImage from '../../../assets/Mask_group.svg';
 import dummyContentImage from '../../../assets/busan.png';
-import { useLocation } from 'react-router-dom';
-import Profile from 'components/sidebar/Profile';
+
+const day = require('dayjs');
+day.locale('ko');
+
 const WritingListWrapper = styled.div`
 	flex: 3;
 `;
@@ -22,6 +27,14 @@ const SideBarWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
+`;
+const SideMenuLocation = styled.span`
+	position: absolute;
+	top: -6rem;
+	right: 0;
+	font-size: 1.6rem;
+	font-weight: 600;
+	color: #959696;
 `;
 
 const CommunityUserInfo = styled.div`
@@ -65,16 +78,27 @@ const CommunityContent = styled.p`
 `;
 const ContentImg = styled.img`
 	display: block;
+	width: 100%;
 `;
 const ProfileWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
-	gap: 1.5rem;
+	gap: 2rem;
 	height: 20rem;
 	border: 0.1rem solid #cfcfcf;
 	border-radius: 0.8rem;
+`;
+const MyImage = styled.img`
+	width: 8rem;
+	height: 8rem;
+	border-radius: 50%;
+`;
+const MyName = styled.span`
+	font-size: 1.6rem;
+	font-weight: 400;
+	color: #000;
 `;
 
 const CommentWrapper = styled.div`
@@ -180,8 +204,11 @@ const CommunityPost = () => {
 		username,
 	} = data;
 
+	const YearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
+	console.log(YearMonthDay);
+
 	const c = contents.replace('\r\n/g', <br />);
-	console.log('c', c);
+	// console.log('c', c);
 
 	// 댓글
 	const [comment, setComment] = useState('');
@@ -195,12 +222,17 @@ const CommunityPost = () => {
 			style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: '8rem 0 16rem' }}
 		>
 			<Title text="커뮤니티" />
-			<div style={{ display: 'flex', gap: '2rem', marginTop: '3.2rem' }}>
+			<div style={{ position: 'relative', display: 'flex', gap: '2rem', marginTop: '3.2rem' }}>
 				<WritingListWrapper>
 					<CommunityUserInfo>
-						<ProfileImg src={user_img_link} style={{ width: '4rem', height: '4rem' }} />
+						{user_img_link === '' ? (
+							<ProfileImg src={dummyMyImage} style={{ width: '4rem', height: '4rem' }} />
+						) : (
+							<ProfileImg src={user_img_link} style={{ width: '4rem', height: '4rem' }} />
+						)}
+
 						<UserName>{username}</UserName>
-						<CommunityData>2023-07-31 20:22</CommunityData>
+						<CommunityData>{YearMonthDay}</CommunityData>
 					</CommunityUserInfo>
 					<CommunityContentWrapper>
 						<CommunityTitleWrapper>
@@ -209,26 +241,25 @@ const CommunityPost = () => {
 						</CommunityTitleWrapper>
 
 						<CommunityContent>{c}</CommunityContent>
-						<div
-							style={{
-								display: 'flex',
-								alignItems: 'center',
-								gap: '1.5rem',
-								maxWidth: '79.5rem',
-								overflow: 'scroll',
-							}}
-						>
-							<ContentImg src={board_img_link} />
-							{/* <ContentImg src={dummyContentImage} />
-							<ContentImg src={dummyContentImage} />
-							<ContentImg src={dummyContentImage} />
-							<ContentImg src={dummyContentImage} />
-							<ContentImg src={dummyContentImage} /> */}
-						</div>
+						{board_img_link === '이미지 파일이 없습니다.' ? (
+							''
+						) : (
+							<div
+								style={{
+									display: 'flex',
+									alignItems: 'center',
+									gap: '1.5rem',
+									maxWidth: '79.5rem',
+									overflow: 'scroll',
+								}}
+							>
+								<ContentImg src={`http://13.209.56.221:8000/img/${board_img_link}`} />
+							</div>
+						)}
 					</CommunityContentWrapper>
 					<CommentWrapper>
 						<div>
-							<CommunityData>2023-07-31 20:22</CommunityData>
+							<CommunityData>{YearMonthDay}</CommunityData>
 							<CommentLength>· 댓글 3</CommentLength>
 						</div>
 						<CommentInput>
@@ -287,7 +318,19 @@ const CommunityPost = () => {
 				</WritingListWrapper>
 
 				<SideBarWrapper>
-					<Profile />
+					{category === 'IS_ACCOMPANY' ? (
+						<SideMenuLocation>동행게시판</SideMenuLocation>
+					) : (
+						<SideMenuLocation>자유게시판</SideMenuLocation>
+					)}
+					<ProfileWrapper>
+						{user_img_link === '' ? (
+							<MyImage src={dummyMyImage} />
+						) : (
+							<MyImage src={user_img_link} />
+						)}
+						<MyName>{username}</MyName>
+					</ProfileWrapper>
 					{category === 'IS_ACCOMPANY' ? (
 						<ButtonGroup>
 							{recruitment === 'RECRUITING' ? (

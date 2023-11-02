@@ -1,12 +1,16 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 
 import { Pagination } from 'antd';
 
 import Empty from 'components/common/Empty';
 import { axiosGet } from 'utils/AxiosUtils';
 import { ImgWhether, RecruitmentStatus } from 'components/common/Icon';
+
+const day = require('dayjs');
+day.locale('ko');
 
 const WritingListWrapper = styled.div`
 	flex: 3;
@@ -87,7 +91,8 @@ const CommunityList = () => {
 				<WritingListInner>
 					{communityListData.map(list => {
 						const { b_id, title, category, recruitment, board_img_link, created_at } = list;
-						const data = created_at.split('T', 1);
+
+						const YearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
 
 						return (
 							<WritingList key={b_id} index={b_id}>
@@ -106,7 +111,7 @@ const CommunityList = () => {
 
 									{board_img_link === '이미지 파일이 없습니다.' ? null : <ImgWhether />}
 								</WritingListTitle>
-								<WritingListDate>{data}</WritingListDate>
+								<WritingListDate>{YearMonthDay}</WritingListDate>
 							</WritingList>
 						);
 					})}
