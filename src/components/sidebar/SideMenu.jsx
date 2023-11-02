@@ -45,7 +45,7 @@ const Sidebar = () => {
 		{
 			id: 401,
 			url: '/my/profile',
-			tilte: '내 프로필',
+			title: '내 프로필',
 		},
 		{
 			id: 402,
@@ -83,7 +83,7 @@ const Sidebar = () => {
 	 * 그리고 3번ㅇ이 문제라 그런거같은데 .. v.하면 id, url, title, title 이렇게 두개가 떠요 ..
 	 */
 
-	const side = mypageSide.filter(v => (urlName === v.url ? v.tilte : ''));
+	const side = mypageSide.filter(v => (urlName === v.url ? v.title : ''));
 	console.log('side', side[0].tilte);
 	console.log('pathname === sideURL', urlName === mypageSide[0].url);
 
@@ -94,11 +94,12 @@ const Sidebar = () => {
 
 	return (
 		<SideBarWrapper>
-			{isLoading ? <SideMenuLocation>{side[0].tilte}</SideMenuLocation> : ''}
+			{isLoading ? <SideMenuLocation>{side[0].title}</SideMenuLocation> : ''}
 			{/* {isLoading ? <SideMenuLocation>{mypageSide[url]}</SideMenuLocation> : ''} */}
 
 			<SideMenu>
 				{mypageSide.map(my => {
+					console.log(my);
 					return (
 						<SideList key={my.id}>
 							<NavLink to={my.url}>{my.title}</NavLink>
