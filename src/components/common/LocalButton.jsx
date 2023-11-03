@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import {
 	TrackedProgressIcon,
 	TrackingProgressIcon,
@@ -8,7 +8,11 @@ import {
 import { styled } from 'styled-components';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
+import { axiosTokenPost } from 'utils/AxiosUtils';
+import isBetween from 'dayjs/plugin/isBetween';
+import dayjs from 'dayjs';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+dayjs.extend(isBetween, isSameOrBefore);
 const WishListItem = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -31,6 +35,9 @@ const ListIconWrapper = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	padding: 2rem;
+`;
+const AticleHeart = styled.div`
+	text-align: right;
 `;
 
 const ListContent = styled(Link)`
@@ -73,17 +80,28 @@ const LocalDate = styled.p`
 `;
 const LocalButton = ({ props, index }) => {
 	// const [bookmark, setBookmark] = useState(false)
-	const img = process.env.REACT_APP_ENDPOINT + '/img/' + props.i_link;
+	const [onChecked, setonChecked] = useState(props.is_bookmark);
+	const data = dayjs();
+	// const [startTime]
+	console.log(props.term.split('~'));
+	const [startTime, FinishTime] = props.term.split('~');
 
+	const img = process.env.REACT_APP_ENDPOINT + '/img/' + props.i_link;
+	const handleChecked = useCallback(async () => {
+		setonChecked(prev => !prev);
+		await axiosTokenPost(`/festival/bookmark?festival_name=${props.f_name}`);
+	}, [props.f_name]);
 	return (
 		<WishListItem style={{ backgroundImage: `url(${img})` }}>
 			<ListIconWrapper>
-				{props.is_bookmark === false ? <WishHeartIcon /> : <WishHeartActiveIcon />}
+				<AticleHeart onClick={handleChecked}>
+					{!onChecked ? <WishHeartIcon /> : <WishHeartActiveIcon />}
+				</AticleHeart>
 
-				{props.status === '개최 예정' ? (
-					<TrackedProgressIcon text={props.status} />
-				) : (
+				{data.isBetween(startTime.trim(), FinishTime.trim()) ? (
 					<TrackingProgressIcon text="진행 중" />
+				) : (
+					<TrackedProgressIcon text="개최 예정" />
 				)}
 			</ListIconWrapper>
 
