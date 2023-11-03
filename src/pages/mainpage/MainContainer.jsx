@@ -1,31 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
 import Benner from 'assets/MainBenner.png';
+import { Link } from 'react-router-dom';
+import CommunityList from 'pages/community/CommunityList/CommunityList';
 
 const Wrapper = styled.div`
 	width: 100%;
 `;
 //커뮤니티
 const ComunityContainer = styled.div`
-	margin-top: 10rem;
-	margin-bottom: 10rem;
+	margin: 8rem 0rem 16rem;
 `;
 const ComunityHeader = styled.div`
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 2rem;
+	margin-bottom: 4rem;
 `;
 const ComunityTitle = styled.div`
-	font-size: 24px;
-	font-weight: bold;
-`;
-const ComunityTheMore = styled.div`
-	font-size: 16px;
+	font-size: 2.4rem;
 	font-weight: 600;
 `;
-const ComunityContent = styled.div`
-	border-top: 1px solid gray;
+const ComunityTheMore = styled(Link)`
+	color: #000;
+	font-size: 1.6rem;
+	font-weight: 600;
 `;
+const ComunityContent = styled.div``;
 const BennerContainer = styled.div`
 	margin-bottom: 10rem;
 `;
@@ -39,12 +39,13 @@ const MainContainer = () => {
 					<ComunityTitle>
 						소중한 <span style={{ color: '#3AD0FF' }}> 추억</span> 만들어 볼까요?
 					</ComunityTitle>
-					<ComunityTheMore>더보기</ComunityTheMore>
+					<ComunityTheMore to="/community">더보기</ComunityTheMore>
 				</ComunityHeader>
 				<ComunityContent>
-					{test.map((e, index) => {
+					{/* {test.map((e, index) => {
 						return <PostFree key={index} />;
-					})}
+					})} */}
+					<CommunityList />
 				</ComunityContent>
 			</ComunityContainer>
 			<BennerContainer>
