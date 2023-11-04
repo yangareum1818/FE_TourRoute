@@ -73,15 +73,20 @@ const CommunityList = () => {
 		[setPage],
 	);
 	const ListGet = useCallback(async () => {
-		const res = await axiosGet('/board/get_board_all');
-		setCommunityListData(res);
+		const all = await axiosGet('/board/get_board_all');
+		const category = await axiosGet(
+			`/board/get_latest?category=${window.location.pathname.split('/')[2]}`,
+		);
+
+		if (window.location.pathname.split('/')[2]) setCommunityListData(category);
+		else setCommunityListData(all);
 	}, []);
 
 	console.log(communityListData);
 
 	useEffect(() => {
 		ListGet();
-	}, [ListGet]);
+	}, []);
 
 	return (
 		<WritingListWrapper>
@@ -96,7 +101,7 @@ const CommunityList = () => {
 
 						return (
 							<WritingList key={b_id} index={b_id}>
-								{category === 'IS_FREE' ? (
+								{category === 'free' ? (
 									<WritingListCategory>자유게시판</WritingListCategory>
 								) : (
 									<WritingListCategory>동행게시판</WritingListCategory>
@@ -105,9 +110,7 @@ const CommunityList = () => {
 									<Link to={`/community/${b_id}`} state={{ prop: list }}>
 										{title}
 									</Link>
-									{category === 'IS_ACCOMPANY' ? (
-										<RecruitmentStatus statusText={recruitment} />
-									) : null}
+									{category === 'accompany' ? <RecruitmentStatus statusText={recruitment} /> : null}
 
 									{board_img_link === '이미지 파일이 없습니다.' ? null : <ImgWhether />}
 								</WritingListTitle>

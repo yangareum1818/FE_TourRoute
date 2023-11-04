@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { FaPen } from 'react-icons/fa6';
 import { Link, NavLink } from 'react-router-dom';
@@ -54,17 +54,20 @@ const WriteBtn = styled(Link)`
 `;
 
 const CommunitySide = () => {
+	useEffect(() => {}, []);
 	return (
 		<SideBarWrapper>
 			<SideMenu>
 				<SideList>
-					<NavLink to="/community">전체게시판</NavLink>
+					<button onClick={() => window.location.replace('/community')}>전체게시판</button>
 				</SideList>
 				<SideList>
-					<NavLink>자유게시판</NavLink>
+					<button onClick={() => window.location.replace('/community/free')}>자유게시판</button>
 				</SideList>
 				<SideList>
-					<NavLink>동행게시판</NavLink>
+					<button onClick={() => window.location.replace('/community/accompany')}>
+						동행게시판
+					</button>
 				</SideList>
 			</SideMenu>
 
