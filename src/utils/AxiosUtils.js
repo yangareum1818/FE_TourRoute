@@ -47,10 +47,14 @@ export const axiosTokenPost = async (url, body, headers = defaultHeaders) => {
 
 export const axiosTokenFormPost = async (url, body, headers = formDataHeaders) => {
 	const res = await axios.post(ENDPOINT + url, body, headerConfiguration(headers));
-	return res.data;
+	return res;
 };
 
 export const axiosTokenPut = async (url, body, headers = formDataHeaders) => {
 	const res = await axios.put(ENDPOINT + url, body, headerConfiguration(headers));
+	return res.data;
+};
+export const axiosTokenDelete = async (url, headers = defaultHeaders) => {
+	const res = await axios.delete(ENDPOINT + url, headerConfiguration(headers));
 	return res.data;
 };
