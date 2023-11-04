@@ -314,7 +314,7 @@ const CommunityPost = () => {
 						<CommentListWrapper>
 							{getComment.map(element => {
 								return (
-									<CommentList>
+									<CommentList key={element.b_id}>
 										<CommentHeader>
 											<CommentInfo>
 												<UserProfileImg />
