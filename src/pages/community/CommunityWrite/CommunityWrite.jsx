@@ -144,7 +144,7 @@ const CommunityWrite = () => {
 	const [board, setBoard] = useState({
 		title: '',
 		contents: '',
-		category: 'IS_FREE',
+		category: 'free',
 		recruitment: '',
 		r_link: '',
 	});
@@ -225,7 +225,7 @@ const CommunityWrite = () => {
 			const { value, name, checked } = e.target;
 			console.log(value, name, checked);
 
-			if (value === 'IS_FREE') {
+			if (value === 'free') {
 				SetRecruiting(false);
 				setBoard({ ...board, category: value, recruitment: '' });
 			} else {
@@ -321,7 +321,7 @@ const CommunityWrite = () => {
 								<RadioInput
 									type="radio"
 									name="category"
-									value="IS_FREE"
+									value="free"
 									defaultChecked={checkedHandle}
 									onClick={e => {
 										onCategoryChange(e);
@@ -334,7 +334,7 @@ const CommunityWrite = () => {
 								<RadioInput
 									type="radio"
 									name="category"
-									value="IS_ACCOMPANY"
+									value="accompany"
 									onClick={e => {
 										onCategoryChange(e);
 									}}

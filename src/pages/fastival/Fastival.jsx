@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import LocalButton from '../../components/common/LocalButton';
 import { Pagination } from 'antd';
 import { axiosGet, axiosTokenGet } from 'utils/AxiosUtils';
-
+import isBetween from 'dayjs/plugin/isBetween';
+import dayjs from 'dayjs';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+dayjs.extend(isBetween, isSameOrBefore);
 const Wrapper = styled.div`
 	padding: 8rem 0 16rem;
 	height: 100%;
@@ -51,30 +54,86 @@ const PaginationDiv = styled.div`
 	font-size: 1.4rem;
 `;
 const Fastival = () => {
+	const location = useLocation();
+	const navigate = useNavigate();
+	const [url, seturl] = useState();
 	const [Data, setData] = useState([]);
+	const [ChangeData, setChageData] = useState([]);
 	const [Category, setCategory] = useState('전체');
-	let local = ['전체', '부산', '대구', '경주', '포항'];
-	const GetAllFestival = useCallback(async e => {
-		localStorage.getItem('token')
-			? await axiosTokenGet('/festival/get_info').then(res => setData(res))
-			: await axiosGet('/festival/get_info').then(res => setData(res));
-	}, []);
-
-	const GetCityFestival = useCallback(async e => {
-		localStorage.getItem('token')
-			? await axiosTokenGet(`/festival/get_city_info?city_name=${e}`).then(res => setData(res))
-			: await axiosGet(`/festival/get_city_info?city_name=${e}`).then(res => setData(res));
-	}, []);
-
-	const GetFestival = useCallback(
-		e => {
-			setCategory(e);
-			Category === '전체' ? GetAllFestival(e) : GetCityFestival(e);
+	const data = dayjs();
+	const urltype = {
+		daegu: '대구',
+		busan: '부산',
+		gyeongju: '경주',
+		pohang: '포항',
+	};
+	console.log();
+	const GetAllFestival = useCallback(
+		async e => {
+			localStorage.getItem('token')
+				? await axiosTokenGet('/festival/get_info').then(res =>
+						res.map(element => {
+							const [startTime, FinishTime] = element.term.split('~');
+							if (data.isBefore(FinishTime.trim())) {
+								if (data.isBetween(startTime.trim(), FinishTime.trim())) {
+									setData(Data => [...Data, element]);
+								} else {
+									setChageData(ChangeData => [...ChangeData, element]);
+								}
+							}
+						}),
+				  )
+				: await axiosGet('/festival/get_info').then(res =>
+						res.map(element => {
+							const [startTime, FinishTime] = element.term.split('~');
+							if (data.isBefore(FinishTime.trim())) {
+								if (data.isBetween(startTime.trim(), FinishTime.trim())) {
+									setData(Data => [...Data, element]);
+								} else {
+									setChageData(ChangeData => [...ChangeData, element]);
+								}
+							}
+						}),
+				  );
 		},
-		[Category, GetAllFestival, GetCityFestival],
+		[data],
 	);
+
+	const GetCityFestival = useCallback(
+		async e => {
+			localStorage.getItem('token')
+				? await axiosTokenGet(`/festival/get_city_info?city_name=${e}`).then(res =>
+						res.map(element => {
+							const [startTime, FinishTime] = element.term.split('~');
+							if (data.isBefore(FinishTime.trim())) {
+								if (data.isBetween(startTime.trim(), FinishTime.trim())) {
+									setData(Data => [...Data, element]);
+								} else {
+									setChageData(ChangeData => [...ChangeData, element]);
+								}
+							}
+						}),
+				  )
+				: await axiosGet(`/festival/get_city_info?city_name=${e}`).then(res =>
+						res.map(element => {
+							const [startTime, FinishTime] = element.term.split('~');
+							if (data.isBefore(FinishTime.trim())) {
+								if (data.isBetween(startTime.trim(), FinishTime.trim())) {
+									setData(Data => [...Data, element]);
+								} else {
+									setChageData(ChangeData => [...ChangeData, element]);
+								}
+							}
+						}),
+				  );
+		},
+		[data],
+	);
+
 	useEffect(() => {
-		GetFestival();
+		location.pathname.split('/')[2] === 'all'
+			? GetAllFestival()
+			: GetCityFestival(urltype[location.pathname.split('/')[2]]);
 	}, []);
 
 	return (
@@ -83,13 +142,19 @@ const Fastival = () => {
 				<FastivalSubTitle>역사가 깊은, 경상도 각지에서 </FastivalSubTitle>열리는 축제를 즐겨보세요!
 			</FastivalTitle>
 			<LocalList>
-				{local.map(e => {
+				<LocalBtn onClick={() => window.location.replace('/festival/all')}>전체</LocalBtn>
+				<LocalBtn onClick={() => window.location.replace('/festival/busan')}>부산</LocalBtn>
+				<LocalBtn onClick={() => window.location.replace('/festival/daegu')}>대구</LocalBtn>
+				<LocalBtn onClick={() => window.location.replace('/festival/pohang')}>포항</LocalBtn>
+				<LocalBtn onClick={() => window.location.replace('/festival/gyeongju')}>경주</LocalBtn>
+
+				{/* {local.map(e => {
 					return Category === e ? (
 						<LocalBtnChecked onClick={() => GetFestival(e)}>{e}</LocalBtnChecked>
 					) : (
 						<LocalBtn onClick={() => GetFestival(e)}>{e}</LocalBtn>
 					);
-				})}
+				})} */}
 			</LocalList>
 			<MyWishListWrapper>
 				{Data.map((e, index) => {
@@ -99,10 +164,14 @@ const Fastival = () => {
 						</MyWishList>
 					);
 				})}
+				{ChangeData.map((e, index) => {
+					return (
+						<MyWishList key={index}>
+							<LocalButton key={index} props={e} index={index} />
+						</MyWishList>
+					);
+				})}
 			</MyWishListWrapper>
-			<PaginationDiv>
-				<Pagination />
-			</PaginationDiv>
 		</Wrapper>
 	);
 };
