@@ -66,6 +66,8 @@ function App() {
 					<Route path="festival/board/:id" element={<FastivalPost />} />
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />} />
+					<Route path="/community/free" element={<Community />} />
+					<Route path="/community/accompany" element={<Community />} />
 					<Route path="/community/:postId" element={<CommunityPost />} />
 					{/* /community/post=postId || /community/postId */}
 					<Route path="/communitywrite" element={<CommunityWrite />} />
