@@ -1,10 +1,10 @@
 import { styled } from 'styled-components';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FaUserGroup } from 'react-icons/fa6';
 import dayjs from 'dayjs';
 
-import { axiosTokenPost } from 'utils/AxiosUtils';
+import { axiosTokenPost, axiosGet, axiosTokenDelete, axiosTokenDeleteBody } from 'utils/AxiosUtils';
 
 import { Title } from 'components/common/Title';
 import { Button, ButtonGroup } from 'components/common/Button';
@@ -199,6 +199,7 @@ const Comment = styled.p`
 
 const CommunityPost = () => {
 	const me = useSelector(state => state.Info);
+	console.log(me);
 	// 게시글 상세 데이터
 	const location = useLocation();
 	const data = location.state.prop;
@@ -224,12 +225,30 @@ const CommunityPost = () => {
 	const transform = e => {
 		return e.replace(/\n/g, '<br/>');
 	};
-
+	//게시판
+	const Delboard = useCallback(async () => {
+		console.log(b_id);
+		await axiosTokenDelete(`/board/delete_board?b_id=${b_id}`);
+		// window.location.replace('/community');
+	}, [b_id]);
 	// 댓글
 	const [comment, setComment] = useState('');
+	const [getComment, setGetcomment] = useState([]);
 	const onCommentClick = useCallback(async () => {
-		const commentData = await axiosTokenPost('/comment/create_comment');
-		setComment(commentData);
+		await axiosTokenPost('/comment/create_comment', {
+			b_id: b_id,
+			contents: comment,
+		});
+	}, [b_id, comment]);
+	const onGetComment = useCallback(async () => {
+		const res = await axiosGet(`/comment/get_comment?b_id=${b_id}`);
+		setGetcomment(res);
+	}, [b_id]);
+	const onDelComment = useCallback(async c_id => {
+		await axiosTokenDelete(`/comment/delete_comment?c_id=${c_id}`);
+	}, []);
+	useEffect(() => {
+		onGetComment();
 	}, []);
 
 	return (
@@ -251,7 +270,7 @@ const CommunityPost = () => {
 						</CommunityUserInfo>
 						<CommunityUserPostControl>
 							<button>수정</button>
-							<button>삭제</button>
+							<button onClick={Delboard}>삭제</button>
 						</CommunityUserPostControl>
 					</CommunityUserInfoInner>
 					<CommunityContentWrapper>
@@ -284,56 +303,39 @@ const CommunityPost = () => {
 							<CommentLength>· 댓글 3</CommentLength>
 						</div>
 						<CommentInput>
-							<Input type="text" value={comment} placeholder="댓글을 입력해주세요." />
+							<Input
+								type="text"
+								value={comment}
+								onChange={e => setComment(e.target.value)}
+								placeholder="댓글을 입력해주세요."
+							/>
 							<CommentBtn onClick={onCommentClick}>게시</CommentBtn>
 						</CommentInput>
 						<CommentListWrapper>
-							<CommentList>
-								<CommentHeader>
-									<CommentInfo>
-										<UserProfileImg />
-										<CommentTitle>배낭 여행</CommentTitle>
-										<CommentData>2023-07-31 17:22</CommentData>
-									</CommentInfo>
-									<CommentControl>
-										<CorrectionBtn>수정</CorrectionBtn>
-										<DeleteBtn>삭제</DeleteBtn>
-									</CommentControl>
-								</CommentHeader>
-								<CommentInner>
-									<Comment>혹시 일정이 변경이 가능하실까요?</Comment>
-								</CommentInner>
-							</CommentList>
-
-							<CommentList>
-								<CommentHeader>
-									<CommentInfo>
-										<UserProfileImg />
-										<CommentTitle>배낭 여행</CommentTitle>
-										<CommentData>2023-07-31 17:22</CommentData>
-									</CommentInfo>
-									<CommentControl>
-										<CorrectionBtn>수정</CorrectionBtn>
-										<DeleteBtn>삭제</DeleteBtn>
-									</CommentControl>
-								</CommentHeader>
-								<CommentInner>
-									<Comment>혹시 일정이 변경이 가능하실까요?</Comment>
-								</CommentInner>
-							</CommentList>
-
-							<CommentList>
-								<CommentHeader>
-									<CommentInfo>
-										<UserProfileImg />
-										<CommentTitle>나나나</CommentTitle>
-										<CommentData>2023-07-31 17:22</CommentData>
-									</CommentInfo>
-								</CommentHeader>
-								<CommentInner>
-									<Comment>담에 짧은기간 여행이면 함께 하고싶어요!!</Comment>
-								</CommentInner>
-							</CommentList>
+							{getComment.map(element => {
+								return (
+									<CommentList>
+										<CommentHeader>
+											<CommentInfo>
+												<UserProfileImg />
+												<CommentTitle>{element.username}</CommentTitle>
+												<CommentData>2023-07-31 17:22</CommentData>
+											</CommentInfo>
+											{me.user.name === element.username ? (
+												<CommentControl>
+													<CorrectionBtn>수정</CorrectionBtn>
+													<DeleteBtn onClick={() => onDelComment(element.c_id)}>삭제</DeleteBtn>
+												</CommentControl>
+											) : (
+												''
+											)}
+										</CommentHeader>
+										<CommentInner>
+											<Comment>{element.contents}</Comment>
+										</CommentInner>
+									</CommentList>
+								);
+							})}
 						</CommentListWrapper>
 					</CommentWrapper>
 				</WritingListWrapper>
