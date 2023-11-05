@@ -17,8 +17,11 @@ const WishListContainer = () => {
 	const [bookmarkData, setBookmarkData] = useState([]);
 	const userWishList = useCallback(async () => {
 		const data = await axiosTokenGet('/festival/get_info');
-		setBookmarkData(data);
+		data.map(e => {
+			if (e.is_bookmark) setBookmarkData([...bookmarkData, e]);
+		});
 	}, []);
+	console.log(bookmarkData);
 
 	useEffect(() => {
 		userWishList();
@@ -33,7 +36,7 @@ const WishListContainer = () => {
 			) : (
 				<MyWishListWrapper>
 					{bookmarkData.map((data, index) => {
-						return data.is_bookmark === true ? <LocalButton key={index} props={data} /> : null;
+						return <LocalButton key={index} props={data} />;
 					})}
 				</MyWishListWrapper>
 			)}

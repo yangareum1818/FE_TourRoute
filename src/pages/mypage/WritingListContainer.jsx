@@ -1,9 +1,13 @@
 import { Pagination } from 'antd';
 import Empty from 'components/common/Empty';
 import { ImgWhether, RecruitmentStatus } from 'components/common/Icon';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { axiosTokenGet } from 'utils/AxiosUtils';
+
+const day = require('dayjs');
+day.locale('ko');
 
 const WritingListWrapper = styled.div``;
 
@@ -32,7 +36,7 @@ const WritingListTitle = styled.div`
 	font-size: 1.6rem;
 
 	a {
-		width: 40rem;
+		max-width: 37rem;
 		color: #000;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -56,90 +60,54 @@ const WritingListDate = styled.span`
 	font-weight: 400;
 `;
 
-const PageContainer = styled.div`
-	padding-top: 6rem;
-	text-align: center;
-`;
-
 const WritingListContainer = () => {
-	const [current, setcurrent] = useState(1);
-	const pageChange = useCallback(e => {
-		setcurrent(e);
+	const [meWritingList, setMeWritingList] = useState([]);
+
+	const MyWritingList = useCallback(async () => {
+		const data = await axiosTokenGet('/board/get_board');
+		setMeWritingList(data);
 	}, []);
 
-	const test = [
-		{
-			category: '자유 게시판',
-			title:
-				'제목이 길면 이렇게 해주세요 제목이 길면 이렇게 해주세요 제목이 길면 이 제목이 길면 제목이 길면 제목이 길면 이렇게 해주세요.',
-			date: '2023-07-23',
-		},
-		{
-			category: '자유 게시판',
-			title:
-				'제목이 길면 이렇게 해주세요 제목이 길면 이렇게 해주세요 제목이 길면 이 제목이 길면 제목이 길면 제목이 길면 이렇게 해주세요.',
-			date: '2023-07-23',
-		},
-	];
+	console.log('meWritingList', meWritingList);
+
+	useEffect(() => {
+		MyWritingList();
+	}, []);
+
 	return (
 		<WritingListWrapper>
-			<Empty text="커뮤니티에서 동행인을 구하거나, 자유롭게 글을 작성해보세요!" />
-			<WritingListInner>
-				<WritingList>
-					<WritingListCategory>자유게시판</WritingListCategory>
-					<WritingListTitle>
-						<Link>
-							제목이 길면 이렇게 해주세요 제목이 길면 이렇게 해주세요 제목이 길면 이 제목이 길면
-							제목이 길면 제목이 길면 이렇게 해주세요.
-						</Link>
-						<RecruitmentStatus statusText="모집 완료" />
-						<ImgWhether />
-					</WritingListTitle>
-					<WritingListChange>
-						<WritingChangeBtn>수정</WritingChangeBtn>
-						<WritingChangeBtn>삭제</WritingChangeBtn>
-					</WritingListChange>
-					<WritingListDate>2023-07-23</WritingListDate>
-				</WritingList>
+			{meWritingList.length === 0 ? (
+				<Empty text="커뮤니티에서 동행인을 구하거나, 자유롭게 글을 작성해보세요!" />
+			) : (
+				<WritingListInner>
+					{meWritingList.map(list => {
+						const { b_id, category, created_at, title, user_img_link, recruitment } = list;
+						const YearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
+						return (
+							<WritingList key={b_id} index={b_id}>
+								{category === 'free' ? (
+									<WritingListCategory>자유게시판</WritingListCategory>
+								) : (
+									<WritingListCategory>동행게시판</WritingListCategory>
+								)}
+								<WritingListTitle>
+									<Link to={`/community/${b_id}`} state={{ prop: list }}>
+										{title}
+									</Link>
+									{category === 'accompany' ? <RecruitmentStatus statusText={recruitment} /> : null}
 
-				<WritingList>
-					<WritingListCategory>자유게시판</WritingListCategory>
-					<WritingListTitle>
-						<Link>
-							제목이 길면 이렇게 해주세요 제목이 길면 이렇게 해주세요 제목이 길면 이 제목이 길면
-							제목이 길면 제목이 길면 이렇게 해주세요.
-						</Link>
-						<RecruitmentStatus statusText="모집 중" />
-						<ImgWhether />
-					</WritingListTitle>
-					<WritingListChange>
-						<WritingChangeBtn>수정</WritingChangeBtn>
-						<WritingChangeBtn>삭제</WritingChangeBtn>
-					</WritingListChange>
-					<WritingListDate>2023-07-23</WritingListDate>
-				</WritingList>
-
-				<WritingList>
-					<WritingListCategory>자유게시판</WritingListCategory>
-					<WritingListTitle>
-						<Link>
-							제목이 길면 이렇게 해주세요 제목이 길면 이렇게 해주세요 제목이 길면 이 제목이 길면
-							제목이 길면 제목이 길면 이렇게 해주세요.
-						</Link>
-						<RecruitmentStatus statusText="모집 중" />
-						<ImgWhether />
-					</WritingListTitle>
-					<WritingListChange>
-						<WritingChangeBtn>수정</WritingChangeBtn>
-						<WritingChangeBtn>삭제</WritingChangeBtn>
-					</WritingListChange>
-					<WritingListDate>2023-07-23</WritingListDate>
-				</WritingList>
-			</WritingListInner>
-
-			<PageContainer>
-				<Pagination current={current} onChange={pageChange} total={50} />
-			</PageContainer>
+									{user_img_link === '이미지 파일이 없습니다.' ? null : <ImgWhether />}
+								</WritingListTitle>
+								<WritingListChange>
+									<WritingChangeBtn>수정</WritingChangeBtn>
+									<WritingChangeBtn>삭제</WritingChangeBtn>
+								</WritingListChange>
+								<WritingListDate>{YearMonthDay}</WritingListDate>
+							</WritingList>
+						);
+					})}
+				</WritingListInner>
+			)}
 		</WritingListWrapper>
 	);
 };
