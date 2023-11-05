@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { useCallback, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FaUserGroup } from 'react-icons/fa6';
 import dayjs from 'dayjs';
 
@@ -200,6 +200,7 @@ const Comment = styled.p`
 const CommunityPost = () => {
 	const me = useSelector(state => state.Info);
 	console.log(me);
+	const navigate = useNavigate();
 	// 게시글 상세 데이터
 	const location = useLocation();
 	const data = location.state.prop;
@@ -227,9 +228,8 @@ const CommunityPost = () => {
 	};
 	//게시판
 	const Delboard = useCallback(async () => {
-		console.log(b_id);
 		await axiosTokenDelete(`/board/delete_board?b_id=${b_id}`);
-		// window.location.replace('/community');
+		navigate('/community');
 	}, [b_id]);
 	// 댓글
 	const [comment, setComment] = useState('');
@@ -268,10 +268,14 @@ const CommunityPost = () => {
 							<UserName>{username}</UserName>
 							<CommunityData>{YearMonthDay}</CommunityData>
 						</CommunityUserInfo>
-						<CommunityUserPostControl>
-							<button>수정</button>
-							<button onClick={Delboard}>삭제</button>
-						</CommunityUserPostControl>
+						{me.user.name === data.username ? (
+							<CommunityUserPostControl>
+								<button>수정</button>
+								<button onClick={Delboard}>삭제</button>
+							</CommunityUserPostControl>
+						) : (
+							''
+						)}
 					</CommunityUserInfoInner>
 					<CommunityContentWrapper>
 						<CommunityTitleWrapper>

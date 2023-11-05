@@ -285,17 +285,21 @@ const CommunityWrite = () => {
 	// 작성완료
 	const CommuWriteHandleSubmit = useCallback(async () => {
 		try {
-			formData.append('file', ImageData);
-			ImageChecked === false
-				? await axiosTokenPost(
-						`/board/create_board?title=${title}&contents=${TextData}&category=${category}&recruitment=${recruitment}`,
-				  )
-				: await axiosTokenFormPost(
-						`/board/create_board?title=${title}&contents=${TextData}&category=${category}&recruitment=${recruitment}&r_link=${r_link}`,
-						formData,
-				  );
-			alert('게시글 작성이 완료되었습니다.');
-			navigate('/community');
+			if (title && TextData && category) {
+				formData.append('file', ImageData);
+				ImageChecked === false
+					? await axiosTokenPost(
+							`/board/create_board?title=${title}&contents=${TextData}&category=${category}&recruitment=${recruitment}`,
+					  )
+					: await axiosTokenFormPost(
+							`/board/create_board?title=${title}&contents=${TextData}&category=${category}&recruitment=${recruitment}&r_link=${r_link}`,
+							formData,
+					  );
+				alert('게시글 작성이 완료되었습니다.');
+				navigate('/community');
+			} else {
+				alert('글을 입력해주세요');
+			}
 		} catch (error) {
 			console.error(error);
 		}

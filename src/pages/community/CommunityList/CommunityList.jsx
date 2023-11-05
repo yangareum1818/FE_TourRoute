@@ -94,7 +94,7 @@ const CommunityList = () => {
 				<Empty text="커뮤니티에서 동행인을 구하거나, 자유롭게 글을 작성해보세요!" />
 			) : (
 				<WritingListInner>
-					{communityListData.map(list => {
+					{communityListData.map((list, index) => {
 						const { b_id, title, category, recruitment, board_img_link, created_at } = list;
 
 						const YearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
