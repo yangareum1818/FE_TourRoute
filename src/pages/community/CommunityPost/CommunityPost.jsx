@@ -199,7 +199,6 @@ const Comment = styled.p`
 
 const CommunityPost = () => {
 	const me = useSelector(state => state.Info);
-	console.log(me);
 	const navigate = useNavigate();
 	// 게시글 상세 데이터
 	const location = useLocation();
@@ -279,7 +278,7 @@ const CommunityPost = () => {
 					</CommunityUserInfoInner>
 					<CommunityContentWrapper>
 						<CommunityTitleWrapper>
-							{category === 'IS_ACCOMPANY' ? <RecruitmentStatus statusText={recruitment} /> : null}
+							{category === 'accompany' ? <RecruitmentStatus statusText={recruitment} /> : null}
 							<CommuTitle>{title}</CommuTitle>
 						</CommunityTitleWrapper>
 
@@ -297,7 +296,7 @@ const CommunityPost = () => {
 									overflow: 'scroll',
 								}}
 							>
-								<ContentImg src={`http://13.209.56.221:8000/img/${img}`} />
+								<ContentImg src={img} />
 							</div>
 						)}
 					</CommunityContentWrapper>
@@ -317,15 +316,18 @@ const CommunityPost = () => {
 						</CommentInput>
 						<CommentListWrapper>
 							{getComment.map(element => {
+								const { b_id, c_id, contents, created_at, i_link, user_email, username } = element;
+								const CommentYearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
+								console.log(element);
 								return (
-									<CommentList key={element.b_id}>
+									<CommentList key={element.c_id}>
 										<CommentHeader>
 											<CommentInfo>
 												<UserProfileImg />
 												<CommentTitle>{element.username}</CommentTitle>
-												<CommentData>2023-07-31 17:22</CommentData>
+												<CommentData>{CommentYearMonthDay}</CommentData>
 											</CommentInfo>
-											{me.user.name === element.username ? (
+											{element.user_email === me.user.email ? (
 												<CommentControl>
 													<CorrectionBtn>수정</CorrectionBtn>
 													<DeleteBtn onClick={() => onDelComment(element.c_id)}>삭제</DeleteBtn>
@@ -345,7 +347,7 @@ const CommunityPost = () => {
 				</WritingListWrapper>
 
 				<SideBarWrapper>
-					{category === 'IS_ACCOMPANY' ? (
+					{category === 'accompany' ? (
 						<SideMenuLocation>동행게시판</SideMenuLocation>
 					) : (
 						<SideMenuLocation>자유게시판</SideMenuLocation>
@@ -358,7 +360,7 @@ const CommunityPost = () => {
 						)}
 						<MyName>{username}</MyName>
 					</ProfileWrapper>
-					{category === 'IS_ACCOMPANY' ? (
+					{category === 'accompany' ? (
 						<ButtonGroup>
 							{recruitment === 'RECRUITING' ? (
 								<Button text="참여하기">
@@ -368,7 +370,9 @@ const CommunityPost = () => {
 								<Button text="모집완료" variant="cancel" />
 							)}
 
-							<Button text="참여하기 종료" variant="cancel" />
+							{me.user.email === user_email ? (
+								<Button text="참여하기 종료" variant="cancel" />
+							) : null}
 						</ButtonGroup>
 					) : null}
 				</SideBarWrapper>
