@@ -209,18 +209,13 @@ const CommunityPost = () => {
 
 	const location = useLocation();
 	const data = location.state.prop;
-	console.log(data);
+	console.log('data', data);
 	const url = window.location.pathname.split('/')[2];
 	console.log(url);
 	const img = process.env.REACT_APP_ENDPOINT + '/img/' + data.board_img_link;
 	const YearMonthDay = day(data.created_at).format('YYYY/MM/DD hh:mm');
 	// 게시글 상세 데이터
 	const me = useSelector(state => state.Info);
-	const [boardData, setBoardData] = useState([]);
-	const getBoard = useCallback(async () => {
-		const data = await axiosTokenGet('/board/get_board');
-		setBoardData(data);
-	}, []);
 
 	const transform = e => {
 		return e.replace(/\n/g, '<br/>');
@@ -253,12 +248,13 @@ const CommunityPost = () => {
 	}, [data.b_id]);
 
 	const onDelComment = useCallback(async c_id => {
-		await axiosTokenDelete(`/comment/delete_comment?c_id=${c_id}`);
-		window.location.replace(`/community/${url}`);
+		if (window.confirm('댓글을 삭제하겠습니까 ?')) {
+			await axiosTokenDelete(`/comment/delete_comment?c_id=${c_id}`);
+			window.location.replace(`/community/${url}`);
+		}
 	}, []);
 
 	useEffect(() => {
-		getBoard();
 		onGetComment();
 	}, []);
 
@@ -267,154 +263,130 @@ const CommunityPost = () => {
 			style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: '8rem 0 16rem' }}
 		>
 			<Title text="커뮤니티" />
-			{boardData.length > 0 ? (
+			{data ? (
 				<div style={{ position: 'relative', display: 'flex', gap: '2rem', marginTop: '3.2rem' }}>
-					{boardData.map(board => {
-						const {
-							b_id,
-							user_email,
-							username,
-							title,
-							contents,
-							r_link,
-							user_img_link,
-							recruitment,
-							category,
-							board_img_link,
-							created_at,
-						} = board;
+					<WritingListWrapper>
+						<CommunityUserInfoInner>
+							<CommunityUserInfo>
+								{data.user_img_link === '' ? (
+									<ProfileImg src={dummyMyImage} />
+								) : (
+									<ProfileImg src={data.user_img_link} />
+								)}
+								<UserName>{data.username}</UserName>
+								<CommunityData>{YearMonthDay}</CommunityData>
+							</CommunityUserInfo>
+							{me.user.name === data.username ? (
+								<CommunityUserPostControl>
+									<button>수정</button>
+									<button onClick={Delboard}>삭제</button>
+								</CommunityUserPostControl>
+							) : (
+								''
+							)}
+						</CommunityUserInfoInner>
+						<CommunityContentWrapper>
+							<CommunityTitleWrapper>
+								{data.category === 'accompany' ? (
+									<RecruitmentStatus statusText={data.recruitment} />
+								) : null}
+								<CommuTitle>{data.title}</CommuTitle>
+							</CommunityTitleWrapper>
 
-						return (
-							<>
-								<WritingListWrapper>
-									<CommunityUserInfoInner>
-										<CommunityUserInfo>
-											{data.user_img_link === '' ? (
-												<ProfileImg src={dummyMyImage} />
-											) : (
-												<ProfileImg src={data.user_img_link} />
-											)}
-											<UserName>{data.username}</UserName>
-											<CommunityData>{YearMonthDay}</CommunityData>
-										</CommunityUserInfo>
-										{me.user.name === data.username ? (
-											<CommunityUserPostControl>
-												<button>수정</button>
-												<button onClick={Delboard}>삭제</button>
-											</CommunityUserPostControl>
-										) : (
-											''
-										)}
-									</CommunityUserInfoInner>
-									<CommunityContentWrapper>
-										<CommunityTitleWrapper>
-											{category === 'accompany' ? (
-												<RecruitmentStatus statusText={data.recruitment} />
-											) : null}
-											<CommuTitle>{data.title}</CommuTitle>
-										</CommunityTitleWrapper>
+							<CommunityContent dangerouslySetInnerHTML={{ __html: transform(data.contents) }} />
 
-										<CommunityContent dangerouslySetInnerHTML={{ __html: transform(contents) }} />
+							{data.board_img_link === '이미지 파일이 없습니다.' ? (
+								''
+							) : (
+								<div
+									style={{
+										display: 'flex',
+										alignItems: 'center',
+										gap: '1.5rem',
+										maxWidth: '79.5rem',
+										overflow: 'scroll',
+									}}
+								>
+									<ContentImg src={img} />
+								</div>
+							)}
+						</CommunityContentWrapper>
+						<CommentWrapper>
+							<div>
+								<CommunityData>{YearMonthDay}</CommunityData>
+								<CommentLength>· 댓글 {getComment.length}</CommentLength>
+							</div>
+							<CommentInput>
+								<Input
+									type="text"
+									name="comment"
+									value={comment}
+									onChange={e => setComment(e.target.value)}
+									placeholder="댓글을 입력해주세요."
+								/>
+								<CommentBtn onClick={onCommentClick}>게시</CommentBtn>
+							</CommentInput>
+							<CommentListWrapper>
+								{getComment.map(element => {
+									const CommentYearMonthDay = day(element.created_at).format('YYYY/MM/DD hh:mm');
 
-										{board_img_link === '이미지 파일이 없습니다.' ? (
-											''
-										) : (
-											<div
-												style={{
-													display: 'flex',
-													alignItems: 'center',
-													gap: '1.5rem',
-													maxWidth: '79.5rem',
-													overflow: 'scroll',
-												}}
-											>
-												<ContentImg src={img} />
-											</div>
-										)}
-									</CommunityContentWrapper>
-									<CommentWrapper>
-										<div>
-											<CommunityData>{YearMonthDay}</CommunityData>
-											<CommentLength>· 댓글 {getComment.length}</CommentLength>
-										</div>
-										<CommentInput>
-											<Input
-												type="text"
-												name="comment"
-												value={comment}
-												onChange={e => setComment(e.target.value)}
-												placeholder="댓글을 입력해주세요."
-											/>
-											<CommentBtn onClick={onCommentClick}>게시</CommentBtn>
-										</CommentInput>
-										<CommentListWrapper>
-											{getComment.map(element => {
-												const { b_id, c_id, contents, created_at, i_link, user_email, username } =
-													element;
-												const CommentYearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
+									return (
+										<CommentList key={element.c_id}>
+											<CommentHeader>
+												<CommentInfo>
+													<UserProfileImg />
+													<CommentTitle>{element.username}</CommentTitle>
+													<CommentData>{CommentYearMonthDay}</CommentData>
+												</CommentInfo>
+												{element.user_email === me.user.email ? (
+													<CommentControl>
+														<CorrectionBtn>수정</CorrectionBtn>
+														<DeleteBtn onClick={() => onDelComment(element.c_id)}>삭제</DeleteBtn>
+													</CommentControl>
+												) : (
+													''
+												)}
+											</CommentHeader>
+											<CommentInner>
+												<Comment>{element.contents}</Comment>
+											</CommentInner>
+										</CommentList>
+									);
+								})}
+							</CommentListWrapper>
+						</CommentWrapper>
+					</WritingListWrapper>
 
-												return (
-													<CommentList key={element.c_id}>
-														<CommentHeader>
-															<CommentInfo>
-																<UserProfileImg />
-																<CommentTitle>{element.username}</CommentTitle>
-																<CommentData>{CommentYearMonthDay}</CommentData>
-															</CommentInfo>
-															{element.user_email === me.user.email ? (
-																<CommentControl>
-																	<CorrectionBtn>수정</CorrectionBtn>
-																	<DeleteBtn onClick={() => onDelComment(element.c_id)}>
-																		삭제
-																	</DeleteBtn>
-																</CommentControl>
-															) : (
-																''
-															)}
-														</CommentHeader>
-														<CommentInner>
-															<Comment>{element.contents}</Comment>
-														</CommentInner>
-													</CommentList>
-												);
-											})}
-										</CommentListWrapper>
-									</CommentWrapper>
-								</WritingListWrapper>
+					<SideBarWrapper>
+						{data.category === 'accompany' ? (
+							<SideMenuLocation>동행게시판</SideMenuLocation>
+						) : (
+							<SideMenuLocation>자유게시판</SideMenuLocation>
+						)}
+						<ProfileWrapper>
+							{data.user_img_link === '' ? (
+								<MyImage src={dummyMyImage} />
+							) : (
+								<MyImage src={data.user_img_link} />
+							)}
+							<MyName>{data.username}</MyName>
+						</ProfileWrapper>
+						{data.category === 'accompany' ? (
+							<ButtonGroup>
+								{data.recruitment === 'RECRUITING' ? (
+									<Button text="참여하기">
+										<FaUserGroup style={{ display: 'block', color: '#fff' }} />
+									</Button>
+								) : (
+									<Button text="모집완료" variant="cancel" />
+								)}
 
-								<SideBarWrapper>
-									{category === 'accompany' ? (
-										<SideMenuLocation>동행게시판</SideMenuLocation>
-									) : (
-										<SideMenuLocation>자유게시판</SideMenuLocation>
-									)}
-									<ProfileWrapper>
-										{user_img_link === '' ? (
-											<MyImage src={dummyMyImage} />
-										) : (
-											<MyImage src={user_img_link} />
-										)}
-										<MyName>{username}</MyName>
-									</ProfileWrapper>
-									{category === 'accompany' ? (
-										<ButtonGroup>
-											{recruitment === 'RECRUITING' ? (
-												<Button text="참여하기">
-													<FaUserGroup style={{ display: 'block', color: '#fff' }} />
-												</Button>
-											) : (
-												<Button text="모집완료" variant="cancel" />
-											)}
-
-											{me.user.email === user_email ? (
-												<Button text="참여하기 종료" variant="cancel" />
-											) : null}
-										</ButtonGroup>
-									) : null}
-								</SideBarWrapper>
-							</>
-						);
-					})}
+								{me.user.email === data.user_email ? (
+									<Button text="참여하기 종료" variant="cancel" />
+								) : null}
+							</ButtonGroup>
+						) : null}
+					</SideBarWrapper>
 				</div>
 			) : (
 				<Empty text="해당 게시물이 존재하지 않습니다." />
