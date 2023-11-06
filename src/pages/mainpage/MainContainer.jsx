@@ -96,7 +96,7 @@ const MainContainer = () => {
 				<ComunityContent>
 					{communityListData.map((e, index) => {
 						return (
-							<WritingList key={index} key={e.b_id}>
+							<WritingList key={index}>
 								{e.category === 'free' ? (
 									<WritingListCategory>자유게시판</WritingListCategory>
 								) : (
