@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import KakaoMap from './kakaomap/KakaoMap';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { axiosPost } from '../../../utils/AxiosUtils';
 const Wrapper = styled.div`
 	display: flex;
-	gap: 3rem;
+	gap: 0.5rem;
 `;
 const NextBtn = styled.div`
 	background-color: #3ad0ff;
@@ -34,7 +34,7 @@ const TourInfoDate = styled.div`
 	display: flex;
 	gap: 2rem;
 `;
-const RecordInfoTourStart = styled.h1`
+const RecordInfoTourStart = styled.span`
 	position: relative;
 	padding: 1rem 3rem;
 	border: 0.1rem solid #959696;
@@ -76,12 +76,31 @@ const RecordInfoTourValuesInner = styled.div`
 	flex-direction: column;
 	width: 33rem;
 `;
+const SubIntro = styled.p`
+	background-color: #f2f6f9;
+	padding: 1rem;
+	margin: 1rem 0;
+`;
 const MapLayOut = () => {
 	const navigate = useNavigate();
 	const result = useSelector(state1 => state1.Result);
 	const Tour = useSelector(state => state.Tour);
 	const name = useSelector(state => state.Info);
 	const day = window.location.pathname.split('/')[3];
+
+	const [locationName, setlocation] = useState(
+		result.Result[day][0].store_name ||
+			result.Result[day][0].m_name ||
+			result.Result[day][0].s_name ||
+			'',
+	);
+	const [finishlocationName, setfinishlocationName] = useState(
+		result.Result[day][2].store_name ||
+			result.Result[day][2].m_name ||
+			result.Result[day][2].s_name ||
+			'',
+	);
+	console.log();
 	const HandleDayChoice = useCallback(
 		e => {
 			navigate(`/tourplan/3/${e}`);
@@ -106,10 +125,10 @@ const MapLayOut = () => {
 						})}
 					</TourInfoDate>
 					<RecordInfoTourValuesInner>
-						<RecordInfoTourStart>첫날 목적지</RecordInfoTourStart>
-						<RecordInfoTourEnd>마지막 목적지</RecordInfoTourEnd>
+						<RecordInfoTourStart>{locationName}</RecordInfoTourStart>
+						<RecordInfoTourEnd>{finishlocationName}</RecordInfoTourEnd>
 					</RecordInfoTourValuesInner>
-					<p>올해 여행은? 투어라우트에서 더 간편하게!</p>
+					<SubIntro>올해 여행은? 투어라우트에서 더 간편하게!</SubIntro>
 					{result.Result[day].map((e, index) => {
 						return <MapList key={index} props={e} />;
 					})}
