@@ -94,9 +94,9 @@ const MainContainer = () => {
 					<ComunityTheMore to="/community">더보기</ComunityTheMore>
 				</ComunityHeader>
 				<ComunityContent>
-					{communityListData.map(e => {
+					{communityListData.map((e, index) => {
 						return (
-							<WritingList>
+							<WritingList key={index}>
 								{e.category === 'free' ? (
 									<WritingListCategory>자유게시판</WritingListCategory>
 								) : (
