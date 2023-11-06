@@ -1,8 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
-
 import { Pagination } from 'antd';
 
 import Empty from 'components/common/Empty';

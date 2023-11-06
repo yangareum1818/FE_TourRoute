@@ -4,7 +4,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FaUserGroup } from 'react-icons/fa6';
 import dayjs from 'dayjs';
 
-import { axiosTokenPost, axiosGet, axiosTokenDelete, axiosTokenDeleteBody } from 'utils/AxiosUtils';
+import {
+	axiosTokenPost,
+	axiosGet,
+	axiosTokenDelete,
+	axiosTokenDeleteBody,
+	axiosTokenGet,
+} from 'utils/AxiosUtils';
 
 import { Title } from 'components/common/Title';
 import { Button, ButtonGroup } from 'components/common/Button';
@@ -13,6 +19,7 @@ import { RecruitmentStatus } from 'components/common/Icon';
 
 import dummyMyImage from '../../../assets/Mask_group.svg';
 import { useSelector } from 'react-redux';
+import Empty from 'components/common/Empty';
 
 const day = require('dayjs');
 day.locale('ko');
@@ -198,55 +205,60 @@ const Comment = styled.p`
 `;
 
 const CommunityPost = () => {
-	const me = useSelector(state => state.Info);
 	const navigate = useNavigate();
-	// 게시글 상세 데이터
+
 	const location = useLocation();
 	const data = location.state.prop;
 
-	let {
-		b_id,
-		board_img_link,
-		category,
-		contents,
-		created_at,
-		r_link,
-		recruitment,
-		title,
-		user_email,
-		user_img_link,
-		username,
-	} = data;
+	// 게시글 상세 데이터
+	const me = useSelector(state => state.Info);
+	const [boardData, setBoardData] = useState([]);
+	const getBoard = useCallback(async () => {
+		const data = await axiosTokenGet('/board/get_board');
+		setBoardData(data);
+	}, []);
 
-	const img = process.env.REACT_APP_ENDPOINT + '/img/' + board_img_link;
+	const id = boardData.find(b => {
+		return b.b_id;
+	});
 
-	const YearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
-
+	console.log(boardData[0]);
+	console.log('id', id);
 	const transform = e => {
 		return e.replace(/\n/g, '<br/>');
 	};
-	//게시판
+
+	// 게시판 삭제
 	const Delboard = useCallback(async () => {
-		await axiosTokenDelete(`/board/delete_board?b_id=${b_id}`);
+		await axiosTokenDelete(`/board/delete_board?b_id=${id}`);
 		navigate('/community');
-	}, [b_id]);
-	// 댓글
+	}, [id]);
+
+	// 댓글 게시, 수정, 삭제
 	const [comment, setComment] = useState('');
 	const [getComment, setGetcomment] = useState([]);
 	const onCommentClick = useCallback(async () => {
-		await axiosTokenPost('/comment/create_comment', {
-			b_id: b_id,
+		if (comment === '') return alert('댓글을 입력해주세요.');
+		const res = await axiosTokenPost('/comment/create_comment', {
+			b_id: id,
 			contents: comment,
 		});
-	}, [b_id, comment]);
+		if (res.detail === '댓글 작성 성공') {
+			navigate(`/community/${id}`);
+		}
+	}, [id, comment]);
+
 	const onGetComment = useCallback(async () => {
-		const res = await axiosGet(`/comment/get_comment?b_id=${b_id}`);
+		const res = await axiosGet(`/comment/get_comment?b_id=${id.b_id}`);
 		setGetcomment(res);
-	}, [b_id]);
+	}, [id.b_id]);
+
 	const onDelComment = useCallback(async c_id => {
 		await axiosTokenDelete(`/comment/delete_comment?c_id=${c_id}`);
 	}, []);
+
 	useEffect(() => {
+		getBoard();
 		onGetComment();
 	}, []);
 
@@ -255,128 +267,161 @@ const CommunityPost = () => {
 			style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: '8rem 0 16rem' }}
 		>
 			<Title text="커뮤니티" />
-			<div style={{ position: 'relative', display: 'flex', gap: '2rem', marginTop: '3.2rem' }}>
-				<WritingListWrapper>
-					<CommunityUserInfoInner>
-						<CommunityUserInfo>
-							{user_img_link === '' ? (
-								<ProfileImg src={dummyMyImage} />
-							) : (
-								<ProfileImg src={user_img_link} />
-							)}
-							<UserName>{username}</UserName>
-							<CommunityData>{YearMonthDay}</CommunityData>
-						</CommunityUserInfo>
-						{me.user.name === data.username ? (
-							<CommunityUserPostControl>
-								<button>수정</button>
-								<button onClick={Delboard}>삭제</button>
-							</CommunityUserPostControl>
-						) : (
-							''
-						)}
-					</CommunityUserInfoInner>
-					<CommunityContentWrapper>
-						<CommunityTitleWrapper>
-							{category === 'accompany' ? <RecruitmentStatus statusText={recruitment} /> : null}
-							<CommuTitle>{title}</CommuTitle>
-						</CommunityTitleWrapper>
+			{boardData.length > 0 ? (
+				<div style={{ position: 'relative', display: 'flex', gap: '2rem', marginTop: '3.2rem' }}>
+					{boardData.map(board => {
+						const {
+							b_id,
+							user_email,
+							username,
+							title,
+							contents,
+							r_link,
+							user_img_link,
+							recruitment,
+							category,
+							board_img_link,
+							created_at,
+						} = board;
 
-						<CommunityContent dangerouslySetInnerHTML={{ __html: transform(contents) }} />
+						const img = process.env.REACT_APP_ENDPOINT + '/img/' + board_img_link;
+						const YearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
 
-						{board_img_link === '이미지 파일이 없습니다.' ? (
-							''
-						) : (
-							<div
-								style={{
-									display: 'flex',
-									alignItems: 'center',
-									gap: '1.5rem',
-									maxWidth: '79.5rem',
-									overflow: 'scroll',
-								}}
-							>
-								<ContentImg src={img} />
-							</div>
-						)}
-					</CommunityContentWrapper>
-					<CommentWrapper>
-						<div>
-							<CommunityData>{YearMonthDay}</CommunityData>
-							<CommentLength>· 댓글 3</CommentLength>
-						</div>
-						<CommentInput>
-							<Input
-								type="text"
-								value={comment}
-								onChange={e => setComment(e.target.value)}
-								placeholder="댓글을 입력해주세요."
-							/>
-							<CommentBtn onClick={onCommentClick}>게시</CommentBtn>
-						</CommentInput>
-						<CommentListWrapper>
-							{getComment.map(element => {
-								const { b_id, c_id, contents, created_at, i_link, user_email, username } = element;
-								const CommentYearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
-								console.log(element);
-								return (
-									<CommentList key={element.c_id}>
-										<CommentHeader>
-											<CommentInfo>
-												<UserProfileImg />
-												<CommentTitle>{element.username}</CommentTitle>
-												<CommentData>{CommentYearMonthDay}</CommentData>
-											</CommentInfo>
-											{element.user_email === me.user.email ? (
-												<CommentControl>
-													<CorrectionBtn>수정</CorrectionBtn>
-													<DeleteBtn onClick={() => onDelComment(element.c_id)}>삭제</DeleteBtn>
-												</CommentControl>
+						return (
+							<>
+								<WritingListWrapper>
+									<CommunityUserInfoInner>
+										<CommunityUserInfo>
+											{user_img_link === '' ? (
+												<ProfileImg src={dummyMyImage} />
 											) : (
-												''
+												<ProfileImg src={user_img_link} />
 											)}
-										</CommentHeader>
-										<CommentInner>
-											<Comment>{element.contents}</Comment>
-										</CommentInner>
-									</CommentList>
-								);
-							})}
-						</CommentListWrapper>
-					</CommentWrapper>
-				</WritingListWrapper>
+											<UserName>{username}</UserName>
+											<CommunityData>{YearMonthDay}</CommunityData>
+										</CommunityUserInfo>
+										{me.user.name === username ? (
+											<CommunityUserPostControl>
+												<button>수정</button>
+												<button onClick={Delboard}>삭제</button>
+											</CommunityUserPostControl>
+										) : (
+											''
+										)}
+									</CommunityUserInfoInner>
+									<CommunityContentWrapper>
+										<CommunityTitleWrapper>
+											{category === 'accompany' ? (
+												<RecruitmentStatus statusText={recruitment} />
+											) : null}
+											<CommuTitle>{title}</CommuTitle>
+										</CommunityTitleWrapper>
 
-				<SideBarWrapper>
-					{category === 'accompany' ? (
-						<SideMenuLocation>동행게시판</SideMenuLocation>
-					) : (
-						<SideMenuLocation>자유게시판</SideMenuLocation>
-					)}
-					<ProfileWrapper>
-						{user_img_link === '' ? (
-							<MyImage src={dummyMyImage} />
-						) : (
-							<MyImage src={user_img_link} />
-						)}
-						<MyName>{username}</MyName>
-					</ProfileWrapper>
-					{category === 'accompany' ? (
-						<ButtonGroup>
-							{recruitment === 'RECRUITING' ? (
-								<Button text="참여하기">
-									<FaUserGroup style={{ display: 'block', color: '#fff' }} />
-								</Button>
-							) : (
-								<Button text="모집완료" variant="cancel" />
-							)}
+										<CommunityContent dangerouslySetInnerHTML={{ __html: transform(contents) }} />
 
-							{me.user.email === user_email ? (
-								<Button text="참여하기 종료" variant="cancel" />
-							) : null}
-						</ButtonGroup>
-					) : null}
-				</SideBarWrapper>
-			</div>
+										{board_img_link === '이미지 파일이 없습니다.' ? (
+											''
+										) : (
+											<div
+												style={{
+													display: 'flex',
+													alignItems: 'center',
+													gap: '1.5rem',
+													maxWidth: '79.5rem',
+													overflow: 'scroll',
+												}}
+											>
+												<ContentImg src={img} />
+											</div>
+										)}
+									</CommunityContentWrapper>
+									<CommentWrapper>
+										{/* <div>
+											<CommunityData>{YearMonthDay}</CommunityData>
+											<CommentLength>· 댓글 {getComment.length}</CommentLength>
+										</div>
+										<CommentInput>
+											<Input
+												type="text"
+												name="comment"
+												value={comment}
+												onChange={e => setComment(e.target.value)}
+												placeholder="댓글을 입력해주세요."
+											/>
+											<CommentBtn onClick={onCommentClick}>게시</CommentBtn>
+										</CommentInput> */}
+										<CommentListWrapper>
+											{getComment.map(element => {
+												const { b_id, c_id, contents, created_at, i_link, user_email, username } =
+													element;
+												const CommentYearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
+
+												return (
+													<CommentList key={element.c_id}>
+														<CommentHeader>
+															<CommentInfo>
+																<UserProfileImg />
+																<CommentTitle>{element.username}</CommentTitle>
+																<CommentData>{CommentYearMonthDay}</CommentData>
+															</CommentInfo>
+															{element.user_email === me.user.email ? (
+																<CommentControl>
+																	<CorrectionBtn>수정</CorrectionBtn>
+																	<DeleteBtn onClick={() => onDelComment(element.c_id)}>
+																		삭제
+																	</DeleteBtn>
+																</CommentControl>
+															) : (
+																''
+															)}
+														</CommentHeader>
+														<CommentInner>
+															<Comment>{element.contents}</Comment>
+														</CommentInner>
+													</CommentList>
+												);
+											})}
+										</CommentListWrapper>
+									</CommentWrapper>
+								</WritingListWrapper>
+
+								<SideBarWrapper>
+									{category === 'accompany' ? (
+										<SideMenuLocation>동행게시판</SideMenuLocation>
+									) : (
+										<SideMenuLocation>자유게시판</SideMenuLocation>
+									)}
+									<ProfileWrapper>
+										{user_img_link === '' ? (
+											<MyImage src={dummyMyImage} />
+										) : (
+											<MyImage src={user_img_link} />
+										)}
+										<MyName>{username}</MyName>
+									</ProfileWrapper>
+									{category === 'accompany' ? (
+										<ButtonGroup>
+											{recruitment === 'RECRUITING' ? (
+												<Button text="참여하기">
+													<FaUserGroup style={{ display: 'block', color: '#fff' }} />
+												</Button>
+											) : (
+												<Button text="모집완료" variant="cancel" />
+											)}
+
+											{me.user.email === user_email ? (
+												<Button text="참여하기 종료" variant="cancel" />
+											) : null}
+										</ButtonGroup>
+									) : null}
+								</SideBarWrapper>
+							</>
+						);
+					})}
+				</div>
+			) : (
+				<Empty text="해당 게시물이 존재하지 않습니다." />
+			)}
 		</div>
 	);
 };
