@@ -209,7 +209,11 @@ const CommunityPost = () => {
 
 	const location = useLocation();
 	const data = location.state.prop;
-
+	console.log(data);
+	const url = window.location.pathname.split('/')[2];
+	console.log(url);
+	const img = process.env.REACT_APP_ENDPOINT + '/img/' + data.board_img_link;
+	const YearMonthDay = day(data.created_at).format('YYYY/MM/DD hh:mm');
 	// 게시글 상세 데이터
 	const me = useSelector(state => state.Info);
 	const [boardData, setBoardData] = useState([]);
@@ -218,21 +222,15 @@ const CommunityPost = () => {
 		setBoardData(data);
 	}, []);
 
-	const id = boardData.find(b => {
-		return b.b_id;
-	});
-
-	console.log(boardData[0]);
-	console.log('id', id);
 	const transform = e => {
 		return e.replace(/\n/g, '<br/>');
 	};
 
 	// 게시판 삭제
 	const Delboard = useCallback(async () => {
-		await axiosTokenDelete(`/board/delete_board?b_id=${id}`);
+		await axiosTokenDelete(`/board/delete_board?b_id=${data.b_id}`);
 		navigate('/community');
-	}, [id]);
+	}, [data.b_id]);
 
 	// 댓글 게시, 수정, 삭제
 	const [comment, setComment] = useState('');
@@ -240,21 +238,23 @@ const CommunityPost = () => {
 	const onCommentClick = useCallback(async () => {
 		if (comment === '') return alert('댓글을 입력해주세요.');
 		const res = await axiosTokenPost('/comment/create_comment', {
-			b_id: id,
+			b_id: data.b_id,
 			contents: comment,
 		});
 		if (res.detail === '댓글 작성 성공') {
-			navigate(`/community/${id}`);
+			// navigate(`/community/${url}`);
+			window.location.replace(`/community/${url}`);
 		}
-	}, [id, comment]);
+	}, [comment]);
 
 	const onGetComment = useCallback(async () => {
-		const res = await axiosGet(`/comment/get_comment?b_id=${id.b_id}`);
+		const res = await axiosGet(`/comment/get_comment?b_id=${data.b_id}`);
 		setGetcomment(res);
-	}, [id.b_id]);
+	}, [data.b_id]);
 
 	const onDelComment = useCallback(async c_id => {
 		await axiosTokenDelete(`/comment/delete_comment?c_id=${c_id}`);
+		window.location.replace(`/community/${url}`);
 	}, []);
 
 	useEffect(() => {
@@ -284,23 +284,20 @@ const CommunityPost = () => {
 							created_at,
 						} = board;
 
-						const img = process.env.REACT_APP_ENDPOINT + '/img/' + board_img_link;
-						const YearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
-
 						return (
 							<>
 								<WritingListWrapper>
 									<CommunityUserInfoInner>
 										<CommunityUserInfo>
-											{user_img_link === '' ? (
+											{data.user_img_link === '' ? (
 												<ProfileImg src={dummyMyImage} />
 											) : (
-												<ProfileImg src={user_img_link} />
+												<ProfileImg src={data.user_img_link} />
 											)}
-											<UserName>{username}</UserName>
+											<UserName>{data.username}</UserName>
 											<CommunityData>{YearMonthDay}</CommunityData>
 										</CommunityUserInfo>
-										{me.user.name === username ? (
+										{me.user.name === data.username ? (
 											<CommunityUserPostControl>
 												<button>수정</button>
 												<button onClick={Delboard}>삭제</button>
@@ -312,9 +309,9 @@ const CommunityPost = () => {
 									<CommunityContentWrapper>
 										<CommunityTitleWrapper>
 											{category === 'accompany' ? (
-												<RecruitmentStatus statusText={recruitment} />
+												<RecruitmentStatus statusText={data.recruitment} />
 											) : null}
-											<CommuTitle>{title}</CommuTitle>
+											<CommuTitle>{data.title}</CommuTitle>
 										</CommunityTitleWrapper>
 
 										<CommunityContent dangerouslySetInnerHTML={{ __html: transform(contents) }} />
@@ -336,7 +333,7 @@ const CommunityPost = () => {
 										)}
 									</CommunityContentWrapper>
 									<CommentWrapper>
-										{/* <div>
+										<div>
 											<CommunityData>{YearMonthDay}</CommunityData>
 											<CommentLength>· 댓글 {getComment.length}</CommentLength>
 										</div>
@@ -349,7 +346,7 @@ const CommunityPost = () => {
 												placeholder="댓글을 입력해주세요."
 											/>
 											<CommentBtn onClick={onCommentClick}>게시</CommentBtn>
-										</CommentInput> */}
+										</CommentInput>
 										<CommentListWrapper>
 											{getComment.map(element => {
 												const { b_id, c_id, contents, created_at, i_link, user_email, username } =
