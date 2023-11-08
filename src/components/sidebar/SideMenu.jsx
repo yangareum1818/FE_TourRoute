@@ -60,11 +60,6 @@ const Sidebar = () => {
 			url: '/my/wrtiting',
 			title: '내가 작성한 글',
 		},
-		{
-			id: 405,
-			url: '/my/comment',
-			title: '내가 쓴 댓글',
-		},
 	];
 
 	const side = mypageSide.filter(v => (urlName === v.url ? v.title : null));
