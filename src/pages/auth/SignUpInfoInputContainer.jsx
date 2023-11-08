@@ -52,6 +52,7 @@ const AuthInfoContent = styled.div`
 `;
 
 const SignUpInfoInput = () => {
+	const navigate = useNavigate();
 	const [username, onChangeUsername] = useInput('');
 
 	const [email, setEmail] = useState('');
@@ -80,7 +81,7 @@ const SignUpInfoInput = () => {
 			const expPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
 			setPassword1(e.target.value);
 			setPasswordExpError(!expPassword.test(password1));
-			if (e.target.value === '') {
+			if (password1 === '' && passwordExpError) {
 				setPasswordExpError(false);
 			}
 		},
@@ -96,26 +97,36 @@ const SignUpInfoInput = () => {
 		[password1],
 	);
 
-	const navigate = useNavigate();
 	const onSubmit = useCallback(
 		async e => {
 			e.preventDefault();
-			const userData = {
-				username: username,
-				email: email,
-				password1: password1,
-				password2: password2,
-			};
-			if (Object.values(userData).includes('') === true) return open();
-			if (!email) return setEmailError(true);
-			if (!password1) return setPasswordExpError(true);
-			if (!password2) return setPasswordError(true);
-			if (password1 !== password2) return setPasswordError(true);
+			try {
+				const userData = {
+					username: username,
+					email: email,
+					password1: password1,
+					password2: password2,
+				};
+				if (Object.values(userData).includes('') === true) return open();
+				if (!email) return setEmailError(true);
+				if (!password1) {
+					return setPasswordExpError(true);
+				} else {
+					alert('비밀번호 조합을 다시 맞춰주세요');
+				}
+				if (!password2) return setPasswordError(true);
+				if (password1 !== password2) {
+					setPasswordError(true);
+					alert('비밀번호가 동일하지 않습니다.');
+				}
 
-			const res = await axiosPost('/users/signup', userData);
-			if (res.state === 200 || 201) {
-				navigate('/auth/signup/complete');
-				alert('로그인 성공');
+				const res = await axiosPost('/users/signup', userData);
+				if (res.state === 200 || 201) {
+					navigate('/auth/signup/complete');
+					alert('로그인 성공');
+				}
+			} catch (error) {
+				alert('동일한 이메일이 있습니다. 다른 이메일을 입력해주세요.');
 			}
 		},
 		[email, navigate, open, password1, password2, username],
