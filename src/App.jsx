@@ -22,7 +22,6 @@ import ProfileManagementContainer from 'pages/mypage/ProfileManagementContainer'
 import RecordContainer from 'pages/mypage/RecordContainer';
 import WishListContainer from 'pages/mypage/WishListContainer';
 import WritingListContainer from 'pages/mypage/WritingListContainer';
-import CommentContainer from 'pages/mypage/CommentContainer';
 // 커뮤니티
 import Community from './pages/community/Community';
 import CommunityPost from 'pages/community/CommunityPost/CommunityPost';
@@ -59,7 +58,6 @@ function App() {
 						<Route path="/my/record" element={<RecordContainer />} />
 						<Route path="/my/wishlist" element={<WishListContainer />} />
 						<Route path="/my/wrtiting" element={<WritingListContainer />} />
-						<Route path="/my/comment" element={<CommentContainer />} />
 					</Route>
 					{/* 지역축제 */}
 					<Route path="festival/:city" element={<Fastival />} />
@@ -69,13 +67,7 @@ function App() {
 					<Route path="/community/free" element={<Community />} />
 					<Route path="/community/accompany" element={<Community />} />
 					<Route path="/community/:postId" element={<CommunityPost />} />
-					{/* /community/post=postId || /community/postId */}
 					<Route path="/communitywrite" element={<CommunityWrite />} />
-
-					{/* <Route element={<PostContentsLayout text="커뮤니티" />}>
-						<Route path="/community" element={<Community />} />
-						<Route path="/community/:postId" element={<CommunityPost />} />
-					</Route> */}
 				</Route>
 			</Routes>
 		</BrowserRouter>
