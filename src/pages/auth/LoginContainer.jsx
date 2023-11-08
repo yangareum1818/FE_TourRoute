@@ -124,10 +124,14 @@ const LoginContainer = () => {
 	const onSubmit = useCallback(
 		async e => {
 			e.preventDefault();
-			const res = await axiosPostQuery(`/users/login?email=${email}&password=${password1}`);
-			localStorage.setItem('token', res.access_token);
-			navigate('/');
-			alert(email + '님 환영합니다.');
+			try {
+				const res = await axiosPostQuery(`/users/login?email=${email}&password=${password1}`);
+				localStorage.setItem('token', res.access_token);
+				navigate('/');
+				alert(email + '님 환영합니다.');
+			} catch (error) {
+				alert('회원정보가 일치하지 않습니다.');
+			}
 		},
 		[navigate, email, password1],
 	);
