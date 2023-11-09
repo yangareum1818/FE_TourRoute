@@ -5,7 +5,7 @@ import Comments from './Comments';
 const CommentListWrapper = styled.ul``;
 
 const CommentList = ({ getComment, editComment, url }) => {
-	const [selCommentIndex, setSelCommentIndex] = useState(0);
+	const [selCommentIndex, setSelCommentIndex] = useState(getComment.c_id);
 
 	return (
 		<CommentListWrapper>

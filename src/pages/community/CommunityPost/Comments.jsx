@@ -85,22 +85,25 @@ const Comments = ({
 		/>
 	);
 
-	const onCommentEdit = () => {
-		// 	setSelCommentIndex(0);
-		// 	editComment(c_id, editValue);
-		// await axiosTokenPut('/comment/update_comment', {
-		// 	c_id: c_id,
-		// 	contents: contents,
-		// });
-	};
+	const onCommentEdit = useCallback(async () => {
+		setSelCommentIndex(0);
+		editComment(c_id, editValue);
+		await axiosTokenPut('/comment/update_comment', {
+			c_id: c_id,
+			contents: contents,
+		});
+	}, [editComment, editValue, setSelCommentIndex, c_id, contents]);
 
 	// 삭제
-	const onDelComment = useCallback(async c_id => {
-		if (window.confirm('댓글을 삭제하겠습니까 ?')) {
-			await axiosTokenDelete(`/comment/delete_comment?c_id=${c_id}`);
-			window.location.replace(`/community/${url}`);
-		}
-	}, []);
+	const onDelComment = useCallback(
+		async c_id => {
+			if (window.confirm('댓글을 삭제하겠습니까 ?')) {
+				await axiosTokenDelete(`/comment/delete_comment?c_id=${c_id}`);
+				window.location.replace(`/community/${url}`);
+			}
+		},
+		[url],
+	);
 
 	return (
 		<CommentList id={c_id}>

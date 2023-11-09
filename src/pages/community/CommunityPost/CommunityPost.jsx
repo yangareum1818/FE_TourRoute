@@ -162,7 +162,7 @@ const CommunityPost = () => {
 	const Delboard = useCallback(async () => {
 		await axiosTokenDelete(`/board/delete_board?b_id=${data.b_id}`);
 		navigate('/community');
-	}, [data.b_id]);
+	}, [data.b_id, navigate]);
 
 	// 댓글 게시
 	const [comment, setComment] = useState('');
@@ -177,7 +177,7 @@ const CommunityPost = () => {
 			// navigate(`/community/${url}`);
 			window.location.replace(`/community/${url}`);
 		}
-	}, [comment]);
+	}, [data.b_id, comment, url]);
 
 	const onGetComment = useCallback(async () => {
 		const res = await axiosGet(`/comment/get_comment?b_id=${data.b_id}`);
@@ -197,7 +197,7 @@ const CommunityPost = () => {
 
 	useEffect(() => {
 		onGetComment();
-	}, []);
+	}, [onGetComment]);
 
 	return (
 		<div
