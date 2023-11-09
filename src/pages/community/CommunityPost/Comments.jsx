@@ -54,9 +54,6 @@ const CommentControl = styled.div`
 	}
 `;
 
-const CorrectionBtn = styled.button``;
-const DeleteBtn = styled.button``;
-
 const CommentInner = styled.div``;
 const CommentText = styled.p`
 	color: #000;
@@ -71,6 +68,8 @@ const Comments = ({
 	editComment,
 	url,
 }) => {
+	console.log(isEditing);
+
 	const me = useSelector(state => state.Info);
 	const CommentYearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
 
@@ -86,7 +85,7 @@ const Comments = ({
 	);
 
 	const onCommentEdit = useCallback(async () => {
-		setSelCommentIndex(0);
+		setSelCommentIndex(user_email);
 		editComment(c_id, editValue);
 		await axiosTokenPut('/comment/update_comment', {
 			c_id: c_id,
@@ -115,10 +114,10 @@ const Comments = ({
 				</CommentInfo>
 				{user_email === me.user.email ? (
 					<CommentControl>
-						{/* <CorrectionBtn onClick={isEditing ? onCommentEdit() : setSelCommentIndex(c_id)}>
+						{/* <button onClick={isEditing ? onCommentEdit() : setSelCommentIndex(user_email)}>
 							수정
-						</CorrectionBtn> */}
-						<DeleteBtn onClick={() => onDelComment(c_id)}>삭제</DeleteBtn>
+						</button> */}
+						<button onClick={() => onDelComment(c_id)}>삭제</button>
 					</CommentControl>
 				) : (
 					''

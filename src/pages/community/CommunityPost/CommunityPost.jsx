@@ -184,9 +184,9 @@ const CommunityPost = () => {
 		setGetcomment(res);
 	}, [data.b_id]);
 
-	const editComment = (c_id, editValue) => {
+	const editComment = (user_email, editValue) => {
 		let newCommentLists = getComment.map(c => {
-			if (c.id === c_id) {
+			if (c.email === user_email) {
 				c.contents = editValue;
 			}
 			return c;
