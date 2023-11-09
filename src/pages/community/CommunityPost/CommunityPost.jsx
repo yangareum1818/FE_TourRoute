@@ -4,13 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FaUserGroup } from 'react-icons/fa6';
 import dayjs from 'dayjs';
 
-import {
-	axiosTokenPost,
-	axiosGet,
-	axiosTokenDelete,
-	axiosTokenDeleteBody,
-	axiosTokenGet,
-} from 'utils/AxiosUtils';
+import { axiosTokenPost, axiosGet, axiosTokenDelete } from 'utils/AxiosUtils';
 
 import { Title } from 'components/common/Title';
 import { Button, ButtonGroup } from 'components/common/Button';
@@ -20,6 +14,7 @@ import { RecruitmentStatus } from 'components/common/Icon';
 import dummyMyImage from '../../../assets/Mask_group.svg';
 import { useSelector } from 'react-redux';
 import Empty from 'components/common/Empty';
+import CommentList from './CommentList';
 
 const day = require('dayjs');
 day.locale('ko');
@@ -145,64 +140,6 @@ const CommentBtn = styled.button`
 	font-size: 1.6rem;
 	font-weight: 700;
 `;
-const CommentListWrapper = styled.ul``;
-
-const CommentList = styled.li`
-	margin-top: 3rem;
-	padding-left: 2rem;
-`;
-
-const CommentHeader = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-`;
-
-const CommentInfo = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 1rem;
-
-	& > * {
-		color: #959696;
-		font-size: 1.6rem;
-		font-weight: 300;
-	}
-`;
-
-const UserProfileImg = styled.img`
-	width: 4rem;
-	height: 4rem;
-	background: #000;
-	border-radius: 50%;
-`;
-const CommentTitle = styled.span`
-	color: #000;
-`;
-const CommentData = styled.span``;
-
-const CommentControl = styled.div`
-	display: flex;
-	gap: 2rem;
-
-	& > * {
-		color: #959696;
-		font-size: 1.6rem;
-		font-weight: 300;
-	}
-`;
-
-const CorrectionBtn = styled.button``;
-const DeleteBtn = styled.button``;
-
-const CommentInner = styled.div``;
-const Comment = styled.p`
-	margin-top: 1rem;
-	color: #000;
-	font-size: 1.5rem;
-	font-weight: 300;
-`;
 
 const CommunityPost = () => {
 	const navigate = useNavigate();
@@ -227,7 +164,7 @@ const CommunityPost = () => {
 		navigate('/community');
 	}, [data.b_id]);
 
-	// 댓글 게시, 수정, 삭제
+	// 댓글 게시
 	const [comment, setComment] = useState('');
 	const [getComment, setGetcomment] = useState([]);
 	const onCommentClick = useCallback(async () => {
@@ -247,12 +184,16 @@ const CommunityPost = () => {
 		setGetcomment(res);
 	}, [data.b_id]);
 
-	const onDelComment = useCallback(async c_id => {
-		if (window.confirm('댓글을 삭제하겠습니까 ?')) {
-			await axiosTokenDelete(`/comment/delete_comment?c_id=${c_id}`);
-			window.location.replace(`/community/${url}`);
-		}
-	}, []);
+	const editComment = (c_id, editValue) => {
+		let newCommentLists = getComment.map(c => {
+			if (c.id === c_id) {
+				c.contents = editValue;
+			}
+			return c;
+		});
+
+		setGetcomment(newCommentLists);
+	};
 
 	useEffect(() => {
 		onGetComment();
@@ -326,34 +267,7 @@ const CommunityPost = () => {
 								/>
 								<CommentBtn onClick={onCommentClick}>게시</CommentBtn>
 							</CommentInput>
-							<CommentListWrapper>
-								{getComment.map(element => {
-									const CommentYearMonthDay = day(element.created_at).format('YYYY/MM/DD hh:mm');
-
-									return (
-										<CommentList key={element.c_id}>
-											<CommentHeader>
-												<CommentInfo>
-													<UserProfileImg />
-													<CommentTitle>{element.username}</CommentTitle>
-													<CommentData>{CommentYearMonthDay}</CommentData>
-												</CommentInfo>
-												{element.user_email === me.user.email ? (
-													<CommentControl>
-														<CorrectionBtn>수정</CorrectionBtn>
-														<DeleteBtn onClick={() => onDelComment(element.c_id)}>삭제</DeleteBtn>
-													</CommentControl>
-												) : (
-													''
-												)}
-											</CommentHeader>
-											<CommentInner>
-												<Comment>{element.contents}</Comment>
-											</CommentInner>
-										</CommentList>
-									);
-								})}
-							</CommentListWrapper>
+							<CommentList getComment={getComment} editComment={editComment} url={url} />
 						</CommentWrapper>
 					</WritingListWrapper>
 
