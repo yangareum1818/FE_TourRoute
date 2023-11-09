@@ -146,9 +146,7 @@ const CommunityPost = () => {
 
 	const location = useLocation();
 	const data = location.state.prop;
-	console.log('data', data);
 	const url = window.location.pathname.split('/')[2];
-	console.log(url);
 	const img = process.env.REACT_APP_ENDPOINT + '/img/' + data.board_img_link;
 	const YearMonthDay = day(data.created_at).format('YYYY/MM/DD hh:mm');
 	// 게시글 상세 데이터
@@ -157,6 +155,11 @@ const CommunityPost = () => {
 	const transform = e => {
 		return e.replace(/\n/g, '<br/>');
 	};
+
+	//게시글수정
+	const onClickPostModify = useCallback(() => {
+		navigate('/communitywrite', { state: data });
+	}, [navigate, data]);
 
 	// 게시판 삭제
 	const Delboard = useCallback(async () => {
@@ -219,7 +222,7 @@ const CommunityPost = () => {
 							</CommunityUserInfo>
 							{me.user.name === data.username ? (
 								<CommunityUserPostControl>
-									<button>수정</button>
+									<button onClick={onClickPostModify}>수정</button>
 									<button onClick={Delboard}>삭제</button>
 								</CommunityUserPostControl>
 							) : (

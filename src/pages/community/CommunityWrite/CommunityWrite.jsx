@@ -1,8 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { useNavigate } from 'react-router-dom';
-import { axiosTokenFormPost, axiosTokenPost } from 'utils/AxiosUtils';
+import { useNavigate, useLocation } from 'react-router-dom';
+import {
+	axiosTokenFormPost,
+	axiosTokenPost,
+	axiosTokenFormPut,
+	axiosTokenPut,
+} from 'utils/AxiosUtils';
 
 import DummyImges from 'assets/image.png';
 import backgroundimg from 'assets/background_write.png';
@@ -130,17 +135,25 @@ const TextAreaWrapper = styled(TextArea)`
 `;
 
 const CommunityWrite = () => {
+	const location = useLocation();
+	const data = location.state;
 	const navigate = useNavigate();
 	const freeRef = useRef();
 	const commpanyRef = useRef();
 	const RecruitingRef = useRef();
 	const RecruitEndRef = useRef();
+	const [Modify, setModify] = useState(true);
 	const [Recruiting, SetRecruiting] = useState(false);
+	const [modifyRecruiting, setmodifyRecruiting] = useState(
+		data && data.category === 'free' ? false : true,
+	);
 	const [ImageData, setImageData] = useState('');
 	const [TextData, SetTextData] = useState('');
+	const [modifyData, setmodifyData] = useState(data ? data.contents : '');
 	const [ImageChecked, setImageShecked] = useState(false);
 	const [checkedHandle, setCheckedHandle] = useState(true);
 
+	console.log('test', location.state);
 	const [board, setBoard] = useState({
 		title: '',
 		contents: '',
@@ -223,7 +236,6 @@ const CommunityWrite = () => {
 	const onCategoryChange = useCallback(
 		e => {
 			const { value, name, checked } = e.target;
-			console.log(value, name, checked);
 
 			if (value === 'free') {
 				SetRecruiting(false);
@@ -244,9 +256,6 @@ const CommunityWrite = () => {
 		},
 		[board],
 	);
-
-	console.log('board', board);
-
 	// 이미지 업로드
 	const imgesInputRef = useRef('');
 	const onUploadImageButtonClick = useCallback(() => {
@@ -257,13 +266,6 @@ const CommunityWrite = () => {
 	const onUploadImg = e => {
 		setImageShecked(true);
 		setImageData(e.target.files[0]);
-		// const imageFormData = new FormData();
-		// [].forEach.call(e.target.files, file => {
-		// 	imageFormData.append('image', file);
-		// });
-		// console.log('imageFormData', imageFormData);
-
-		// 이미지 1개일 경우임. 2개이상은 조건문 변경바람 (위 주석).
 		if (e.target.files[0]) {
 			setImgsrc(e.target.files[0]);
 		} else {
@@ -271,8 +273,6 @@ const CommunityWrite = () => {
 			return;
 		}
 		const render = new FileReader();
-
-		console.log(render);
 
 		render.onload = () => {
 			if (render.readyState === 2) {
@@ -300,10 +300,23 @@ const CommunityWrite = () => {
 			} else {
 				alert('글을 입력해주세요');
 			}
-		} catch (error) {
-			console.error(error);
-		}
+		} catch (error) {}
 	}, [title, category, recruitment, r_link, ImageData, ImageChecked, formData]);
+
+	const onClickModifySubmit = useCallback(
+		async e => {
+			formData.append('file', ImageData);
+			ImageChecked === false
+				? await axiosTokenPut(
+						`/board/update_board?b_id=${data.b_id}&contents=${modifyData}&recruitment=${recruitment}`,
+				  ).then(() => window.location.replace(`/community`))
+				: await axiosTokenFormPut(
+						`/board/update_board?b_id=${data.b_id}&contents=${modifyData}&recruitment=${recruitment}`,
+						formData,
+				  ).then(() => window.location.replace(`/community`));
+		},
+		[ImageChecked, ImageData, formData, modifyData, recruitment],
+	);
 
 	// 취소
 	const handleClose = useCallback(
@@ -316,169 +329,249 @@ const CommunityWrite = () => {
 	return (
 		<Wrapper>
 			<Benner />
-			<SectionDiv>
-				<InputWrapper style={{ flexDirection: 'column', gap: '3rem' }}>
-					<CategoryInner>
-						<CategoryLabel>카테고리</CategoryLabel>
-						<CategoryValue>
-							<CategoryInputInner>
-								<RadioInput
-									type="radio"
-									name="category"
-									value="free"
-									defaultChecked={checkedHandle}
-									onClick={e => {
-										onCategoryChange(e);
-									}}
-									ref={freeRef}
+			{data ? (
+				<div>
+					<SectionDiv>
+						<InputWrapper style={{ flexDirection: 'column', gap: '3rem' }}>
+							<CategoryInner>
+								<CategoryLabel>카테고리</CategoryLabel>
+								<CategoryValue>
+									{data.category === 'free' ? '자유게시판' : '동행게시판'}
+								</CategoryValue>
+							</CategoryInner>
+
+							{modifyRecruiting ? (
+								<CategoryInner>
+									<CategoryLabel>모집상태</CategoryLabel>
+									<CategoryValue>
+										<CategoryInputInner>
+											<RadioInput
+												type="radio"
+												name="recruitment"
+												value="RECRUITING"
+												onClick={e => onRecruitMentChange(e.target.value)}
+												ref={RecruitingRef}
+											/>
+											<span onClick={() => RecruitingRef.current.click()}>모집 중</span>
+										</CategoryInputInner>
+										<CategoryInputInner>
+											<RadioInput
+												type="radio"
+												name="recruitment"
+												value="RECRUITMENT_COMPLETED"
+												onClick={e => onRecruitMentChange(e.target.value)}
+												ref={RecruitEndRef}
+											/>
+											<span onClick={() => RecruitEndRef.current.click()}>모집 완료</span>
+										</CategoryInputInner>
+									</CategoryValue>
+								</CategoryInner>
+							) : null}
+						</InputWrapper>
+
+						<InputWrapper>
+							<TitleLabel>제목</TitleLabel>
+							<span style={{ flex: 7 }}>{data.title}</span>
+						</InputWrapper>
+
+						{Recruiting ? (
+							<InputWrapper>
+								<TitleLabel>참여링크</TitleLabel>
+								<TitleInput
+									type="text"
+									name="recruit"
+									value={r_link}
+									onChange={onChange}
+									placeholder="ex) 오픈채팅 URL 또는 편하신 URL을 입력해주세요. ( *개인정보는 올리시면 안돼요! ) "
 								/>
-								<span onClick={() => freeRef.current.click()}>자유게시판</span>
-							</CategoryInputInner>
-							<CategoryInputInner>
-								<RadioInput
-									type="radio"
-									name="category"
-									value="accompany"
-									onClick={e => {
-										onCategoryChange(e);
-									}}
-									ref={commpanyRef}
+							</InputWrapper>
+						) : null}
+
+						{Imgsrc.length === 0 ? (
+							<InputWrapper style={{ justifyContent: 'center' }}>
+								<Images
+									src={DummyImges}
+									alt="community_imgaes"
+									onClick={onUploadImageButtonClick}
 								/>
-								<span onClick={() => commpanyRef.current.click()}>동행게시판</span>
-							</CategoryInputInner>
-						</CategoryValue>
-					</CategoryInner>
-
-					{Recruiting ? (
-						<CategoryInner>
-							<CategoryLabel>모집상태</CategoryLabel>
-							<CategoryValue>
-								<CategoryInputInner>
-									<RadioInput
-										type="radio"
-										name="recruitment"
-										value="RECRUITING"
-										onClick={e => onRecruitMentChange(e.target.value)}
-										ref={RecruitingRef}
-									/>
-									<span onClick={() => RecruitingRef.current.click()}>모집 중</span>
-								</CategoryInputInner>
-								<CategoryInputInner>
-									<RadioInput
-										type="radio"
-										name="recruitment"
-										value="RECRUITMENT_COMPLETED"
-										onClick={e => onRecruitMentChange(e.target.value)}
-										ref={RecruitEndRef}
-									/>
-									<span onClick={() => RecruitEndRef.current.click()}>모집 완료</span>
-								</CategoryInputInner>
-							</CategoryValue>
-						</CategoryInner>
-					) : null}
-				</InputWrapper>
-
-				<InputWrapper>
-					<TitleLabel>제목</TitleLabel>
-					<TitleInput
-						name="title"
-						value={title}
-						onChange={onChange}
-						placeholder="ex) 1박 2일 대구 놀러갈 분 구해요"
-					/>
-				</InputWrapper>
-
-				{Recruiting ? (
-					<InputWrapper>
-						<TitleLabel>참여링크</TitleLabel>
-						<TitleInput
-							type="text"
-							name="recruit"
-							value={r_link}
-							onChange={onChange}
-							placeholder="ex) 오픈채팅 URL 또는 편하신 URL을 입력해주세요. ( *개인정보는 올리시면 안돼요! ) "
+								<InputImges
+									type="file"
+									multiple
+									accept="image/*"
+									name="commun_imgaes"
+									ref={imgesInputRef}
+									onChange={onUploadImg}
+								/>
+							</InputWrapper>
+						) : (
+							<InputWrapper>
+								<TitleLabel>이미지</TitleLabel>
+								<PostImgWrapper>
+									{/* {Imgsrc.forEach(() => {})} */}
+									<PostImg src={Imgsrc} alt="사진추가 이미지" />
+								</PostImgWrapper>
+							</InputWrapper>
+						)}
+						<ReactQuill
+							name="contents"
+							value={modifyData}
+							onChange={e => setmodifyData(e)}
+							maxLength={1500}
+							style={{
+								height: 500,
+								resize: 'none',
+							}}
+							modules={modules}
+							placeholder="1. 현재 동행이 있나요?
+			ex) 동행 1명 있어요
+			2. 어떤 동행을 찾고 있나요?
+			ex) 맛집  탐방을 좋아하는 20-30대 동행 찾아요!
+			3. 함께 맞출부분이 있나요?
+			ex) 원하시는 날짜가 있다면 알려주세요
+			(1500자 이내)"
 						/>
-					</InputWrapper>
-				) : null}
+					</SectionDiv>
+					<ButtonGroup style={{ width: '40rem', margin: '0 auto' }}>
+						<Button onClick={onClickModifySubmit} $sumbit text="수정하기" />
+						<Button onClick={handleClose} text="취소" variant="cancel" />
+					</ButtonGroup>
+				</div>
+			) : (
+				<div>
+					<SectionDiv>
+						<InputWrapper style={{ flexDirection: 'column', gap: '3rem' }}>
+							<CategoryInner>
+								<CategoryLabel>카테고리</CategoryLabel>
+								<CategoryValue>
+									<CategoryInputInner>
+										<RadioInput
+											type="radio"
+											name="category"
+											value="free"
+											defaultChecked={checkedHandle}
+											onClick={e => {
+												onCategoryChange(e);
+											}}
+											ref={freeRef}
+										/>
+										<span onClick={() => freeRef.current.click()}>자유게시판</span>
+									</CategoryInputInner>
+									<CategoryInputInner>
+										<RadioInput
+											type="radio"
+											name="category"
+											value="accompany"
+											onClick={e => {
+												onCategoryChange(e);
+											}}
+											ref={commpanyRef}
+										/>
+										<span onClick={() => commpanyRef.current.click()}>동행게시판</span>
+									</CategoryInputInner>
+								</CategoryValue>
+							</CategoryInner>
 
-				{/* <InputWrapper>
-					<TitleLabel>이미지</TitleLabel>
-					<PostImgWrapper>
-						<PostImg src={DummyImg} alt="사진추가 이미지" />
-						<PostImg src={DummyImg} alt="사진추가 이미지" />
-						<PostImg src={DummyImg} alt="사진추가 이미지" />
-						<PostImg src={DummyImg} alt="사진추가 이미지" />
-						<PostImg src={DummyImg} alt="사진추가 이미지" />
-						<PostImg src={DummyImg} alt="사진추가 이미지" />
-						<PostImg src={DummyImg} alt="사진추가 이미지" />
-						<PostImg src={DummyImg} alt="사진추가 이미지" />
-						<PostImg src={DummyImg} alt="사진추가 이미지" />
-						<PostImg src={DummyImg} alt="사진추가 이미지" />
-						<PostImg src={DummyImg} alt="사진추가 이미지" />
-					</PostImgWrapper>
-				</InputWrapper> */}
+							{Recruiting ? (
+								<CategoryInner>
+									<CategoryLabel>모집상태</CategoryLabel>
+									<CategoryValue>
+										<CategoryInputInner>
+											<RadioInput
+												type="radio"
+												name="recruitment"
+												value="RECRUITING"
+												onClick={e => onRecruitMentChange(e.target.value)}
+												ref={RecruitingRef}
+											/>
+											<span onClick={() => RecruitingRef.current.click()}>모집 중</span>
+										</CategoryInputInner>
+										<CategoryInputInner>
+											<RadioInput
+												type="radio"
+												name="recruitment"
+												value="RECRUITMENT_COMPLETED"
+												onClick={e => onRecruitMentChange(e.target.value)}
+												ref={RecruitEndRef}
+											/>
+											<span onClick={() => RecruitEndRef.current.click()}>모집 완료</span>
+										</CategoryInputInner>
+									</CategoryValue>
+								</CategoryInner>
+							) : null}
+						</InputWrapper>
 
-				{Imgsrc.length === 0 ? (
-					<InputWrapper style={{ justifyContent: 'center' }}>
-						<Images src={DummyImges} alt="community_imgaes" onClick={onUploadImageButtonClick} />
-						<InputImges
-							type="file"
-							multiple
-							accept="image/*"
-							name="commun_imgaes"
-							ref={imgesInputRef}
-							onChange={onUploadImg}
-						/>
-					</InputWrapper>
-				) : (
-					<InputWrapper>
-						<TitleLabel>이미지</TitleLabel>
-						<PostImgWrapper>
-							{/* {Imgsrc.forEach(() => {})} */}
-							<PostImg src={Imgsrc} alt="사진추가 이미지" />
-						</PostImgWrapper>
-					</InputWrapper>
-				)}
-				<ReactQuill
-					name="contents"
-					onChange={e => SetTextData(e)}
-					maxLength={1500}
-					style={{
-						height: 500,
-						resize: 'none',
-					}}
-					modules={modules}
-					placeholder="1. 현재 동행이 있나요?
+						<InputWrapper>
+							<TitleLabel>제목</TitleLabel>
+							<TitleInput
+								name="title"
+								value={title}
+								onChange={onChange}
+								placeholder="ex) 1박 2일 대구 놀러갈 분 구해요"
+							/>
+						</InputWrapper>
+
+						{Recruiting ? (
+							<InputWrapper>
+								<TitleLabel>참여링크</TitleLabel>
+								<TitleInput
+									type="text"
+									name="recruit"
+									value={r_link}
+									onChange={onChange}
+									placeholder="ex) 오픈채팅 URL 또는 편하신 URL을 입력해주세요. ( *개인정보는 올리시면 안돼요! ) "
+								/>
+							</InputWrapper>
+						) : null}
+
+						{Imgsrc.length === 0 ? (
+							<InputWrapper style={{ justifyContent: 'center' }}>
+								<Images
+									src={DummyImges}
+									alt="community_imgaes"
+									onClick={onUploadImageButtonClick}
+								/>
+								<InputImges
+									type="file"
+									multiple
+									accept="image/*"
+									name="commun_imgaes"
+									ref={imgesInputRef}
+									onChange={onUploadImg}
+								/>
+							</InputWrapper>
+						) : (
+							<InputWrapper>
+								<TitleLabel>이미지</TitleLabel>
+								<PostImgWrapper>
+									{/* {Imgsrc.forEach(() => {})} */}
+									<PostImg src={Imgsrc} alt="사진추가 이미지" />
+								</PostImgWrapper>
+							</InputWrapper>
+						)}
+						<ReactQuill
+							name="contents"
+							onChange={e => SetTextData(e)}
+							maxLength={1500}
+							style={{
+								height: 500,
+								resize: 'none',
+							}}
+							modules={modules}
+							placeholder="1. 현재 동행이 있나요?
 ex) 동행 1명 있어요
 2. 어떤 동행을 찾고 있나요?
 ex) 맛집  탐방을 좋아하는 20-30대 동행 찾아요!
 3. 함께 맞출부분이 있나요?
 ex) 원하시는 날짜가 있다면 알려주세요
 (1500자 이내)"
-				/>
-				{/* <TextAreaWrapper
-					showCount
-					maxLength={1500}
-					style={{
-						height: 500,
-						resize: 'none',
-					}}
-					name="contents"
-					value={contents}
-					onChange={onChange}
-					placeholder="1. 현재 동행이 있나요?
-ex) 동행 1명 있어요
-2. 어떤 동행을 찾고 있나요?
-ex) 맛집  탐방을 좋아하는 20-30대 동행 찾아요!
-3. 함께 맞출부분이 있나요?
-ex) 원하시는 날짜가 있다면 알려주세요
-(1500자 이내)"
-				/> */}
-			</SectionDiv>
-			<ButtonGroup style={{ width: '40rem', margin: '0 auto' }}>
-				<Button onClick={CommuWriteHandleSubmit} $sumbit text="작성완료" />
-				<Button onClick={handleClose} text="취소" variant="cancel" />
-			</ButtonGroup>
+						/>
+					</SectionDiv>
+					<ButtonGroup style={{ width: '40rem', margin: '0 auto' }}>
+						<Button onClick={CommuWriteHandleSubmit} $sumbit text="작성완료" />
+						<Button onClick={handleClose} text="취소" variant="cancel" />
+					</ButtonGroup>
+				</div>
+			)}
 		</Wrapper>
 	);
 };

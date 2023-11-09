@@ -12,8 +12,6 @@ const CommentList = ({ getComment, editComment, url }) => {
 			{getComment.map(comment => {
 				const id = comment.c_id;
 				const email = comment.user_email;
-				console.log(comment);
-				console.log(getComment, email);
 
 				return (
 					<Comments
