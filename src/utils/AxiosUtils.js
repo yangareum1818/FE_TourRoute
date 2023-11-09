@@ -49,6 +49,10 @@ export const axiosTokenFormPost = async (url, body, headers = formDataHeaders) =
 	const res = await axios.post(ENDPOINT + url, body, headerConfiguration(headers));
 	return res;
 };
+export const axiosTokenFormPut = async (url, body, headers = formDataHeaders) => {
+	const res = await axios.put(ENDPOINT + url, body, headerConfiguration(headers));
+	return res;
+};
 
 export const axiosTokenPut = async (url, body, headers = formDataHeaders) => {
 	const res = await axios.put(ENDPOINT + url, body, headerConfiguration(headers));
