@@ -4,7 +4,7 @@ import logoImg from '../../assets/logo.svg';
 
 import artimg from 'assets/category_art.png';
 import foodimg from 'assets/category_food.png';
-import mountin from 'assets/category_mount.png';
+import mountain from 'assets/category_mount.png';
 import hotplace from 'assets/category_hotlocation.png';
 import walking from 'assets/category_walk.png';
 
@@ -76,12 +76,12 @@ const MyRecordInfoText = styled.span`
 	color: #000;
 `;
 
-const MyRecordInfoValue = styled.span`
+const MyRecordInfoValue = styled.li`
 	flex: 3;
 	color: #959696;
 `;
 
-const MyRecordInfoValuesWrapper = styled.div`
+const MyRecordInfoValuesWrapper = styled.ul`
 	display: flex;
 	flex-direction: column;
 	flex: 3;
@@ -148,7 +148,7 @@ const MyRecordInfoTourEnd = styled.span`
 const TourList = ({ props }) => {
 	// 예술 아트 artimg : museum
 	// 맛집 foodimg : restaurant
-	// 등산 mountin : mountain
+	// 등산 mountin : mountin
 	// 핫플레이스 hotplace : tourspot
 	// 산책 walking : park
 
@@ -162,9 +162,9 @@ const TourList = ({ props }) => {
 			name: '맛집',
 			image: foodimg,
 		},
-		mountin: {
+		mountain: {
 			name: '등산',
-			image: mountin,
+			image: mountain,
 		},
 		hotplace: {
 			name: '핫플레이스',
@@ -241,9 +241,10 @@ const TourList = ({ props }) => {
 					<MyRecordInfoWrapper>
 						<MyRecordInfoText>동행인</MyRecordInfoText>
 						<MyRecordInfoValuesWrapper>
-							<MyRecordInfoValue>nextgenerationsuperstar@gmail.com 맹구</MyRecordInfoValue>
-							<MyRecordInfoValue>nextgenerationsuperstar@gmail.com 유리</MyRecordInfoValue>
-							<MyRecordInfoValue>nextgenerationsuperstar@gmail.com 유리</MyRecordInfoValue>
+							<MyRecordInfoValue>{accompany[0]}</MyRecordInfoValue>
+							<MyRecordInfoValue>{accompany[1]}</MyRecordInfoValue>
+							<MyRecordInfoValue>{accompany[2]}</MyRecordInfoValue>
+							<MyRecordInfoValue>{accompany[3]}</MyRecordInfoValue>
 						</MyRecordInfoValuesWrapper>
 					</MyRecordInfoWrapper>
 

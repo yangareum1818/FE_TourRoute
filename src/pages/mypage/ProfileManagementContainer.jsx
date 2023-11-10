@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { axiosTokenGet, axiosTokenPut } from 'utils/AxiosUtils';
+import { axiosTokenFormPut, axiosTokenGet, axiosTokenPut } from 'utils/AxiosUtils';
 import { Button, ButtonGroup } from 'components/common/Button';
 
 import dummyMyImage from '../../assets/Mask_group.svg';
@@ -111,7 +111,10 @@ const ProfileManagementContainer = () => {
 		try {
 			formData.append('file', imagesrc);
 			formData.append('username', user.username);
-			const res = await axiosTokenPut(`/users/update_mypage?username=${user.username}`, formData);
+			const res = await axiosTokenFormPut(
+				`/users/update_mypage?username=${user.username}`,
+				formData,
+			);
 
 			if (res) {
 				alert('수정이 완료되었습니다.');
