@@ -4,7 +4,7 @@ import SubLogoImg from 'assets/sub_logo.svg';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.header`
-	padding: 2rem 0;
+	padding: 2rem;
 	margin: 0 auto;
 	max-width: 108rem;
 	display: flex;
