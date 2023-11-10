@@ -1,5 +1,4 @@
-import { Input } from 'components/common/Input';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 import { axiosTokenDelete, axiosTokenPut } from 'utils/AxiosUtils';
@@ -54,44 +53,73 @@ const CommentControl = styled.div`
 	}
 `;
 
-const CommentInner = styled.div``;
+const CommentInner = styled.div`
+	position: relative;
+
+	& > input {
+		height: 5.1rem;
+		padding: 1.6rem 3rem 1.6rem 2rem;
+		border-radius: 0.8rem;
+		border: 0.1rem solid #cfcfcf;
+		background: #fff;
+	}
+`;
+
 const CommentText = styled.p`
 	color: #000;
 	font-size: 1.5rem;
 	font-weight: 300;
 `;
 
-const Comments = ({
-	comment: { c_id, username, user_email, contents, created_at },
-	isEditing,
-	setSelCommentIndex,
-	editComment,
-	url,
-}) => {
-	console.log(isEditing);
+const CommentBtn = styled.button`
+	position: absolute;
+	top: 1.8rem;
+	right: 2rem;
+	color: #3ad0ff;
+	font-size: 1.6rem;
+	font-weight: 700;
+`;
+
+const Comments = ({ comment, url }) => {
+	let { c_id, username, user_email, contents, created_at } = comment;
+
+	const CommentRef = useRef();
 
 	const me = useSelector(state => state.Info);
 	const CommentYearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
 
 	// 수정
-	const [editValue, setEditValue] = useState(contents);
-	const editInput = (
-		<Input
-			type="text"
-			value={editValue}
-			onChange={e => setEditValue(e.target.value)}
-			onKeyDown={e => (e.key === 'Enter' ? onCommentEdit() : null)}
-		/>
-	);
+	const [editState, setEditState] = useState(false);
+	const [editValue, setEditValue] = useState(contents || '');
 
-	const onCommentEdit = useCallback(async () => {
-		setSelCommentIndex(user_email);
-		editComment(c_id, editValue);
-		await axiosTokenPut('/comment/update_comment', {
-			c_id: c_id,
-			contents: contents,
-		});
-	}, [editComment, editValue, setSelCommentIndex, c_id, contents]);
+	const onCommentEdit = useCallback(() => {
+		me.user.email === user_email ? setEditState(true) : setEditState(false);
+	}, [me.user.email, user_email]);
+
+	const onCommentChange = e => {
+		setEditValue(e.target.value);
+	};
+
+	const onCommentChageComplete = useCallback(async () => {
+		try {
+			const res = await axiosTokenPut(
+				`/comment/update_comment?c_id=${c_id}&contents=${editValue}`,
+				{
+					c_id: c_id,
+					contents: editValue,
+				},
+			);
+
+			if (res) {
+				setEditState(!editState);
+				alert('수정이 완료되었습니다.');
+				// 상태관리하면 이거 location없애고 컴포넌트에 contents 상태관리됌.
+				window.location.replace(`/community/${url}`);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	}, [c_id, editValue, editState, url]);
 
 	// 삭제
 	const onDelComment = useCallback(
@@ -105,7 +133,7 @@ const Comments = ({
 	);
 
 	return (
-		<CommentList id={c_id}>
+		<CommentList>
 			<CommentHeader>
 				<CommentInfo>
 					<UserProfileImg />
@@ -114,16 +142,30 @@ const Comments = ({
 				</CommentInfo>
 				{user_email === me.user.email ? (
 					<CommentControl>
-						{/* <button onClick={isEditing ? onCommentEdit() : setSelCommentIndex(user_email)}>
-							수정
-						</button> */}
+						{!editState ? <button onClick={() => onCommentEdit()}>수정</button> : null}
 						<button onClick={() => onDelComment(c_id)}>삭제</button>
 					</CommentControl>
 				) : (
 					''
 				)}
 			</CommentHeader>
-			<CommentInner>{isEditing ? editInput : <CommentText>{contents}</CommentText>}</CommentInner>
+			<CommentInner>
+				{editState ? (
+					<>
+						<input
+							type="text"
+							name="comment"
+							ref={CommentRef}
+							value={editValue}
+							onChange={onCommentChange}
+							onKeyDown={e => (e.key === 'Enter' ? onCommentChageComplete() : null)}
+						/>
+						<CommentBtn onClick={() => onCommentChageComplete()}>수정 완료</CommentBtn>
+					</>
+				) : (
+					<CommentText>{contents}</CommentText>
+				)}
+			</CommentInner>
 		</CommentList>
 	);
 };
