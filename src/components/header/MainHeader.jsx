@@ -14,11 +14,14 @@ import { useDispatch } from 'react-redux';
 import { Info } from 'store/UserInfo';
 import { tour } from 'store/PostRedux';
 import { message } from 'antd';
+
 const WrapperContainer = styled.div`
 	padding-bottom: 5rem;
 	margin: 0 auto;
 	max-width: 1080px;
+	padding: 0rem 2rem;
 `;
+
 //header
 const Wrapper = styled.div`
 	display: flex;

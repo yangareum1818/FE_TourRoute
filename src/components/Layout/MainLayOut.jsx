@@ -6,7 +6,8 @@ import MainContainer from '../../pages/mainpage/MainContainer';
 import MainHeader from '../header/MainHeader';
 const LayoutContainer = styled.div`
 	margin: 0 auto;
-	max-width: 1080px;
+	max-width: 108rem;
+	padding: 0rem 2rem;
 `;
 
 const HeaderContainer = styled.header`

@@ -6,6 +6,7 @@ import SubHeader from '../header/SubHeader';
 const LayoutContainer = styled.div`
 	margin: 0 auto;
 	max-width: 1080px;
+	padding: 0rem 2rem;
 `;
 const SectionContainer = styled.section`
 	display: flex;
