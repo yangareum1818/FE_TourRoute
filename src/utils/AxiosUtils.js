@@ -54,7 +54,7 @@ export const axiosTokenFormPut = async (url, body, headers = formDataHeaders) =>
 	return res;
 };
 
-export const axiosTokenPut = async (url, body, headers = formDataHeaders) => {
+export const axiosTokenPut = async (url, body, headers = defaultHeaders) => {
 	const res = await axios.put(ENDPOINT + url, body, headerConfiguration(headers));
 	return res.data;
 };

@@ -187,17 +187,6 @@ const CommunityPost = () => {
 		setGetcomment(res);
 	}, [data.b_id]);
 
-	const editComment = (user_email, editValue) => {
-		let newCommentLists = getComment.map(c => {
-			if (c.email === user_email) {
-				c.contents = editValue;
-			}
-			return c;
-		});
-
-		setGetcomment(newCommentLists);
-	};
-
 	useEffect(() => {
 		onGetComment();
 	}, [onGetComment]);
@@ -270,7 +259,7 @@ const CommunityPost = () => {
 								/>
 								<CommentBtn onClick={onCommentClick}>게시</CommentBtn>
 							</CommentInput>
-							<CommentList getComment={getComment} editComment={editComment} url={url} />
+							<CommentList getComment={getComment} url={url} />
 						</CommentWrapper>
 					</WritingListWrapper>
 
