@@ -32,14 +32,15 @@ const ListContainer = styled.div`
 `;
 const TourInfoDate = styled.div`
 	display: flex;
-	gap: 2rem;
+	gap: 1rem;
+	margin-bottom: 1rem;
 `;
 const RecordInfoTourStart = styled.span`
 	position: relative;
 	padding: 1rem 3rem;
 	border: 0.1rem solid #959696;
 	border-radius: 0.4rem 0.4rem 0 0;
-
+	font-size: 1.3rem;
 	&::before {
 		content: '';
 		position: absolute;
@@ -58,7 +59,7 @@ const RecordInfoTourEnd = styled.span`
 	margin-top: -0.1rem;
 	border: 0.1rem solid #959696;
 	border-radius: 0 0 0.4rem 0.4rem;
-
+	font-size: 1.3rem;
 	&::before {
 		content: '';
 		position: absolute;
@@ -70,6 +71,11 @@ const RecordInfoTourEnd = styled.span`
 		border: 0.3rem solid #000;
 		border-radius: 50%;
 	}
+`;
+const DayBtn = styled.button`
+	border: 0.1rem solid grey;
+	border-radius: 1rem;
+	padding: 0.7rem;
 `;
 const RecordInfoTourValuesInner = styled.div`
 	display: flex;
@@ -118,9 +124,9 @@ const MapLayOut = () => {
 					<TourInfoDate>
 						{result.Result.map((e, index) => {
 							return (
-								<div key={index} onClick={() => HandleDayChoice(index)}>
+								<DayBtn key={index} onClick={() => HandleDayChoice(index)}>
 									{index + 1}일차
-								</div>
+								</DayBtn>
 							);
 						})}
 					</TourInfoDate>
@@ -132,7 +138,6 @@ const MapLayOut = () => {
 					{result.Result[day].map((e, index) => {
 						return <MapList key={index} props={e} />;
 					})}
-					;
 				</ListContainer>
 			</Wrapper>
 			<NextBtn onClick={HandleFinish}>

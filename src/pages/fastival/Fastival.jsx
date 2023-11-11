@@ -60,14 +60,13 @@ const Fastival = () => {
 	const [Data, setData] = useState([]);
 	const [ChangeData, setChageData] = useState([]);
 	const [Category, setCategory] = useState('전체');
-	const data = dayjs();
+	const data = dayjs('2023-09-01');
 	const urltype = {
 		daegu: '대구',
 		busan: '부산',
 		gyeongju: '경주',
 		pohang: '포항',
 	};
-	console.log();
 	const GetAllFestival = useCallback(
 		async e => {
 			localStorage.getItem('token')

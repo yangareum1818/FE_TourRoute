@@ -37,9 +37,7 @@ const BarcordContainer = styled.div`
 	margin-bottom: 2rem;
 `;
 const SerchBarInput = styled.div`
-	display: grid;
-	grid-template-columns: 19rem 30rem 12rem 18rem 16rem;
-	grid-template-rows: 4rem;
+	display: flex;
 	gap: 2rem;
 	padding-left: 1rem;
 `;

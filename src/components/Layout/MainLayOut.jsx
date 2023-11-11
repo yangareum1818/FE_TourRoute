@@ -14,6 +14,7 @@ const HeaderContainer = styled.header`
 	background-image: url(${backimg});
 	background-size: cover;
 	background-position: center;
+	height: 60rem;
 `;
 const SectionContainer = styled.section`
 	display: flex;
