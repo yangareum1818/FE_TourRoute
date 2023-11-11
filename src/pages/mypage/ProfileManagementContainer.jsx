@@ -123,18 +123,17 @@ const ProfileManagementContainer = () => {
 		} catch (error) {
 			console.error(error);
 		}
-	}, [formData, user.username]);
+	}, [formData, user.username, imagesrc]);
 
 	const onCancle = () => {
 		if (window.confirm('변경사항이 사라집니다.')) {
 			navigate(-1);
 		}
 	};
-	console.log('username, user.username', username, user.username);
 
 	useEffect(() => {
 		userInfo();
-	}, []);
+	}, [userInfo]);
 
 	return (
 		<>
