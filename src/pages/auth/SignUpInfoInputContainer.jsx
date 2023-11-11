@@ -4,10 +4,8 @@ import { RightArrow } from 'components/common/Icon';
 import { Button, ButtonGroup } from 'components/common/Button';
 import { ErrorMsg, Input } from 'components/common/Input';
 import { Link, useNavigate } from 'react-router-dom';
-import Modal from 'components/common/Modal';
 import useInput from 'hook/useInput';
 import { useCallback, useState } from 'react';
-import useModal from 'hook/useModal';
 import { axiosPost } from '../../utils/AxiosUtils';
 
 const InnerWrapper = styled.div`
@@ -62,8 +60,6 @@ const SignUpInfoInput = () => {
 	const [passwordExpError, setPasswordExpError] = useState(false);
 	const [passwordError, setPasswordError] = useState(false);
 
-	const { isOpen, open } = useModal();
-
 	const onChangeEamilCheck = useCallback(
 		e => {
 			const expEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -82,17 +78,17 @@ const SignUpInfoInput = () => {
 			setPassword1(e.target.value);
 			setPasswordExpError(!expPassword.test(password1));
 			if (password1 === '' && passwordExpError) {
-				setPasswordExpError(false);
+				setPasswordExpError(true);
 			}
 		},
-		[password1],
+		[password1, passwordExpError],
 	);
 
 	const onChangePasswordCheck = useCallback(
 		e => {
 			setPassword2(e.target.value);
 			setPasswordError(e.target.value !== password1);
-			if (e.target.value === '') setPasswordError(false);
+			if (e.target.value === '') setPasswordError(true);
 		},
 		[password1],
 	);
@@ -107,29 +103,29 @@ const SignUpInfoInput = () => {
 					password1: password1,
 					password2: password2,
 				};
-				if (Object.values(userData).includes('') === true) return open();
-				if (!email) return setEmailError(true);
-				if (!password1) {
-					return setPasswordExpError(true);
-				} else {
-					alert('비밀번호 조합을 다시 맞춰주세요');
+				if (Object.values(userData).includes('') === true) {
+					return alert('필수입력값을 입력해주세요.');
 				}
-				if (!password2) return setPasswordError(true);
+				if (!email) {
+					return setEmailError(true);
+				}
 				if (password1 !== password2) {
-					setPasswordError(true);
-					alert('비밀번호가 동일하지 않습니다.');
+					return alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
+				}
+				if (passwordExpError) {
+					return alert('비밀번호 조합을 확인해주세요.');
 				}
 
 				const res = await axiosPost('/users/signup', userData);
 				if (res.state === 200 || 201) {
-					navigate('/auth/signup/complete');
 					alert('로그인 성공');
+					navigate('/auth/signup/complete');
 				}
 			} catch (error) {
 				alert('동일한 이메일이 있습니다. 다른 이메일을 입력해주세요.');
 			}
 		},
-		[email, navigate, open, password1, password2, username],
+		[email, navigate, password1, password2, username],
 	);
 
 	return (
@@ -203,7 +199,7 @@ const SignUpInfoInput = () => {
 						</Link>
 					</ButtonGroup>
 				</FormWrapper>
-				{isOpen && <Modal text="필수 항목을 입력해주세요." />}
+				{/* {isOpen ? <Modal text="필수 항목을 입력해주세요." /> : null} */}
 			</InnerWrapper>
 		</AuthLayout>
 	);
