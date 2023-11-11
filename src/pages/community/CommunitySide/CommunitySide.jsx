@@ -29,6 +29,17 @@ const SideList = styled.li`
 		color: #000;
 		font-weight: 500;
 	}
+	& > button {
+		display: block;
+		font-size: 1.6rem;
+		font-weight: 300;
+	}
+	&:hover > button,
+	&.active > button {
+		display: block;
+		color: #000;
+		font-weight: 500;
+	}
 `;
 
 const WriteBtn = styled(Link)`
@@ -54,11 +65,10 @@ const WriteBtn = styled(Link)`
 `;
 
 const CommunitySide = () => {
-	useEffect(() => {}, []);
 	return (
 		<SideBarWrapper>
 			<SideMenu>
-				<SideList>
+				<SideList className="active">
 					<button onClick={() => window.location.replace('/community')}>전체게시판</button>
 				</SideList>
 				<SideList>

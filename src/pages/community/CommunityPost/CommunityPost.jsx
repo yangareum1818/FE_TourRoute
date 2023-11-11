@@ -2,7 +2,6 @@ import { styled } from 'styled-components';
 import { useCallback, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaUserGroup } from 'react-icons/fa6';
-import dayjs from 'dayjs';
 
 import { axiosTokenPost, axiosGet, axiosTokenDelete } from 'utils/AxiosUtils';
 
@@ -278,19 +277,23 @@ const CommunityPost = () => {
 							<MyName>{data.username}</MyName>
 						</ProfileWrapper>
 						{data.category === 'accompany' ? (
-							<ButtonGroup>
-								{data.recruitment === 'RECRUITING' ? (
-									<Button text="참여하기">
-										<FaUserGroup style={{ display: 'block', color: '#fff' }} />
-									</Button>
-								) : (
-									<Button text="모집완료" variant="cancel" />
-								)}
-
+							<div>
 								{me.user.email === data.user_email ? (
-									<Button text="참여하기 종료" variant="cancel" />
-								) : null}
-							</ButtonGroup>
+									<ButtonGroup>
+										<Button text="참여하기 종료" variant="cancel" />
+									</ButtonGroup>
+								) : (
+									<ButtonGroup>
+										{data.recruitment === 'RECRUITING' ? (
+											<Button text="참여하기">
+												<FaUserGroup style={{ display: 'block', color: '#fff' }} />
+											</Button>
+										) : (
+											<Button text="모집완료" variant="cancel" />
+										)}
+									</ButtonGroup>
+								)}
+							</div>
 						) : null}
 					</SideBarWrapper>
 				</div>
