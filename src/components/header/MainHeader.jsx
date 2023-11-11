@@ -170,6 +170,7 @@ const MainHeader = () => {
 	const [Token, setToken] = useState(null);
 	const [UserId, setUserId] = useInput('');
 	const [UserList, setUserList] = useState([]);
+	const [Username, setUsername] = useState('');
 	const [Loading, setLoading] = useState(false);
 
 	const [LocalName, setLocalName] = useState('대구');
@@ -229,14 +230,7 @@ const MainHeader = () => {
 	};
 	const handleDate = e => {
 		const [start, finish] = e;
-		console.log(
-			start.$d
-				.toLocaleDateString()
-				.replace(/\./g, '')
-				.split(' ')
-				.map((v, i) => (i > 0 && v.length < 2 ? '0' + v : v))
-				.join('-'),
-		);
+
 		setStartDate(
 			start.$d
 				.toLocaleDateString()
@@ -257,10 +251,11 @@ const MainHeader = () => {
 	const handlepeople = useCallback(
 		async e => {
 			const res = await axiosTokenGet(`/users/get-user/${e.target.value}`);
-			console.log(res.status_code);
+			console.log(res);
 			if (res.status_code === 200) {
 				alert('success', '확인되었습니다');
 				setUserList([...UserList, UserId]);
+				setUsername(res.username);
 			}
 			if (res.status_code === 400) {
 				alert('warning', res.detail);
@@ -409,7 +404,9 @@ const MainHeader = () => {
 									{UserList.map((e, index) => {
 										return (
 											<PeopleList key={index}>
-												<div>{e}</div>
+												<div>
+													{e} {Username}
+												</div>
 												<DeletBtn>
 													<FaX onClick={() => handleDel(e)} />
 												</DeletBtn>

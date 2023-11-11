@@ -17,11 +17,11 @@ const WishListContainer = () => {
 	const [bookmarkData, setBookmarkData] = useState([]);
 	const userWishList = useCallback(async () => {
 		const data = await axiosTokenGet('/festival/get_info');
-		data.map(e => {
-			if (e.is_bookmark) setBookmarkData([...bookmarkData, e]);
-		});
-	}, []);
-	console.log(bookmarkData);
+		setBookmarkData(data);
+		// data.map(e => {
+		// 	if (e.is_bookmark) setBookmarkData([...bookmarkData, e]);
+		// });
+	}, [bookmarkData]);
 
 	useEffect(() => {
 		userWishList();
@@ -35,9 +35,9 @@ const WishListContainer = () => {
 				<Empty text="찜한 목록이 없습니다. 관심있는 축제를 찜해보세요 - !" />
 			) : (
 				<MyWishListWrapper>
-					{bookmarkData.map((data, index) => {
-						return <LocalButton key={index} props={data} />;
-					})}
+					{bookmarkData.map((data, index) =>
+						data.is_bookmark ? <LocalButton key={index} props={data} /> : '',
+					)}
 				</MyWishListWrapper>
 			)}
 		</div>
