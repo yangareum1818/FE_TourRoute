@@ -63,20 +63,14 @@ const PageContainer = styled.div`
 
 const CommunityList = () => {
 	const [communityListData, setCommunityListData] = useState([]);
-	const [page, setPage] = useState(1);
-	const pageChange = useCallback(
-		value => {
-			setPage(value);
-		},
-		[setPage],
-	);
+
 	const ListGet = useCallback(async () => {
 		const all = await axiosGet('/board/get_board_all');
-		const category = await axiosGet(
+		const categoryData = await axiosGet(
 			`/board/get_latest?category=${window.location.pathname.split('/')[2]}`,
 		);
 
-		if (window.location.pathname.split('/')[2]) setCommunityListData(category);
+		if (window.location.pathname.split('/')[2]) setCommunityListData(categoryData);
 		else setCommunityListData(all);
 	}, []);
 
@@ -116,11 +110,6 @@ const CommunityList = () => {
 							</WritingList>
 						);
 					})}
-
-					<div style={{ fontSize: '20px' }}>page : {page}</div>
-					<PageContainer>
-						<Pagination defaultCurrent={1} current={page + 1} onChange={pageChange} total={50} />
-					</PageContainer>
 				</WritingListInner>
 			)}
 		</WritingListWrapper>
