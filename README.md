@@ -167,6 +167,10 @@ BE 사용기술 <br/>
 ![TourPlan3](https://github.com/TourRoute/FE_TourRoute/assets/77834532/c3e4611a-439d-4826-9672-d424c0852ec2)
 
 
+#### 마이페이지 
+
+![MyPage](https://github.com/TourRoute/FE_TourRoute/assets/77834532/c3b9fb74-9880-469a-a278-4922a24c078f)
+
 
 #### 축제
 
