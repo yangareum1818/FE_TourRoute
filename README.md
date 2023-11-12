@@ -132,7 +132,9 @@ BE 사용기술 <br/>
         - 위도, 경도 기반 네비게이션 알고리즘
 
 - 👨‍💻 **Back-End 김형진**
-
+    - 축제 API
+    - 여행계획 API
+    - AWS EC2, Docker 관리
 
 ### 기능 설명
 #### 로그인
@@ -142,7 +144,8 @@ BE 사용기술 <br/>
 
 #### 회원가입
 
-![register](https://github.com/TourRoute/FE_TourRoute/assets/77834532/4a53beac-c213-48b1-9c36-e06f84ceefd4)
+
+![register](https://github.com/TourRoute/FE_TourRoute/assets/77834532/0aa59c44-6eed-4eca-a368-0b882fcbad0c)
 
 
 
