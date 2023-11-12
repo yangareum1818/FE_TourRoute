@@ -137,15 +137,12 @@ BE 사용기술 <br/>
     - AWS EC2, Docker 관리
 
 ### 기능 설명
-#### 로그인
-
-![Login](https://github.com/TourRoute/FE_TourRoute/assets/77834532/bb771f2b-9093-4ba2-9461-9cc54764ad3a)
-
-
-#### 회원가입
+#### 로그인 및 회원가입 
 
 
 ![register](https://github.com/TourRoute/FE_TourRoute/assets/77834532/0aa59c44-6eed-4eca-a368-0b882fcbad0c)
+
+![Login](https://github.com/TourRoute/FE_TourRoute/assets/77834532/bb771f2b-9093-4ba2-9461-9cc54764ad3a)
 
 
 
@@ -153,16 +150,7 @@ BE 사용기술 <br/>
 
 ![TourPlan1](https://github.com/TourRoute/FE_TourRoute/assets/77834532/31798061-972a-40a4-a24e-3ae469334307)
 
-
-
-<strong>카테고리 설정
-
 ![TourPlan2](https://github.com/TourRoute/FE_TourRoute/assets/77834532/0ccf7e19-b0fc-4cce-ac23-7c5a6c6588d6)
-
-
-
-<strong> 여행리스트
-
 
 ![TourPlan3](https://github.com/TourRoute/FE_TourRoute/assets/77834532/c3e4611a-439d-4826-9672-d424c0852ec2)
 
@@ -173,7 +161,6 @@ BE 사용기술 <br/>
 
 
 #### 축제
-
 
 ![festival](https://github.com/TourRoute/FE_TourRoute/assets/77834532/16d974a7-2a7d-438c-94a3-0f14e3268870)
 
