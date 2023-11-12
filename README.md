@@ -134,5 +134,27 @@ BE 사용기술 <br/>
 - 👨‍💻 **Back-End 김형진**
 
 
+### 기능 설명
+#### 로그인
+![Login.gif](..%2F..%2F..%2FNotion%2FTourRouter%2FGif%2FLogin.gif)
 
+#### 회원가입
+
+![register.gif](..%2F..%2F..%2FNotion%2FTourRouter%2FGif%2Fregister.gif)
+
+
+### 여행계획
+
+![TourPlan1.gif](..%2F..%2F..%2FNotion%2FTourRouter%2FGif%2FTourPlan1.gif)
+
+<strong>카테고리 설정
+
+![TourPlan2.gif](..%2F..%2F..%2FNotion%2FTourRouter%2FGif%2FTourPlan2.gif)
+
+<strong> 여행리스트
+
+![TourPlan3.gif](..%2F..%2F..%2FNotion%2FTourRouter%2FGif%2FTourPlan3.gif)
+
+#### 축제
+![festival.gif](..%2F..%2F..%2FNotion%2FTourRouter%2FGif%2Ffestival.gif)
 
