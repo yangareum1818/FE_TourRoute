@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useInput from 'hook/useInput';
 import { useCallback, useState } from 'react';
 import { axiosPost } from '../../utils/AxiosUtils';
-
+import { message } from 'antd';
 const InnerWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -59,7 +59,14 @@ const SignUpInfoInput = () => {
 	const [password2, setPassword2] = useState('');
 	const [passwordExpError, setPasswordExpError] = useState(false);
 	const [passwordError, setPasswordError] = useState(false);
+	const [messageApi, contextHolder] = message.useMessage();
 
+	const alert = async (type, content) => {
+		return messageApi.open({
+			type: type,
+			content: content,
+		});
+	};
 	const onChangeEamilCheck = useCallback(
 		e => {
 			const expEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -76,8 +83,8 @@ const SignUpInfoInput = () => {
 		e => {
 			const expPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
 			setPassword1(e.target.value);
-			setPasswordExpError(!expPassword.test(password1));
-			if (password1 === '' && passwordExpError) {
+			setPasswordExpError(!expPassword.test(e.target.value));
+			if (password1 === '' && !passwordExpError) {
 				setPasswordExpError(true);
 			}
 		},
@@ -104,25 +111,25 @@ const SignUpInfoInput = () => {
 					password2: password2,
 				};
 				if (Object.values(userData).includes('') === true) {
-					return alert('필수입력값을 입력해주세요.');
+					return alert('warning', '필수입력값을 입력해주세요.');
 				}
 				if (!email) {
 					return setEmailError(true);
 				}
 				if (password1 !== password2) {
-					return alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
+					return alert('warning', '비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
 				}
 				if (passwordExpError) {
-					return alert('비밀번호 조합을 확인해주세요.');
+					return alert('warning', '비밀번호 조합을 확인해주세요.');
 				}
 
 				const res = await axiosPost('/users/signup', userData);
 				if (res.state === 200 || 201) {
-					alert('로그인 성공');
-					navigate('/auth/signup/complete');
+					await alert('success', '회원가입 성공');
+					navigate('/auth/signup/complete', { state: username });
 				}
 			} catch (error) {
-				alert('동일한 이메일이 있습니다. 다른 이메일을 입력해주세요.');
+				alert('warning', '동일한 이메일이 있습니다. 다른 이메일을 입력해주세요.');
 			}
 		},
 		[email, navigate, password1, password2, username],
@@ -130,6 +137,7 @@ const SignUpInfoInput = () => {
 
 	return (
 		<AuthLayout>
+			{contextHolder}
 			<InnerWrapper>
 				<ProcedureTitle>
 					<StepText>약관동의</StepText>

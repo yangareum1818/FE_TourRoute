@@ -102,10 +102,8 @@ const SignUpTermsContainer = () => {
 		const { term, privacy } = agreementChecked;
 
 		if (term && privacy === true) {
-			console.log('이동한다.');
 			navigate('/auth/signup/information');
 		} else {
-			console.log('열린다링이이이이잉');
 			open();
 		}
 	};
