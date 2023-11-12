@@ -78,20 +78,11 @@ BE 사용기술 <br/>
 4. 동행서비스
     - 목적 : 새로운 여행 파트너를 구할 수 있도록 안내 해준다.
     - 특징 :  동행이메일을 입력하여 여행 계획일정들을 공유 해준다.
-- ---
 
 
 👨‍💻 **[Front-End Github](https://github.com/TourRoute/FE_TourRoute)**
 
 🧑‍🔧 **[Back-End Github](https://github.com/TourRoute/BE_TourRoute)**
-
-[API 설계]
-
-### 🏗️ 서비스 아키텍처
-
----
-
-
 
 
 ### 👥 역할분담
@@ -135,6 +126,12 @@ BE 사용기술 <br/>
     - 축제 API
     - 여행계획 API
     - AWS EC2, Docker 관리
+
+### 🏗️ 서비스 아키텍처
+
+---
+
+
 
 ### 기능 설명
 #### 로그인 및 회원가입 
