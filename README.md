@@ -148,22 +148,26 @@ BE 사용기술 <br/>
 
 ### 여행계획
 
-![TourPlan1](https://github.com/TourRoute/FE_TourRoute/assets/77834532/0d3ca00b-c8f7-44fe-bd82-dc08d42c1197)
+![TourPlan1](https://github.com/TourRoute/FE_TourRoute/assets/77834532/31798061-972a-40a4-a24e-3ae469334307)
+
 
 
 <strong>카테고리 설정
 
-![TourPlan2](https://github.com/TourRoute/FE_TourRoute/assets/77834532/a48dab67-68c8-4922-b7d0-2fb0ffd68644)
+![TourPlan2](https://github.com/TourRoute/FE_TourRoute/assets/77834532/0ccf7e19-b0fc-4cce-ac23-7c5a6c6588d6)
+
 
 
 <strong> 여행리스트
 
 
-![TourPlan3](https://github.com/TourRoute/FE_TourRoute/assets/77834532/8613c931-08f2-41a6-b775-5cf78f7f4968)
+![TourPlan3](https://github.com/TourRoute/FE_TourRoute/assets/77834532/c3e4611a-439d-4826-9672-d424c0852ec2)
+
 
 
 #### 축제
 
-![festival](https://github.com/TourRoute/FE_TourRoute/assets/77834532/6fe4380c-50d1-48de-968b-9c36be8bc99d)
+
+![festival](https://github.com/TourRoute/FE_TourRoute/assets/77834532/16d974a7-2a7d-438c-94a3-0f14e3268870)
 
 
