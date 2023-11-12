@@ -97,10 +97,10 @@ BE 사용기술 <br/>
     - Vercel로 웹페이지 배포
 
 - 👨‍💻 **Front-End 양아름**
-    1. 로그인
-    2. 회원가입
-    3. 마이페이지
-    4. 커뮤니티
+    - 로그인
+    - 회원가입
+    - 마이페이지
+    - 커뮤니티
 
 - 👨‍💻 **Back-End 류재문**
     - 데이터 크롤링
@@ -130,6 +130,7 @@ BE 사용기술 <br/>
 ### 🏗️ 서비스 아키텍처
 
 ---
+![tree](https://github.com/TourRoute/FE_TourRoute/assets/77834532/44baefc0-ccb9-4ff6-b283-909159fefb0d)
 
 
 
