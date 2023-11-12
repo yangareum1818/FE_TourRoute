@@ -6,13 +6,15 @@ import MainContainer from '../../pages/mainpage/MainContainer';
 import MainHeader from '../header/MainHeader';
 const LayoutContainer = styled.div`
 	margin: 0 auto;
-	max-width: 1080px;
+	max-width: 108rem;
+	padding: 0rem 2rem;
 `;
 
 const HeaderContainer = styled.header`
 	background-image: url(${backimg});
 	background-size: cover;
 	background-position: center;
+	height: 60rem;
 `;
 const SectionContainer = styled.section`
 	display: flex;

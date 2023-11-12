@@ -13,6 +13,7 @@ const PostContentsWrapper = styled.div`
 `;
 
 const PostContentsInner = styled.div`
+	position: relative;
 	display: flex;
 	gap: 2rem;
 	flex-direction: row;

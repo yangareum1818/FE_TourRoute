@@ -1,55 +1,118 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Pagination } from 'antd';
-const Wrapper = styled.div`
-	border-top: 1px solid grey;
-	width: 77%;
+
+import Empty from 'components/common/Empty';
+import { axiosGet } from 'utils/AxiosUtils';
+import { ImgWhether, RecruitmentStatus } from 'components/common/Icon';
+
+const day = require('dayjs');
+day.locale('ko');
+
+const WritingListWrapper = styled.div`
+	flex: 3;
 `;
-const ListForm = styled.div`
-	display: grid;
-	grid-template-rows: 5.5rem;
-	grid-template-columns: 17rem 55rem 10rem;
-`;
-const ListContent = styled.div`
+
+const WritingListInner = styled.ul``;
+const WritingList = styled.li`
 	display: flex;
+	gap: 2rem;
 	align-items: center;
-	border-bottom: 1px solid grey;
-	font-size: 16px;
+	padding: 2rem 0;
+	border-bottom: 0.1rem solid #cfcfcf;
+
+	&:first-child {
+		border-top: 0.1rem solid #cfcfcf;
+	}
 `;
-const ListSubTitle = styled.span`
+
+const WritingListCategory = styled.span`
+	font-size: 1.6rem;
+	font-weight: 500;
 	color: #959696;
 `;
+
+const WritingListTitle = styled.div`
+	flex: 1;
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	font-size: 1.6rem;
+
+	a {
+		max-width: 45rem;
+		color: #000;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+`;
+
+const WritingListDate = styled.span`
+	text-align: right;
+	color: #959696;
+	font-size: 1.6rem;
+	font-weight: 400;
+`;
+
 const PageContainer = styled.div`
-	margin: 2rem auto;
+	padding-top: 6rem;
 	text-align: center;
 `;
+
 const CommunityList = () => {
-	const [current, setcurrent] = useState(1);
-	const pageChange = useCallback(e => {
-		setcurrent(e);
+	const [communityListData, setCommunityListData] = useState([]);
+
+	const ListGet = useCallback(async () => {
+		const all = await axiosGet('/board/get_board_all');
+		const categoryData = await axiosGet(
+			`/board/get_latest?category=${window.location.pathname.split('/')[2]}`,
+		);
+
+		if (window.location.pathname.split('/')[2]) setCommunityListData(categoryData);
+		else setCommunityListData(all);
 	}, []);
-	const test = ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'];
+
+	console.log(communityListData);
+
+	useEffect(() => {
+		ListGet();
+	}, []);
+
 	return (
-		<>
-			<Wrapper>
-				{test.map(e => {
-					return (
-						<ListForm>
-							<ListContent>
-								<ListSubTitle>자유게시판</ListSubTitle>
-							</ListContent>
-							<ListContent>Content</ListContent>
-							<ListContent>
-								<ListSubTitle>2023-07-31</ListSubTitle>
-							</ListContent>
-						</ListForm>
-					);
-				})}
-				<PageContainer>
-					<Pagination current={current} onChange={pageChange} total={50} />
-				</PageContainer>
-			</Wrapper>
-		</>
+		<WritingListWrapper>
+			{communityListData.length === 0 ? (
+				<Empty text="커뮤니티에서 동행인을 구하거나, 자유롭게 글을 작성해보세요!" />
+			) : (
+				<WritingListInner>
+					{communityListData.map((list, index) => {
+						const { b_id, title, category, recruitment, board_img_link, created_at } = list;
+
+						const YearMonthDay = day(created_at).format('YYYY/MM/DD hh:mm');
+
+						return (
+							<WritingList key={b_id} index={b_id}>
+								{category === 'free' ? (
+									<WritingListCategory>자유게시판</WritingListCategory>
+								) : (
+									<WritingListCategory>동행게시판</WritingListCategory>
+								)}
+								<WritingListTitle>
+									<Link to={`/community/${b_id}`} state={{ prop: list }}>
+										{title}
+									</Link>
+									{category === 'accompany' ? <RecruitmentStatus statusText={recruitment} /> : null}
+
+									{board_img_link === '이미지 파일이 없습니다.' ? null : <ImgWhether />}
+								</WritingListTitle>
+								<WritingListDate>{YearMonthDay}</WritingListDate>
+							</WritingList>
+						);
+					})}
+				</WritingListInner>
+			)}
+		</WritingListWrapper>
 	);
 };
 

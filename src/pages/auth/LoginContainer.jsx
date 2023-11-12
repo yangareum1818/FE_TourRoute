@@ -8,7 +8,7 @@ import kakao from '../../assets/kakao_login_medium_narrow.png';
 import { Button } from 'components/common/Button';
 import { ErrorMsg, Input } from 'components/common/Input';
 import { Title } from 'components/common/Title';
-
+import { message } from 'antd';
 import Modal from 'components/common/Modal';
 // import useInput from 'hook/useInput';
 import useModal from 'hook/useModal';
@@ -93,9 +93,15 @@ const LoginContainer = () => {
 	const [emailError, setEmailError] = useState(false);
 	const [password1, setPassword1] = useState('');
 	const [passwordExpError, setPasswordExpError] = useState(false);
-
+	const [messageApi, contextHolder] = message.useMessage();
 	const { isOpen, open } = useModal();
 
+	const alert = async (type, content) => {
+		return messageApi.open({
+			type: type,
+			content: content,
+		});
+	};
 	const onChangeEamilCheck = useCallback(
 		e => {
 			const expEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -112,7 +118,7 @@ const LoginContainer = () => {
 		e => {
 			const expPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
 			setPassword1(e.target.value);
-			setPasswordExpError(!expPassword.test(password1));
+			setPasswordExpError(!expPassword.test(e.target.value));
 			if (e.target.value === '') {
 				setPasswordExpError(false);
 			}
@@ -124,16 +130,21 @@ const LoginContainer = () => {
 	const onSubmit = useCallback(
 		async e => {
 			e.preventDefault();
-			const res = await axiosPostQuery(`/users/login?email=${email}&password=${password1}`);
-			localStorage.setItem('token', res.access_token);
-			navigate('/');
-			alert(email + '님 환영합니다.');
+			try {
+				const res = await axiosPostQuery(`/users/login?email=${email}&password=${password1}`);
+				localStorage.setItem('token', res.access_token);
+				await alert('success', `${email}님 환영합니다.`);
+				navigate('/');
+			} catch (error) {
+				alert('warning', '회원정보가 일치하지 않습니다.');
+			}
 		},
 		[navigate, email, password1],
 	);
 
 	return (
 		<Wrapper>
+			{contextHolder}
 			<Title text="로그인" />
 			<InnerWrapper>
 				<SocialWrapper>

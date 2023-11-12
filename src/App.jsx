@@ -8,6 +8,7 @@ import Plan from 'pages/planpage/Plan';
 import PlanCheck from 'pages/planpage/plancheck/PlanCheck';
 import PlanList from 'pages/planpage/PlanList/PlanList';
 import MapLayOut from 'pages/planpage/planmap/MapLayOut';
+import PlanResult from 'pages/planpage/planresult/PlanResult';
 // 로그인, 회원가입
 import LoginContainer from 'pages/auth/LoginContainer';
 import SignUpContainer from 'pages/auth/SignUpContainer';
@@ -17,14 +18,15 @@ import SignUpCompleteContainer from 'pages/auth/SignUpCompleteContainer';
 // 마이페이지
 import PostContentsLayout from 'components/Layout/PostContentsLayout';
 import ProfileContainer from 'pages/mypage/ProfileContainer';
+import ProfileManagementContainer from 'pages/mypage/ProfileManagementContainer';
 import RecordContainer from 'pages/mypage/RecordContainer';
 import WishListContainer from 'pages/mypage/WishListContainer';
 import WritingListContainer from 'pages/mypage/WritingListContainer';
-import CommentContainer from 'pages/mypage/CommentContainer';
 // 커뮤니티
 import Community from './pages/community/Community';
+import CommunityPost from 'pages/community/CommunityPost/CommunityPost';
 import CommunityWrite from './pages/community/CommunityWrite/CommunityWrite';
-import CommunityWriteLayout from './components/Layout/CommunityWriteLayout';
+
 import Info from 'pages/ info/Info';
 import MainLayOut from './components/Layout/MainLayOut';
 import Fastival from './pages/fastival/Fastival';
@@ -40,7 +42,8 @@ function App() {
 					<Route path="/tourplan/" element={<Plan />}>
 						<Route path="1" element={<PlanCheck />} />
 						<Route path="2" element={<PlanList />} />
-						<Route path="3" element={<MapLayOut />} />
+						<Route path="3/:day" element={<MapLayOut />} />
+						<Route path="4" element={<PlanResult />} />
 					</Route>
 					<Route path="/login" element={<LoginContainer />} />
 					{/* 회원가입 */}
@@ -48,24 +51,23 @@ function App() {
 					<Route path="/auth/signup/terms" element={<SignUpTermsContainer />} />
 					<Route path="/auth/signup/information" element={<SignUpInfoInput />} />
 					<Route path="/auth/signup/complete" element={<SignUpCompleteContainer />} />
-
 					{/* 마이페이지 */}
 					<Route element={<PostContentsLayout text="마이페이지" />}>
 						<Route path="/my/profile" element={<ProfileContainer />} />
+						<Route path="/my/profile/management" element={<ProfileManagementContainer />} />
 						<Route path="/my/record" element={<RecordContainer />} />
 						<Route path="/my/wishlist" element={<WishListContainer />} />
 						<Route path="/my/wrtiting" element={<WritingListContainer />} />
-						<Route path="/my/comment" element={<CommentContainer />} />
 					</Route>
-
 					{/* 지역축제 */}
-					<Route path="festival" element={<Fastival />} />
-					<Route path="festival/:id" element={<FastivalPost />} />
+					<Route path="festival/:city" element={<Fastival />} />
+					<Route path="festival/board/:id" element={<FastivalPost />} />
 					{/* 커뮤니티 */}
 					<Route path="/community" element={<Community />} />
-					<Route element={<CommunityWriteLayout />}>
-						<Route path="/communitywrite" element={<CommunityWrite />} />
-					</Route>
+					<Route path="/community/free" element={<Community />} />
+					<Route path="/community/accompany" element={<Community />} />
+					<Route path="/community/:postId" element={<CommunityPost />} />
+					<Route path="/communitywrite" element={<CommunityWrite />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import PlanProgress from './planprogress/PlanProgress';
 import { Outlet } from 'react-router-dom';
+import PlanProgress from './planprogress/PlanProgress';
 
 const Wrapper = styled.div`
 	width: 100%;

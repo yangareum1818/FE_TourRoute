@@ -5,7 +5,7 @@ import { axiosTokenGet } from 'utils/AxiosUtils';
 const MyProfileContent = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 3.1rem;
+	gap: 3rem;
 	padding: 4rem 4rem 2rem;
 	border: 0.1rem solid #cfcfcf;
 	border-radius: 0.8rem;
@@ -37,16 +37,18 @@ const ProfileInfoChangeText = styled.span`
 `;
 
 const ProfileContainer = () => {
-	const [username, setUsername] = useState('');
-	const [email, setEmail] = useState('');
+	const [user, setUser] = useState({
+		username: '',
+		email: '',
+		latest: '',
+	});
+	const { username, email, latest } = user;
+	const LastChangeDate = latest.replace('T', ' ').split('.', 1);
 
 	const userInfo = useCallback(async () => {
 		const res = await axiosTokenGet('/users/mypage');
-		console.log(res);
-
-		setUsername(res.username);
-		setEmail(res.email);
-	}, []);
+		setUser(res);
+	}, [setUser]);
 
 	useEffect(() => {
 		userInfo();
@@ -66,7 +68,7 @@ const ProfileContainer = () => {
 				<ProfileInfoTitle>마케팅 수신동의</ProfileInfoTitle>
 				<ProfileInfoValue>수신거부</ProfileInfoValue>
 			</ProfileInfoWrpper>
-			<ProfileInfoChangeText>최근 수정일 : 2023-08-14</ProfileInfoChangeText>
+			<ProfileInfoChangeText>최근 수정일 : {LastChangeDate[0]}</ProfileInfoChangeText>
 		</MyProfileContent>
 	);
 };

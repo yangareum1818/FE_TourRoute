@@ -2,12 +2,16 @@ import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Logo from 'assets/serch_logo.svg';
 import barcord from 'assets/barcord.png';
-import { FaCalendarAlt, FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaUserFriends } from 'react-icons/fa';
 import { DatePicker, InputNumber, Select } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import useInput from 'hooks/useInput';
 import { FaX } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import dayjs from 'dayjs';
+import { tour } from 'store/PostRedux';
+dayjs.extend(customParseFormat);
 const SerchContainer = styled.div`
 	border: 0.5px solid grey;
 	border-radius: 8px;
@@ -33,9 +37,7 @@ const BarcordContainer = styled.div`
 	margin-bottom: 2rem;
 `;
 const SerchBarInput = styled.div`
-	display: grid;
-	grid-template-columns: 19rem 30rem 12rem 18rem 16rem;
-	grid-template-rows: 4rem;
+	display: flex;
 	gap: 2rem;
 	padding-left: 1rem;
 `;
@@ -131,16 +133,33 @@ const NextText = styled.span`
 `;
 const DeletBtn = styled.div``;
 const PlanCheck = () => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [UserId, setUserId] = useInput('');
 	const [UserList, setUserList] = useState([]);
-	const dispatch = useDispatch();
-	const count = useSelector(state => state.reducer.count);
+	const Tour = useSelector(state => state.Tour);
+	const name = useSelector(state => state.Info);
+	const [LocalName, setLocalName] = useState(Tour.Tour.LocalName);
+	const [StartDate, setStartDate] = useState(Tour.Tour.StartDate);
+	const [FinishDate, setFinishDate] = useState(Tour.Tour.FinishDate);
+	const [People, setPeople] = useState(Tour.Tour.People);
 	const { RangePicker } = DatePicker;
+	const dateFormat = 'YYYY-MM-DD';
 
+	const HandlePage = useCallback(() => {
+		dispatch(
+			tour({
+				LocalName: LocalName,
+				StartDate: Tour.Tour.StartDate,
+				FinishDate: Tour.Tour.FinishDate,
+				People: People,
+				UserList: UserList,
+			}),
+		);
+		navigate('/tourplan/2');
+	}, [dispatch, LocalName, StartDate, FinishDate, People, UserList, navigate]);
 	const handleDel = useCallback(
 		e => {
-			console.log(e);
 			UserList.splice(UserList.indexOf(e), 1);
 			setUserList([...UserList]);
 		},
@@ -157,9 +176,6 @@ const PlanCheck = () => {
 		},
 		[UserId, UserList],
 	);
-	const HandlePage = () => {
-		navigate('/tourplan/2');
-	};
 
 	return (
 		<>
@@ -176,7 +192,7 @@ const PlanCheck = () => {
 							<div>
 								목적지
 								<Select
-									defaultValue="대구광역시"
+									defaultValue={Tour.Tour.LocalName + '광역시'}
 									options={[
 										{
 											value: '대구광역시',
@@ -185,6 +201,14 @@ const PlanCheck = () => {
 										{
 											value: '부산광역시',
 											label: '부산광역시',
+										},
+										{
+											value: '경주시',
+											label: '경주시',
+										},
+										{
+											value: '포항시',
+											label: '포항시',
 										},
 									]}
 								/>
@@ -195,11 +219,18 @@ const PlanCheck = () => {
 						</UserInput>
 						<UserInput>
 							{/*<div style={{ marginRight: '1rem' }}>YYYY-MM-DD ~ YYYY-MM-DD</div>*/}
-							<RangePicker />
+
+							<RangePicker
+								defaultValue={[
+									dayjs(Tour.Tour.StartDate, dateFormat),
+									dayjs(Tour.Tour.FinishDate, dateFormat),
+								]}
+								format={dateFormat}
+							/>
 						</UserInput>
 						<UserInput>
 							<PeopleNum>
-								인원 <InputNumber defaultValue={count} />
+								인원 <InputNumber defaultValue={Tour.Tour.People} />
 							</PeopleNum>
 							<InputIcon>
 								<FaUserFriends />
@@ -222,8 +253,8 @@ const PlanCheck = () => {
 								<p style={{ color: '#3AD0FF', fontWeight: 'bold' }}>나</p>
 								<TourPlayerListDiv>
 									<PeopleList>
-										<li>lovaoi777@naver.com</li>
-										<li>짱구</li>
+										<li>{name.user.email}</li>
+										<li>{name.user.name}</li>
 									</PeopleList>
 								</TourPlayerListDiv>
 							</div>

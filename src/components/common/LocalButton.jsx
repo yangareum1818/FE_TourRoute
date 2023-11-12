@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
 	TrackedProgressIcon,
 	TrackingProgressIcon,
@@ -6,31 +6,46 @@ import {
 	WishHeartIcon,
 } from './Icon';
 import { styled } from 'styled-components';
-import img from 'assets/testbag.png';
 import { FaMapMarkerAlt } from 'react-icons/fa';
-const MyWishList = styled.div`
+import { Link } from 'react-router-dom';
+import { axiosTokenPost } from 'utils/AxiosUtils';
+import isBetween from 'dayjs/plugin/isBetween';
+import dayjs from 'dayjs';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+dayjs.extend(isBetween, isSameOrBefore);
+const WishListItem = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	padding: 2rem;
 	height: 100%;
+	background-color: #000;
+	background-repeat: no-repeat;
 	background-size: cover;
+	background-position: 50% 50%;
 	border-radius: 0.8rem;
-	background: #000;
+
+	&:hover > a {
+		background: rgba(0, 0, 0, 0.6);
+		border-radius: 0 0 0.8rem 0.8rem;
+	}
 `;
 
 const ListIconWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	padding: 2rem;
+`;
+const AticleHeart = styled.div`
+	text-align: right;
 `;
 
-const ListContent = styled.div`
-	color: white;
+const ListContent = styled(Link)`
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
-	gap: 0.5rem;
+	padding: 2rem;
+	color: #fff;
 `;
 const LocalName = styled.strong`
 	font-size: 2.4rem;
@@ -41,14 +56,21 @@ const LocalTitle = styled.strong`
 	font-weight: 500;
 `;
 const LocalAddr = styled.div`
+	position: relative;
 	margin-top: 0.5rem;
 
+	svg {
+		position: absolute;
+		top: 0.5rem;
+		left: 0;
+	}
+
 	span {
-		padding-left: 0.5rem;
+		padding-left: 2rem;
 		display: inline-block;
-		color: #959696;
+		color: #fff;
 		font-size: 1.2rem;
-		font-weight: 300;
+		font-weight: 400;
 		vertical-align: middle;
 	}
 `;
@@ -56,32 +78,45 @@ const LocalDate = styled.p`
 	font-size: 1.6rem;
 	font-weight: 500;
 `;
-const LocalButton = ({ status, name, subaddr, term, backimg }) => {
-	const img = 'http://13.209.56.221:8000/img/' + backimg;
+const LocalButton = ({ props, index }) => {
+	// const [bookmark, setBookmark] = useState(false)
+	const [onChecked, setonChecked] = useState(props.is_bookmark);
+	const data = dayjs();
+	// const [startTime]
+	console.log(props.term.split('~'));
+	const [startTime, FinishTime] = props.term.split('~');
+
+	const img = process.env.REACT_APP_ENDPOINT + '/img/' + props.i_link;
+	const handleChecked = useCallback(async () => {
+		setonChecked(prev => !prev);
+		await axiosTokenPost(`/festival/bookmark?festival_name=${props.f_name}`);
+	}, [props.f_name]);
 	return (
-		<MyWishList style={{ backgroundImage: `url(${img})` }}>
+		<WishListItem style={{ backgroundImage: `url(${img})` }}>
 			<ListIconWrapper>
-				{/*<WishHeartIcon /> 빈하트 */}
-				<WishHeartActiveIcon />
-				{status === '개최 예정' ? (
-					<TrackedProgressIcon text={status} />
-				) : (
+				<AticleHeart onClick={handleChecked}>
+					{!onChecked ? <WishHeartIcon /> : <WishHeartActiveIcon />}
+				</AticleHeart>
+
+				{data.isBetween(startTime.trim(), FinishTime.trim()) ? (
 					<TrackingProgressIcon text="진행 중" />
+				) : (
+					<TrackedProgressIcon text="개최 예정" />
 				)}
 			</ListIconWrapper>
 
-			<ListContent>
-				<LocalName>대구</LocalName>
+			<ListContent to={`/festival/board/${index}`} state={{ prop: props }}>
+				<LocalName>{props.city}</LocalName>
 				<div>
-					<LocalTitle>{name}2023 부산여행영화제</LocalTitle>
+					<LocalTitle>{props.f_name}</LocalTitle>
 					<LocalAddr>
 						<FaMapMarkerAlt />
-						<span>{subaddr}부산 해운대구</span>
+						<span>{props.addr}</span>
 					</LocalAddr>
 				</div>
-				<LocalDate>{term}2023. 08. 12 - 2023.08. 13</LocalDate>
+				<LocalDate>{props.term}</LocalDate>
 			</ListContent>
-		</MyWishList>
+		</WishListItem>
 	);
 };
 

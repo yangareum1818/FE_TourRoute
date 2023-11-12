@@ -1,47 +1,91 @@
-import React, { useCallback } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { FaPen } from 'react-icons/fa6';
-import { Link, useNavigate } from 'react-router-dom';
-const Wrapper = styled.div`
-	border: 0.5px solid grey;
-	padding: 1rem;
-	display: grid;
-	border-radius: 8px;
-	grid-template-columns: 10rem;
-	gap: 1rem;
-	margin-bottom: 2rem;
+import { Link, NavLink } from 'react-router-dom';
+
+const SideBarWrapper = styled.div`
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
 `;
-const LinkList = styled.div`
-	font-size: 16px;
+
+const SideMenu = styled.ul`
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	padding: 2rem;
+	border: 0.1rem solid #cfcfcf;
+	border-radius: 0.8rem;
+`;
+
+const SideList = styled.li`
 	color: #959696;
+	font-size: 1.6rem;
+	font-weight: 300;
+
+	&:hover > a,
+	&.active > a {
+		color: #000;
+		font-weight: 500;
+	}
+	& > button {
+		display: block;
+		font-size: 1.6rem;
+		font-weight: 300;
+	}
+	&:hover > button,
+	&.active > button {
+		display: block;
+		color: #000;
+		font-weight: 500;
+	}
 `;
-const WriteBtn = styled.div`
+
+const WriteBtn = styled(Link)`
+	font-size: 0;
+	height: 6rem;
+	line-height: 6rem;
 	background: #3ad0ff;
-	border-radius: 8px;
-	color: white;
-	font-weight: bold;
-	padding: 1rem 10rem;
+	border-radius: 0.8rem;
+	text-align: center;
 	cursor: pointer;
+
+	span {
+		margin-left: 0.8rem;
+	}
+
+	& > * {
+		display: inline-block;
+		color: #fff;
+		font-size: 1.5rem;
+		font-weight: 700;
+		vertical-align: middle;
+	}
 `;
 
 const CommunitySide = () => {
-	const navigate = useNavigate();
-
-	const handlewrite = useCallback(() => {
-		navigate('/communitywrite');
-	}, [navigate()]);
 	return (
-		<div>
-			<Wrapper>
-				<LinkList>전체게시판</LinkList>
-				<LinkList>자유게시판</LinkList>
-				<LinkList>동행게시판</LinkList>
-			</Wrapper>
-			<WriteBtn onClick={handlewrite}>
+		<SideBarWrapper>
+			<SideMenu>
+				<SideList className="active">
+					<button onClick={() => window.location.replace('/community')}>전체게시판</button>
+				</SideList>
+				<SideList>
+					<button onClick={() => window.location.replace('/community/free')}>자유게시판</button>
+				</SideList>
+				<SideList>
+					<button onClick={() => window.location.replace('/community/accompany')}>
+						동행게시판
+					</button>
+				</SideList>
+			</SideMenu>
+
+			<WriteBtn to="/communitywrite">
 				<FaPen />
-				글쓰기
+				<span>글쓰기</span>
 			</WriteBtn>
-		</div>
+		</SideBarWrapper>
 	);
 };
 

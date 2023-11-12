@@ -4,7 +4,7 @@ import SubLogoImg from 'assets/sub_logo.svg';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.header`
-	padding: 2rem 0;
+	padding: 2rem;
 	margin: 0 auto;
 	max-width: 108rem;
 	display: flex;
@@ -40,6 +40,9 @@ const SubHeader = () => {
 	const HandleLogout = useCallback(() => {
 		setToken(window.localStorage.removeItem('token'));
 	}, []);
+	useEffect(() => {
+		setToken(window.localStorage.getItem('token'));
+	}, [setToken]);
 	return (
 		<Wrapper>
 			<Logo>
@@ -52,7 +55,7 @@ const SubHeader = () => {
 					<Link to="/tourplan/1">여행계획</Link>
 				</Category>
 				<Category>
-					<Link to="/festival">지역축제</Link>
+					<Link to="/festival/all">지역축제</Link>
 				</Category>
 				<Category>
 					<Link to="/community">커뮤니티</Link>

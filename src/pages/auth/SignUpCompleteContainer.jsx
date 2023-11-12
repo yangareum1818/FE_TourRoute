@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import AuthLayout from 'components/Layout/AuthLayout';
 import { RightArrow } from 'components/common/Icon';
 import { Button } from 'components/common/Button';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const InnerWrapper = styled.div`
 	display: flex;
@@ -34,7 +34,7 @@ const StepTitle = styled.span`
 `;
 
 const AuthContent = styled.div`
-	padding: 4rem 0;
+	padding: 5rem 0;
 `;
 
 const AuthComplete = styled.p`
@@ -53,6 +53,8 @@ const AuthCompleteDesc = styled.p`
 `;
 
 const SignUpCompleteContainer = () => {
+	const location = useLocation();
+	const data = location.state;
 	return (
 		<AuthLayout>
 			<InnerWrapper>
@@ -64,11 +66,9 @@ const SignUpCompleteContainer = () => {
 					<StepText className="active">가입완료</StepText>
 				</ProcedureTitle>
 
-				<StepTitle>가입완료</StepTitle>
-
 				<AuthContent>
 					<AuthComplete>
-						안녕하세요 🙌 <strong>홍길동</strong>님!
+						안녕하세요 🙌 <strong>{data}</strong>님!
 					</AuthComplete>
 					<AuthCompleteDesc>회원가입이 정상적으로 완료되었습니다.</AuthCompleteDesc>
 				</AuthContent>

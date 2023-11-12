@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { InputErrorIcon } from './Icon';
+import { createContext, useContext } from 'react';
 
 // const COLOR = {
 // 	default: css`
@@ -64,5 +65,58 @@ export const Input = ({ text, placeholder, type, onChange }) => {
 			{text && <DefalutP>{text}</DefalutP>}
 			<DefaultInput type={type} onChange={onChange} placeholder={placeholder} />
 		</DefalutLabel>
+	);
+};
+
+// Community 카테고리 Input
+const CategoryLabel = styled.label`
+	position: relative;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: pointer;
+
+	& > input {
+		position: absolute;
+		width: 0;
+		height: 0;
+		opacity: 0;
+	}
+	& > span {
+		color: #959696;
+		font-size: 1.6rem;
+		font-weight: 500;
+	}
+
+	input[type='radio']:checked ~ span {
+		color: #3ad0ff;
+	}
+`;
+
+export const SelectInputContext = createContext({});
+export const SelectInputWrapper = ({ label, children, ...rest }) => {
+	return (
+		<>
+			<span style={{ marginRight: '3rem' }}>{label}</span>
+			<SelectInputContext.Provider value={rest}>{children}</SelectInputContext.Provider>
+		</>
+	);
+};
+
+export const SelectInput = ({ children, value, name, disabled }) => {
+	const group = useContext(SelectInputContext);
+	return (
+		<CategoryLabel>
+			<input
+				type="radio"
+				value={value}
+				name={name}
+				disabled={disabled || group.disabled}
+				checked={group.value !== undefined ? value === group.value : undefined}
+				onChange={e => group.onChange && group.onChange(e.target.value)}
+			/>
+			<span>{children}</span>
+		</CategoryLabel>
 	);
 };
