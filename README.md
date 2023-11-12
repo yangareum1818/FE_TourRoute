@@ -1,11 +1,14 @@
 # 간편 여행의 시작, [투어라우트]
 <img src="./src/assets/readme/Readme.png">
 
-## 경상도 지역의 여행지를 추천받고, <br/>커뮤니티에서 동행인도 만날 수 있는
-## <h2 color=#3AD0FF>간편한 여행의 시작</h2>
+## 🪄경상도 지역의 여행지를 추천받고  <br/><br/>    커뮤니티에서 동행인도 만날 수 있는 간편한 여행의 시작
 
 ## 📢 프로젝트 소개
-<hr/>
+
+<img src="./src/assets/InfoImg/touroute_about_04.jpg" alt="readme" >
+<img src="./src/assets/InfoImg/touroute_about_05.png" alt="readme" >
+<img src="./src/assets/InfoImg/touroute_about_06.png" alt="readme" >
+
 
 **개발**  
 2023.08.01 ~ 2023.11.6
@@ -44,6 +47,11 @@ BE 사용기술 <br/>
 <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
 <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
 
+
+
+### ✨ 투어라우트 팀원! ✨
+<img src="./src/assets/InfoImg/touroute_about_07.png" alt="readme" >
+
 ## 📖 프로젝트 설명
 
 ### 🤔 주제 선정을 위한 브레인스토밍
@@ -53,19 +61,6 @@ BE 사용기술 <br/>
 - 국내 관광객을 대상으로 맞춤형 여행 계획 서비스를 제작함으로 여행객들에게 여행 일정에 관련된 편의를 도모한다.
 - 여행객에게 필요한 맞춤형 여행 스타일 서비스와 최적의 동선으로 일정을 정리해 주는 간편함을 제공한다.
 - 사용자로 하여금 여행에 있어서 불편함을 덜어내고 편리함을 주는 목적으로 한다. 계획 수립, 동선 파악, 여행의 스타일 등 기존에 있는 웹애플리케이션들의 문제점을 개선하여 사용자에게 도움이 되고 부담 없이 언제든 여행할 수 있다.
-
-### 🧳[투어라우트 바로가기](링크 ㄱ)
-
-👨‍💻 **[Front-End Github](https://github.com/TourRoute/FE_TourRoute)**
-
-🧑‍🔧 **[Back-End Github](https://github.com/TourRoute/BE_TourRoute)**
-
-[API 설계]
-
-### 🏗️ 서비스 아키텍처
-
----
-
 
 ### ✨ 주요기능
 
@@ -85,14 +80,19 @@ BE 사용기술 <br/>
     - 특징 :  동행이메일을 입력하여 여행 계획일정들을 공유 해준다.
 - ---
 
-**UI_사용자화면** 
 
-<img src="./src/assets/InfoImg/touroute_about_04.jpg" alt="readme" >
-<img src="./src/assets/InfoImg/touroute_about_05.png" alt="readme" >
-<img src="./src/assets/InfoImg/touroute_about_06.png" alt="readme" >
+👨‍💻 **[Front-End Github](https://github.com/TourRoute/FE_TourRoute)**
 
-### ✨ 투어라우트 팀원! ✨
-<img src="./src/assets/InfoImg/touroute_about_07.png" alt="readme" >
+🧑‍🔧 **[Back-End Github](https://github.com/TourRoute/BE_TourRoute)**
+
+[API 설계]
+
+### 🏗️ 서비스 아키텍처
+
+---
+
+
+
 
 ### 👥 역할분담
 
