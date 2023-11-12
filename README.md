@@ -136,25 +136,34 @@ BE 사용기술 <br/>
 
 ### 기능 설명
 #### 로그인
-![Login.gif](..%2F..%2F..%2FNotion%2FTourRouter%2FGif%2FLogin.gif)
+
+![Login](https://github.com/TourRoute/FE_TourRoute/assets/77834532/bb771f2b-9093-4ba2-9461-9cc54764ad3a)
+
 
 #### 회원가입
 
-![register.gif](..%2F..%2F..%2FNotion%2FTourRouter%2FGif%2Fregister.gif)
+![register](https://github.com/TourRoute/FE_TourRoute/assets/77834532/4a53beac-c213-48b1-9c36-e06f84ceefd4)
+
 
 
 ### 여행계획
 
-![TourPlan1.gif](..%2F..%2F..%2FNotion%2FTourRouter%2FGif%2FTourPlan1.gif)
+![TourPlan1](https://github.com/TourRoute/FE_TourRoute/assets/77834532/0d3ca00b-c8f7-44fe-bd82-dc08d42c1197)
+
 
 <strong>카테고리 설정
 
-![TourPlan2.gif](..%2F..%2F..%2FNotion%2FTourRouter%2FGif%2FTourPlan2.gif)
+![TourPlan2](https://github.com/TourRoute/FE_TourRoute/assets/77834532/a48dab67-68c8-4922-b7d0-2fb0ffd68644)
+
 
 <strong> 여행리스트
 
-![TourPlan3.gif](..%2F..%2F..%2FNotion%2FTourRouter%2FGif%2FTourPlan3.gif)
+
+![TourPlan3](https://github.com/TourRoute/FE_TourRoute/assets/77834532/8613c931-08f2-41a6-b775-5cf78f7f4968)
+
 
 #### 축제
-![festival.gif](..%2F..%2F..%2FNotion%2FTourRouter%2FGif%2Ffestival.gif)
+
+![festival](https://github.com/TourRoute/FE_TourRoute/assets/77834532/6fe4380c-50d1-48de-968b-9c36be8bc99d)
+
 
