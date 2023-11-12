@@ -60,7 +60,7 @@ const Fastival = () => {
 	const [Data, setData] = useState([]);
 	const [ChangeData, setChageData] = useState([]);
 	const [Category, setCategory] = useState('전체');
-	const data = dayjs('2023-09-01');
+	const data = dayjs('2023-10-01');
 	const urltype = {
 		daegu: '대구',
 		busan: '부산',
