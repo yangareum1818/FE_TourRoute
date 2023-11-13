@@ -69,8 +69,13 @@
 
 ### 🤔 주제 선정을 위한 브레인스토밍
 
-- 초안 : 우리가 할 수 있는 것이 무엇일까? -> 여행에 관심이 있다? -> 여행에 관련된 정보들을 어떻게 알 수 있을까? -> 여행 계획을 설계해주는 애플리케이션을 만들자!
-- 종합 : 여행에 관심을 가지고 여행에 대한 정보들을 파악하기 위해 다양한 사이트를 통해 수집해야 하는데 처음 접하는 사람들은 수집에 한계가 있기에 이런 사람들을 위해 서비스를 제공하고자 여행 계획을 대신 작성해주는 애플리케이션을 구현하였다.
+- **초안**
+  1. 👉🏻 우리가 할 수 있는 것이 무엇일까 ?
+  2. 👉🏻 여행에 관심이 있다 ?
+  3. 👉🏻 여행에 관련된 정보들을 어떻게 알 수 있을까 ?
+  4. 👉🏻 여행 계획을 설계해주는 애플리케이션을 만들자 !
+- **종합**
+  - 👉🏻 여행에 관심을 가지고 여행에 대한 정보들을 파악하기 위해 다양한 사이트를 통해 수집해야 하는데, 처음 접하는 사람들은 수집에 한계가 있기에 이런 사람들을 위해 서비스를 제공하고자 여행 계획을 대신 작성해주는 애플리케이션을 구현하였다.
 
 ### 🤔 목적 및 필요성
 
@@ -81,8 +86,6 @@
 <br />
 
 ### ✨ 주요기능
-
----
 
 - **여행계획**
 
@@ -178,7 +181,7 @@
 
 <br />
 
-### 기능 설명
+### 🗣️ 기능 설명
 
 ---
 
@@ -200,7 +203,7 @@
 
 ![TourPlan1](https://github.com/TourRoute/FE_TourRoute/assets/77834532/31798061-972a-40a4-a24e-3ae469334307)
 
-<p style="text-align: center">[ 서브페이지로 들리지않고, 메인페이지에서 바로 여행계획의 날짜를 입력해 추천경로를 찾아주는 여행계획 ]</p>
+<p style="text-align: center">[ 서브페이지를 거치지않고, 메인페이지에서 바로 여행계획의 날짜를 입력해 추천경로를 찾아주는 여행계획 ]</p>
 
 <br />
 
@@ -228,25 +231,31 @@
 
 ![CommunityWrite]()
 
-<p style="text-align: center">[ 글쓰기 - 자유게시판 글 게시하는 화면</p>
+<p style="text-align: center">[ 글쓰기 - 자유게시판 글 게시하는 화면 ]</p>
 
 <br />
 
 ![CommunityWrite]()
 
-<p style="text-align: center">[ 글쓰기 - 동행게시판 글 게시하는 화면</p>
+<p style="text-align: center">[ 글쓰기 - 동행게시판 글 게시하는 화면 ]</p>
 
 <br />
 
 - 커뮤니티 : 게시판 상세페이지 사이드바
 
-<div align="center" width="100%">
-    <img width="24%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
-    <img width="24%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
-    <img width="24%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
-    <img width="24%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+<div align="center">
+    <img width="49.5%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+    <img width="49.5%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+    <img width="49.5%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+    <img width="49.5%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
 </div>
-<p style="text-align: center">[ 자유게시판일 경우 | 동행게시판 모집중일 경우 | 동행게시판 모집완료일 경우 | 내가쓴 동행게시판 모집중일 경우 ]</p>
+<p style="text-align: center">[ 내가쓴 동행게시판 모집중일 경우 | 자유게시판일 경우 ]<br />[ 동행게시판 모집중일 경우 | 동행게시판 모집완료일 경우 ]</p>
+
+<br />
+
+![Comment]()
+
+<p style="text-align: center">[ 커뮤니티글을 수정 또는 삭제하는 화면 ]</p>
 
 <br />
 
