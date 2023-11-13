@@ -231,13 +231,25 @@
 
 ![CommunityWrite]()
 
-<p style="text-align: center">[ 글쓰기 - 자유게시판 글 게시하는 화면 ]</p>
+<p style="text-align: center">[ 글쓰기 글 게시하는 화면 ]</p>
 
 <br />
 
-![CommunityWrite]()
+- 커뮤니티 : 글쓰기
 
-<p style="text-align: center">[ 글쓰기 - 동행게시판 글 게시하는 화면 ]</p>
+<div align="center">
+    <img width="49.5%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+    <img width="49.5%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+</div>
+<p style="text-align: center">[ 자유게시판일 경우 | 동행게시판일 경우 ]</p>
+
+<br />
+
+- 커뮤니티 : 게시판 리스트
+
+<img src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+
+<p style="text-align: center">[ 자유, 동행게시판일 경우 중 이미지파일이 존재여부, 모집상태등을 리스트에서 확인이 가능하다. ]</p>
 
 <br />
 
@@ -262,6 +274,10 @@
 ![Comment]()
 
 <p style="text-align: center">[ 커뮤니티글의 댓글 게시, 수정, 삭제 화면 ]</p>
+
+<br />
+
+> 내가 쓴 게시물 또는 댓글등을 마이페이지에서 거치지 않고 바로 수정, 삭제가 가능하도록 작업했다.
 
 <br />
 
