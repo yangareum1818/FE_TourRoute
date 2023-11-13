@@ -226,6 +226,34 @@
 
 - #### 커뮤니티
 
+![CommunityWrite]()
+
+<p style="text-align: center">[ 글쓰기 - 자유게시판 글 게시하는 화면</p>
+
+<br />
+
+![CommunityWrite]()
+
+<p style="text-align: center">[ 글쓰기 - 동행게시판 글 게시하는 화면</p>
+
+<br />
+
+- 커뮤니티 : 게시판 상세페이지 사이드바
+
+<div align="center" width="100%">
+    <img width="24%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+    <img width="24%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+    <img width="24%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+    <img width="24%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+</div>
+<p style="text-align: center">[ 자유게시판일 경우 | 동행게시판 모집중일 경우 | 동행게시판 모집완료일 경우 | 내가쓴 동행게시판 모집중일 경우 ]</p>
+
+<br />
+
+![Comment]()
+
+<p style="text-align: center">[ 커뮤니티글의 댓글 게시, 수정, 삭제 화면 ]</p>
+
 <br />
 
 - #### 마이페이지와 프로필변경
