@@ -9,7 +9,7 @@ import { Title } from 'components/common/Title';
 import { Button, ButtonGroup } from 'components/common/Button';
 import { Input } from 'components/common/Input';
 import { RecruitmentStatus } from 'components/common/Icon';
-
+import { message } from 'antd';
 import dummyMyImage from '../../../assets/Mask_group.svg';
 import { useSelector } from 'react-redux';
 import Empty from 'components/common/Empty';
@@ -151,6 +151,13 @@ const CommunityPost = () => {
 	// 게시글 상세 데이터
 	const me = useSelector(state => state.Info);
 
+	const [messageApi, contextHolder] = message.useMessage();
+	const alert = async (type, content) => {
+		return messageApi.open({
+			type: type,
+			content: content,
+		});
+	};
 	const transform = e => {
 		return e.replace(/\n/g, '<br/>');
 	};
@@ -163,6 +170,7 @@ const CommunityPost = () => {
 	// 게시판 삭제
 	const Delboard = useCallback(async () => {
 		await axiosTokenDelete(`/board/delete_board?b_id=${data.b_id}`);
+		await alert('success', '삭제되었습니다.');
 		navigate('/community');
 	}, [data.b_id, navigate]);
 
@@ -194,6 +202,7 @@ const CommunityPost = () => {
 		<div
 			style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: '8rem 0 16rem' }}
 		>
+			{contextHolder}
 			<Title text="커뮤니티" />
 			{data ? (
 				<div style={{ position: 'relative', display: 'flex', gap: '2rem', marginTop: '3.2rem' }}>

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { axiosTokenFormPut, axiosTokenGet, axiosTokenPut } from 'utils/AxiosUtils';
 import { Button, ButtonGroup } from 'components/common/Button';
-
+import { message } from 'antd';
 import dummyMyImage from '../../assets/Mask_group.svg';
 
 const MyProfileContent = styled.div`
@@ -61,8 +61,14 @@ const ProfileManagementContainer = () => {
 		img_link: dummyMyImage,
 	});
 	const { username, email, latest, img_link } = user;
+	const [messageApi, contextHolder] = message.useMessage();
 	let LastChangeDate = latest.replace('T', ' ').split('.', 1).join('');
-
+	const alert = async (type, content) => {
+		return messageApi.open({
+			type: type,
+			content: content,
+		});
+	};
 	const userInfo = useCallback(async () => {
 		const data = await axiosTokenGet('/users/mypage');
 		setUser(data);
@@ -117,7 +123,7 @@ const ProfileManagementContainer = () => {
 			);
 
 			if (res) {
-				alert('수정이 완료되었습니다.');
+				await alert('success', '수정이 완료되었습니다.');
 				window.location.replace('/my/profile');
 			}
 		} catch (error) {
@@ -137,6 +143,7 @@ const ProfileManagementContainer = () => {
 
 	return (
 		<>
+			{contextHolder}
 			<MyProfileContent>
 				<form id="profileEditForm" style={{ display: 'flex', gap: '3rem' }}>
 					<div

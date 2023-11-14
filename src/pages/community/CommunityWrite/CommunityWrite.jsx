@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-
+import { message } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
 	axiosTokenFormPost,
@@ -142,6 +142,7 @@ const CommunityWrite = () => {
 	const commpanyRef = useRef();
 	const RecruitingRef = useRef();
 	const RecruitEndRef = useRef();
+
 	const [Modify, setModify] = useState(true);
 	const [Recruiting, SetRecruiting] = useState(false);
 	const [modifyRecruiting, setmodifyRecruiting] = useState(
@@ -153,7 +154,13 @@ const CommunityWrite = () => {
 	const [ImageChecked, setImageShecked] = useState(false);
 	const [checkedHandle, setCheckedHandle] = useState(true);
 
-	console.log('test', location.state);
+	const [messageApi, contextHolder] = message.useMessage();
+	const alert = async (type, content) => {
+		return messageApi.open({
+			type: type,
+			content: content,
+		});
+	};
 	const [board, setBoard] = useState({
 		title: '',
 		contents: '',
@@ -295,7 +302,7 @@ const CommunityWrite = () => {
 							`/board/create_board?title=${title}&contents=${TextData}&category=${category}&recruitment=${recruitment}&r_link=${r_link}`,
 							formData,
 					  );
-				alert('게시글 작성이 완료되었습니다.');
+				alert('success', '게시글 작성이 완료되었습니다.');
 				navigate('/community');
 			} else {
 				alert('글을 입력해주세요');
@@ -313,7 +320,10 @@ const CommunityWrite = () => {
 				: await axiosTokenFormPut(
 						`/board/update_board?b_id=${data.b_id}&contents=${modifyData}&recruitment=${recruitment}`,
 						formData,
-				  ).then(() => window.location.replace(`/community`));
+				  ).then(async () => {
+						alert('success', '수정되었습니다.');
+						window.location.replace(`/community`);
+				  });
 		},
 		[ImageChecked, ImageData, formData, modifyData, recruitment],
 	);
@@ -328,6 +338,7 @@ const CommunityWrite = () => {
 
 	return (
 		<Wrapper>
+			{contextHolder}
 			<Benner />
 			{data ? (
 				<div>

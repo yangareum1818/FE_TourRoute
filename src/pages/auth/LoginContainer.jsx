@@ -93,9 +93,9 @@ const LoginContainer = () => {
 	const [emailError, setEmailError] = useState(false);
 	const [password1, setPassword1] = useState('');
 	const [passwordExpError, setPasswordExpError] = useState(false);
-	const [messageApi, contextHolder] = message.useMessage();
-	const { isOpen, open } = useModal();
 
+	const { isOpen, open } = useModal();
+	const [messageApi, contextHolder] = message.useMessage();
 	const alert = async (type, content) => {
 		return messageApi.open({
 			type: type,
