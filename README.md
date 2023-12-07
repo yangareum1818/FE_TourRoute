@@ -1,4 +1,4 @@
-# 🪄 간편 여행의 시작, <span style="color: #3AD0FF">[ 투어라우트 ]</span>
+# 🪄 간편 여행의 시작, <span color="#3AD0FF">[ 투어라우트 ]</span>
 
 <img src="./src/assets/readme/Readme.png">
 
@@ -126,20 +126,33 @@
 
 - 👨‍💻 **Front-End 전병규**
 
-  - 여행계획 페이지 마크업 및 스타일 적용
-  - 메인페이지 유효성 검사
-  - 카카오맵 SDK 연결
-  - 축제 페이지 마크업 및 스타일 적용
+  - 여행계획
+    - 카카오맵 SDK 연결
+  - 메인페이지
+    - 유효성 검사
   - Vercel로 웹페이지 배포
+  - MarkeUp or CSS
+    - 헤더, 푸터, 메인페이지, 여행계획, 축제
 
 <br/>
 
 - 👨‍💻 **Front-End 양아름**
 
   - 로그인
+    - 회원가입 정보와 비교 후, 유효성 검사
+    - `localStorage`를 이용해 `token` 저장
   - 회원가입
+    - 약관동의의 전체선택 or 필수, 선택 체크박스 기능
+    - `input`값에 대한 유효성 검사
   - 마이페이지
+    - `react-router` 사용함으로 사이드바 제작
+    - `form-data`를 이용한 이미지 첨부파일 가능한 내 프로필 편집
   - 커뮤니티
+    - 글쓰기 : `form-data`를 이용한 이미지업로드와 `input`에 대한 값 저장
+    - 게시글리스트, 상세페이지들의 조건에 따른 화면 **조건부렌더링**
+    - 게시글 or 댓글 게시와 유저 정보값을 비교한 수정과 삭제
+  - MakeUp or CSS
+    - 로그인, 회원가입, 마이페이지, 축제리스트, 커뮤니티
 
 <br/>
 
@@ -189,13 +202,11 @@
 
 ![병규버전_Signup](https://github.com/TourRoute/FE_TourRoute/assets/77834532/9d5e8b96-f05b-4cf6-9135-e1837756bc48)
 
-
 <p style="text-align: center">[ 회원가입을 위한 회원정보 입력했을 시, 유효성 검사 후 회원가입 성공 화면 ]</p>
 
 <br />
 
 ![병규버전_Login](https://github.com/TourRoute/FE_TourRoute/assets/77834532/9f985b96-c0ff-4b69-8e13-05c660b28694)
-
 
 <p style="text-align: center">[ 내가작성한 정보가 회원가입한 데이터가 있을 경우 로그인 성공 화면 + 유효성 ]</p>
 
@@ -205,20 +216,17 @@
 
 ![TourPlanMain](https://github.com/TourRoute/FE_TourRoute/assets/77834532/653ec97c-1bbe-4df4-88d4-bf790c78392b)
 
-
 <p style="text-align: center">[ 서브페이지를 거치지않고, 메인페이지에서 바로 여행계획의 날짜를 입력해 추천경로를 찾아주는 여행계획 ]</p>
 
 <br />
 
 ![TourPlanCategory](https://github.com/TourRoute/FE_TourRoute/assets/77834532/904888dd-77cf-402e-b1fe-f7e74ee51126)
 
-
 <p style="text-align: center">[ 다음 단계인 카테고리를 선택하는 화면 ]</p>
 
 <br />
 
 ![TourPlanList](https://github.com/TourRoute/FE_TourRoute/assets/77834532/60cec5a3-ca9d-48ed-b1a1-c61d36075834)
-
 
 <p style="text-align: center">[ 여행리스트들이 1, 2, 3일차로 나눠져 지도와 정보들의 리스트들을 사용자가 볼 수 있는 화면 ]</p>
 
@@ -228,7 +236,6 @@
 
 ![Festival](https://github.com/TourRoute/FE_TourRoute/assets/77834532/be75dee8-caff-4afa-a8c7-800097a22664)
 
-
 <p style="text-align: center">[ 경상도의 각 지역별 카테고리로 축제들을 볼 수 있으며, 축제의 정보들을 제공하는 화면 ]</p>
 
 <br />
@@ -237,7 +244,6 @@
 
 ![CommunityWrite](https://github.com/TourRoute/FE_TourRoute/assets/77834532/2adaa892-b1c9-40cb-b833-21cb7e0ad32a)
 
-
 <p style="text-align: center">[ 글쓰기 글 게시하는 화면 ]</p>
 
 <br />
@@ -245,8 +251,8 @@
 - 커뮤니티 : 글쓰기
 
 <div align="center">
-    <img width="49.5%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
-    <img width="49.5%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+    <img width="50%" src="./src/assets/readme/img_communitywrite_free.png" alt="touroute_about" />
+    <img width="46.3%" src="./src/assets/readme/img_communitywrite_accompany.png" alt="touroute_about" />
 </div>
 <p style="text-align: center">[ 자유게시판일 경우 | 동행게시판일 경우 ]</p>
 
@@ -263,24 +269,22 @@
 - 커뮤니티 : 게시판 상세페이지 사이드바
 
 <div align="center">
-    <img width="49.5%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
-    <img width="49.5%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
-    <img width="49.5%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
-    <img width="49.5%" src="./src/assets/InfoImg/touroute_about_04.jpg" alt="touroute_about" />
+    <img width="52.8%" src="./src/assets/readme/img_communityside_free.png" alt="touroute_sidebarbutton" />
+    <img width="46.2%" src="./src/assets/readme/img_communityside_me_accompany.png" alt="touroute_sidebarbutton" />
+    <img width="50%" src="./src/assets/readme/img_communityside_user_accompany1.png" alt="touroute_sidebarbutton" />
+    <img width="49%" src="./src/assets/readme/img_communityside_user_accompany2.png" alt="touroute_sidebarbutton" />
 </div>
-<p style="text-align: center">[ 내가쓴 동행게시판 모집중일 경우 | 자유게시판일 경우 ]<br />[ 동행게시판 모집중일 경우 | 동행게시판 모집완료일 경우 ]</p>
+<p style="text-align: center">[ 자유게시판일 경우 | 내가쓴 동행게시판 모집중일 경우 ]<br />[ 동행게시판 모집중일 경우 | 동행게시판 모집완료일 경우 ]</p>
 
 <br />
 
 ![CommunityModify](https://github.com/TourRoute/FE_TourRoute/assets/77834532/0d4d91ee-9219-425c-a169-30e9c55ce806)
-
 
 <p style="text-align: center">[ 커뮤니티글을 수정 또는 삭제하는 화면 ]</p>
 
 <br />
 
 ![comment](https://github.com/TourRoute/FE_TourRoute/assets/77834532/b4d5c219-807d-4e78-a20d-6bc6e53a5427)
-
 
 <p style="text-align: center">[ 커뮤니티글의 댓글 게시, 수정, 삭제 화면 ]</p>
 
@@ -299,6 +303,5 @@
 <br />
 
 ![MyProprofileImageChange](https://github.com/TourRoute/FE_TourRoute/assets/77834532/e4d76642-4fa2-45a9-bfc7-119f849464df)
-
 
 <p style="text-align: center">[ 프로필 이름과, 이미지를 편집 또는 추가 하는 화면 ]</p>
