@@ -1,5 +1,7 @@
 # 🪄 간편 여행의 시작, <span color="#3AD0FF">[ 투어라우트 ]</span>
 
+👩🏻‍💻 **[개인적인 프로젝트 리뷰](https://velog.io/@yangareum1818/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-TOUR-ROUTE-%EC%B4%9D-%EC%A0%95%EB%A6%AC)**
+
 <img src="./src/assets/readme/Readme.png">
 
 <br />
